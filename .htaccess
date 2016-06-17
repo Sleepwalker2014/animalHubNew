@@ -1,0 +1,3 @@
+RewriteEngine on
+RewriteRule ^([a-zA-Z]+)$  "php/index.php?actionCode=$1" [L]
+RewriteRule ^$  "php/index.php" [L]
