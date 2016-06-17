@@ -5,11 +5,11 @@ return [
         'database' => [
             'connections' => [
                 'default' => [
-                    'adapter' => 'mysql',
-                    'classname' => 'Propel\Runtime\Connection\ConnectionWrapper',
-                    'dsn' => 'mysql:host=localhost;dbname=animal',
-                    'user' => 'root',
-                    'password' => 'Deutschrock1',
+                    'adapter'    => 'mysql',
+                    'classname'  => 'Propel\Runtime\Connection\ConnectionWrapper',
+                    'dsn'        => 'mysql:host=localhost;dbname=animal',
+                    'user'       => 'root',
+                    'password'   => 'Deutschrock1',
                     'attributes' => []
                 ]
             ]

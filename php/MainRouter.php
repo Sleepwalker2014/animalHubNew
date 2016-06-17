@@ -1,7 +1,6 @@
 <?php
 namespace BeatHeat\MainRouter;
 
-use BeatHeat\Home\Home;
 use BeatHeat\SessionHandler;
 use BeatHeat\Template;
 
@@ -12,7 +11,8 @@ class MainRouter
     private $actionMethodMap = ['Login' => ['class' => 'Login', 'method' => 'getHTML'],
                                 'LoginUser' => ['class' => 'Login', 'method' => 'handleLogin'],
                                 'LogoutUser' => ['class' => 'Logout', 'method' => 'handleLogout'],
-                                'Home' => ['class' => 'Home', 'method' => 'getHTML']];
+                                'Home' => ['class' => 'Home', 'method' => 'getHTML'],
+                                'Overview' => ['class' => 'Overview', 'method' => 'getHTML']];
     /**
      * @var Template
      */
@@ -41,10 +41,15 @@ class MainRouter
     {
         $user = $this->sessionHandler->getSessionUser();
 
-        if (((empty($user) || empty($this->actionCode)) && $this->actionCode != 'Login')) {
+        if (!empty($user)) {
+            if (empty($this->actionCode)) {
+                $this->actionCode = 'Overview';
+            }
+        } elseif (empty($this->actionCode)) {
             $this->actionCode = 'Home';
         }
 
+        syslog(0, $this->actionCode);
         if (isset($this->actionMethodMap[$this->actionCode])) {
             $className = "BeatHeat\\" . $this->actionMethodMap[$this->actionCode]['class'] . "\\" . $this->actionMethodMap[$this->actionCode]['class'];
 

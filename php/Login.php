@@ -11,7 +11,7 @@ class Login
      * @var Template $template
      */
     private $template;
-    const TEMPLATE_FILE = 'login/login.html.twig';
+    const TEMPLATE_FILE = 'overview/overview.html.twig';
     /**
      * @var SessionHandler
      */
@@ -30,7 +30,7 @@ class Login
 
     public function getHTML()
     {
-        echo $this->template->getHTMLAsString(self::TEMPLATE_FILE);
+        echo json_encode(['templateData' => $this->template->getHTMLAsString(self::TEMPLATE_FILE)]);
     }
 
     public function handleLogin()
