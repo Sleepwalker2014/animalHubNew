@@ -22,7 +22,7 @@ $(function () {
                 } else {
                     $('#mainContent').html(result.templateData);
                 }
-            }).always(function (result) {
+            }).always(function () {
                 $('#loginSpinner').hide();
                 $("#btn-login").removeProp("disabled");
             });

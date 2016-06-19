@@ -2,3 +2,4 @@
 /vendor/
 /components/
 .idea/*
+.directory

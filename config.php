@@ -10,7 +10,7 @@ $manager->setConfiguration([
     'classname' => 'Propel\\Runtime\\Connection\\DebugPDO',
     'dsn' => 'mysql:host=127.0.0.1;dbname=animal',
     'user' => 'root',
-    'password' => 'Deutschrock1',
+    'password' => 'Deutschrock',
     'attributes' =>
         [
             'ATTR_EMULATE_PREPARES' => false,

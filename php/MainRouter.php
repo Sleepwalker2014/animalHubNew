@@ -49,7 +49,6 @@ class MainRouter
             $this->actionCode = 'Home';
         }
 
-        syslog(0, $this->actionCode);
         if (isset($this->actionMethodMap[$this->actionCode])) {
             $className = "BeatHeat\\" . $this->actionMethodMap[$this->actionCode]['class'] . "\\" . $this->actionMethodMap[$this->actionCode]['class'];
 

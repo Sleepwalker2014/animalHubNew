@@ -38,12 +38,16 @@ class Login
         if (!isset($_POST['loginName']) ||
             !isset($_POST['loginPassword'])
         ) {
+            echo json_encode(['message' => $this->getLoginFailedMessage()]);
             return false;
         }
 
         if ($this->login($_POST['loginName'], $_POST['loginPassword'])) {
             $this->getHTML();
+            return true;
         }
+
+        echo json_encode(['message' => $this->getLoginFailedMessage()]);
     }
 
     public function login($userName, $password)
@@ -65,5 +69,10 @@ class Login
     public function setUserAsSession($user)
     {
         $this->sessionHandler->setSessionUser($user);
+    }
+
+    public function getLoginFailedMessage()
+    {
+        return 'Login nicht erfolgreich. Bitte überprüfen Sie ihren Benutzernamen sowie ihr Passwort.';
     }
 }
