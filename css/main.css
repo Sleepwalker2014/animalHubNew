@@ -40,6 +40,8 @@
     float:                     right;
 }
 
+body { padding-top: 70px; }
+
 /*=========================
   Icons
  ================= */
@@ -137,7 +139,7 @@ a {
 
 footer {
     background-color:        #ffc078;
-    position:                fixed;
+    position:                relative;
     bottom:                  0;
     width:                   100%;
     z-index:                 9999;

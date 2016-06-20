@@ -32,6 +32,6 @@ class Logout
     {
         $this->sessionHandler->closeSession();
 
-        return true;
+        echo $this->template->getHTMLAsString('home/home.html.twig');
     }
 }
