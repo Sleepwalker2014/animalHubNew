@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+  <table name="animals" idMethod="native" phpName="Animals">
+    <column name="animal" phpName="Animal" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="45" required="true"/>
+    <column name="birthDay" phpName="Birthday" type="DATE" required="true"/>
+    <column name="sex" phpName="Sex" type="INTEGER" required="true"/>
+    <column name="furColour" phpName="Furcolour" type="INTEGER" required="true" defaultValue="2"/>
+    <column name="eyeColour" phpName="Eyecolour" type="INTEGER" required="true"/>
+    <column name="species" phpName="Species" type="INTEGER" required="true"/>
+    <column name="size" phpName="Size" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="specification" phpName="Specification" type="VARCHAR" size="255" required="true"/>
+    <column name="race" phpName="Race" type="INTEGER" required="true"/>
+    <column name="test" phpName="Test" type="INTEGER"/>
+    <column name="blah" phpName="Blah" type="DATE"/>
+    <foreign-key foreignTable="sexes" name="sex" onUpdate="CASCADE">
+      <reference local="sex" foreign="sex"/>
+    </foreign-key>
+    <index name="fk_sex">
+      <index-column name="sex"/>
+    </index>
+    <unique name="animal">
+      <unique-column name="animal"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="colours" idMethod="native" phpName="Colours">
+    <column name="colour" phpName="Colour" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="45" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="notificationType" idMethod="native" phpName="Notificationtype">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="25" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="256" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="notifications" idMethod="native" phpName="Notifications">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="latitude" phpName="Latitude" type="DOUBLE" required="true"/>
+    <column name="notificationType" phpName="Notificationtype" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="creationDate" phpName="Creationdate" type="DATE" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="2048" required="true"/>
+    <column name="animal" phpName="Animal" type="INTEGER" required="true"/>
+    <column name="longitude" phpName="Longitude" type="DOUBLE" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="races" idMethod="native" phpName="Races">
+    <column name="race" phpName="Race" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="15" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="25" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="sexes" idMethod="native" phpName="Sexes">
+    <column name="sex" phpName="Sex" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="10" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="25" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="sizes" idMethod="native" phpName="Sizes">
+    <column name="size" phpName="Size" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="25" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="species" idMethod="native" phpName="Species">
+    <column name="species" phpName="Species" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="25" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="45" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="testt" idMethod="native" phpName="Testt">
+    <column name="f" phpName="F" type="DATE" primaryKey="true" required="true"/>
+    <index name="f">
+      <index-column name="f"/>
+    </index>
+    <index name="f_3">
+      <index-column name="f"/>
+    </index>
+    <unique name="f_2">
+      <unique-column name="f"/>
+    </unique>
+    <unique name="f_4">
+      <unique-column name="f"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="users" idMethod="native" phpName="Users">
+    <column name="user" phpName="User" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="255" required="true"/>
+    <column name="password" phpName="Password" type="VARCHAR" size="255" required="true"/>
+    <unique name="email">
+      <unique-column name="email"/>
+    </unique>
+    <unique name="name">
+      <unique-column name="name"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>

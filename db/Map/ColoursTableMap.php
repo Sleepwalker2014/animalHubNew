@@ -59,7 +59,7 @@ class ColoursTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 2;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class ColoursTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 2;
 
     /**
      * the column name for the colour field
@@ -80,11 +80,6 @@ class ColoursTableMap extends TableMap
      * the column name for the code field
      */
     const COL_CODE = 'colours.code';
-
-    /**
-     * the column name for the name field
-     */
-    const COL_NAME = 'colours.name';
 
     /**
      * The default string format for model objects of the related table
@@ -98,11 +93,11 @@ class ColoursTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Colour', 'Code', 'Name', ),
-        self::TYPE_CAMELNAME     => array('colour', 'code', 'name', ),
-        self::TYPE_COLNAME       => array(ColoursTableMap::COL_COLOUR, ColoursTableMap::COL_CODE, ColoursTableMap::COL_NAME, ),
-        self::TYPE_FIELDNAME     => array('colour', 'code', 'name', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Colour', 'Code', ),
+        self::TYPE_CAMELNAME     => array('colour', 'code', ),
+        self::TYPE_COLNAME       => array(ColoursTableMap::COL_COLOUR, ColoursTableMap::COL_CODE, ),
+        self::TYPE_FIELDNAME     => array('colour', 'code', ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -112,11 +107,11 @@ class ColoursTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Colour' => 0, 'Code' => 1, 'Name' => 2, ),
-        self::TYPE_CAMELNAME     => array('colour' => 0, 'code' => 1, 'name' => 2, ),
-        self::TYPE_COLNAME       => array(ColoursTableMap::COL_COLOUR => 0, ColoursTableMap::COL_CODE => 1, ColoursTableMap::COL_NAME => 2, ),
-        self::TYPE_FIELDNAME     => array('colour' => 0, 'code' => 1, 'name' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Colour' => 0, 'Code' => 1, ),
+        self::TYPE_CAMELNAME     => array('colour' => 0, 'code' => 1, ),
+        self::TYPE_COLNAME       => array(ColoursTableMap::COL_COLOUR => 0, ColoursTableMap::COL_CODE => 1, ),
+        self::TYPE_FIELDNAME     => array('colour' => 0, 'code' => 1, ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -138,7 +133,6 @@ class ColoursTableMap extends TableMap
         // columns
         $this->addPrimaryKey('colour', 'Colour', 'INTEGER', true, null, null);
         $this->addColumn('code', 'Code', 'VARCHAR', true, 45, null);
-        $this->addColumn('name', 'Name', 'VARCHAR', true, 45, null);
     } // initialize()
 
     /**
@@ -146,20 +140,6 @@ class ColoursTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('AnimalsRelatedByFurcolourid', '\\Animals', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':furColourId',
-    1 => ':colour',
-  ),
-), null, 'CASCADE', 'AnimalssRelatedByFurcolourid', false);
-        $this->addRelation('AnimalsRelatedByEyecolourid', '\\Animals', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':eyeColourId',
-    1 => ':colour',
-  ),
-), null, 'CASCADE', 'AnimalssRelatedByEyecolourid', false);
     } // buildRelations()
 
     /**
@@ -305,11 +285,9 @@ class ColoursTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(ColoursTableMap::COL_COLOUR);
             $criteria->addSelectColumn(ColoursTableMap::COL_CODE);
-            $criteria->addSelectColumn(ColoursTableMap::COL_NAME);
         } else {
             $criteria->addSelectColumn($alias . '.colour');
             $criteria->addSelectColumn($alias . '.code');
-            $criteria->addSelectColumn($alias . '.name');
         }
     }
 

@@ -9,7 +9,7 @@ return [
                     'classname'  => 'Propel\Runtime\Connection\ConnectionWrapper',
                     'dsn'        => 'mysql:host=localhost;dbname=animal',
                     'user'       => 'root',
-                    'password'   => 'Deutschrock',
+                    'password'   => 'Deutschrock1',
                     'attributes' => []
                 ]
             ]

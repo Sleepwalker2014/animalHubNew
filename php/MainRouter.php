@@ -11,6 +11,7 @@ class MainRouter
     private $actionMethodMap = ['Login' => ['class' => 'Login', 'method' => 'getHTML'],
                                 'LoginUser' => ['class' => 'Login', 'method' => 'handleLogin'],
                                 'LogoutUser' => ['class' => 'Logout', 'method' => 'handleLogout'],
+                                'Register' => ['class' => 'Register', 'method' => 'handleRegister'],
                                 'Home' => ['class' => 'Home', 'method' => 'getHTML'],
                                 'Overview' => ['class' => 'Overview', 'method' => 'getHTML'],
                                 'UserSettings' => ['class' => 'UserSettings', 'method' => 'getHTML']];

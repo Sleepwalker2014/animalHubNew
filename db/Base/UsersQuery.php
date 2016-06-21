@@ -21,10 +21,12 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildUsersQuery orderByUser($order = Criteria::ASC) Order by the user column
  * @method     ChildUsersQuery orderByName($order = Criteria::ASC) Order by the name column
+ * @method     ChildUsersQuery orderByEmail($order = Criteria::ASC) Order by the email column
  * @method     ChildUsersQuery orderByPassword($order = Criteria::ASC) Order by the password column
  *
  * @method     ChildUsersQuery groupByUser() Group by the user column
  * @method     ChildUsersQuery groupByName() Group by the name column
+ * @method     ChildUsersQuery groupByEmail() Group by the email column
  * @method     ChildUsersQuery groupByPassword() Group by the password column
  *
  * @method     ChildUsersQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
@@ -40,6 +42,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildUsers findOneByUser(int $user) Return the first ChildUsers filtered by the user column
  * @method     ChildUsers findOneByName(string $name) Return the first ChildUsers filtered by the name column
+ * @method     ChildUsers findOneByEmail(string $email) Return the first ChildUsers filtered by the email column
  * @method     ChildUsers findOneByPassword(string $password) Return the first ChildUsers filtered by the password column *
 
  * @method     ChildUsers requirePk($key, ConnectionInterface $con = null) Return the ChildUsers by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -47,11 +50,13 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildUsers requireOneByUser(int $user) Return the first ChildUsers filtered by the user column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUsers requireOneByName(string $name) Return the first ChildUsers filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUsers requireOneByEmail(string $email) Return the first ChildUsers filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUsers requireOneByPassword(string $password) Return the first ChildUsers filtered by the password column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildUsers[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildUsers objects based on current ModelCriteria
  * @method     ChildUsers[]|ObjectCollection findByUser(int $user) Return ChildUsers objects filtered by the user column
  * @method     ChildUsers[]|ObjectCollection findByName(string $name) Return ChildUsers objects filtered by the name column
+ * @method     ChildUsers[]|ObjectCollection findByEmail(string $email) Return ChildUsers objects filtered by the email column
  * @method     ChildUsers[]|ObjectCollection findByPassword(string $password) Return ChildUsers objects filtered by the password column
  * @method     ChildUsers[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
@@ -145,7 +150,7 @@ abstract class UsersQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT user, name, password FROM users WHERE user = :p0';
+        $sql = 'SELECT user, name, email, password FROM users WHERE user = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -303,6 +308,35 @@ abstract class UsersQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UsersTableMap::COL_NAME, $name, $comparison);
+    }
+
+    /**
+     * Filter the query on the email column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByEmail('fooValue');   // WHERE email = 'fooValue'
+     * $query->filterByEmail('%fooValue%'); // WHERE email LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $email The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUsersQuery The current query, for fluid interface
+     */
+    public function filterByEmail($email = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($email)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $email)) {
+                $email = str_replace('*', '%', $email);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UsersTableMap::COL_EMAIL, $email, $comparison);
     }
 
     /**

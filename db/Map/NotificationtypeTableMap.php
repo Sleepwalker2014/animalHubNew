@@ -72,9 +72,9 @@ class NotificationtypeTableMap extends TableMap
     const NUM_HYDRATE_COLUMNS = 3;
 
     /**
-     * the column name for the notificationType field
+     * the column name for the id field
      */
-    const COL_NOTIFICATIONTYPE = 'notificationType.notificationType';
+    const COL_ID = 'notificationType.id';
 
     /**
      * the column name for the code field
@@ -98,10 +98,10 @@ class NotificationtypeTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Notificationtype', 'Code', 'Description', ),
-        self::TYPE_CAMELNAME     => array('notificationtype', 'code', 'description', ),
-        self::TYPE_COLNAME       => array(NotificationtypeTableMap::COL_NOTIFICATIONTYPE, NotificationtypeTableMap::COL_CODE, NotificationtypeTableMap::COL_DESCRIPTION, ),
-        self::TYPE_FIELDNAME     => array('notificationType', 'code', 'description', ),
+        self::TYPE_PHPNAME       => array('Id', 'Code', 'Description', ),
+        self::TYPE_CAMELNAME     => array('id', 'code', 'description', ),
+        self::TYPE_COLNAME       => array(NotificationtypeTableMap::COL_ID, NotificationtypeTableMap::COL_CODE, NotificationtypeTableMap::COL_DESCRIPTION, ),
+        self::TYPE_FIELDNAME     => array('id', 'code', 'description', ),
         self::TYPE_NUM           => array(0, 1, 2, )
     );
 
@@ -112,10 +112,10 @@ class NotificationtypeTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Notificationtype' => 0, 'Code' => 1, 'Description' => 2, ),
-        self::TYPE_CAMELNAME     => array('notificationtype' => 0, 'code' => 1, 'description' => 2, ),
-        self::TYPE_COLNAME       => array(NotificationtypeTableMap::COL_NOTIFICATIONTYPE => 0, NotificationtypeTableMap::COL_CODE => 1, NotificationtypeTableMap::COL_DESCRIPTION => 2, ),
-        self::TYPE_FIELDNAME     => array('notificationType' => 0, 'code' => 1, 'description' => 2, ),
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Code' => 1, 'Description' => 2, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'code' => 1, 'description' => 2, ),
+        self::TYPE_COLNAME       => array(NotificationtypeTableMap::COL_ID => 0, NotificationtypeTableMap::COL_CODE => 1, NotificationtypeTableMap::COL_DESCRIPTION => 2, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'code' => 1, 'description' => 2, ),
         self::TYPE_NUM           => array(0, 1, 2, )
     );
 
@@ -136,7 +136,7 @@ class NotificationtypeTableMap extends TableMap
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
-        $this->addPrimaryKey('notificationType', 'Notificationtype', 'INTEGER', true, 10, null);
+        $this->addPrimaryKey('id', 'Id', 'INTEGER', true, 10, null);
         $this->addColumn('code', 'Code', 'VARCHAR', true, 25, null);
         $this->addColumn('description', 'Description', 'VARCHAR', true, 256, null);
     } // initialize()
@@ -146,13 +146,6 @@ class NotificationtypeTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Notifications', '\\Notifications', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':notificationTypeId',
-    1 => ':notificationType',
-  ),
-), null, 'CASCADE', 'Notificationss', false);
     } // buildRelations()
 
     /**
@@ -171,11 +164,11 @@ class NotificationtypeTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Notificationtype', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Notificationtype', TableMap::TYPE_PHPNAME, $indexType)];
+        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -195,7 +188,7 @@ class NotificationtypeTableMap extends TableMap
         return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('Notificationtype', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -296,11 +289,11 @@ class NotificationtypeTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(NotificationtypeTableMap::COL_NOTIFICATIONTYPE);
+            $criteria->addSelectColumn(NotificationtypeTableMap::COL_ID);
             $criteria->addSelectColumn(NotificationtypeTableMap::COL_CODE);
             $criteria->addSelectColumn(NotificationtypeTableMap::COL_DESCRIPTION);
         } else {
-            $criteria->addSelectColumn($alias . '.notificationType');
+            $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.code');
             $criteria->addSelectColumn($alias . '.description');
         }
@@ -354,7 +347,7 @@ class NotificationtypeTableMap extends TableMap
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
             $criteria = new Criteria(NotificationtypeTableMap::DATABASE_NAME);
-            $criteria->add(NotificationtypeTableMap::COL_NOTIFICATIONTYPE, (array) $values, Criteria::IN);
+            $criteria->add(NotificationtypeTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
         $query = NotificationtypeQuery::create()->mergeWith($criteria);
@@ -402,8 +395,8 @@ class NotificationtypeTableMap extends TableMap
             $criteria = $criteria->buildCriteria(); // build Criteria from Notificationtype object
         }
 
-        if ($criteria->containsKey(NotificationtypeTableMap::COL_NOTIFICATIONTYPE) && $criteria->keyContainsValue(NotificationtypeTableMap::COL_NOTIFICATIONTYPE) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.NotificationtypeTableMap::COL_NOTIFICATIONTYPE.')');
+        if ($criteria->containsKey(NotificationtypeTableMap::COL_ID) && $criteria->keyContainsValue(NotificationtypeTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.NotificationtypeTableMap::COL_ID.')');
         }
 
 

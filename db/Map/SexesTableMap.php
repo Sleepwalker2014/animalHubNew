@@ -149,7 +149,7 @@ class SexesTableMap extends TableMap
         $this->addRelation('Animals', '\\Animals', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':sexId',
+    0 => ':sex',
     1 => ':sex',
   ),
 ), null, 'CASCADE', 'Animalss', false);

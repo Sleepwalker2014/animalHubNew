@@ -91,18 +91,15 @@
                       class="form-horizontal"
                       role="form">
 
-                    <div id="signupalert"
-                         style="display: none"
-                         class="alert alert-danger">
-                        <p>Error:</p>
-                        <span></span>
-                    </div>
+                    <div id="registerAlert"
+                         class="alert alert-danger col-sm-12 hide"></div>
 
                     <div class="form-group">
                         <label for="email"
                                class="col-md-3 control-label">E-Mail</label>
                         <div class="col-md-9">
-                            <input type="text"
+                            <input id="registerEmail"
+                                   type="text"
                                    class="form-control"
                                    name="email"
                                    placeholder="E-mail Addresse">
@@ -113,27 +110,19 @@
                         <label for="firstname"
                                class="col-md-3 control-label">Vorname</label>
                         <div class="col-md-9">
-                            <input type="text"
+                            <input id="registerName"
+                                   type="text"
                                    class="form-control"
                                    name="firstname"
                                    placeholder="Vorname">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname"
-                               class="col-md-3 control-label">Nachname</label>
-                        <div class="col-md-9">
-                            <input type="text"
-                                   class="form-control"
-                                   name="lastname"
-                                   placeholder="Nachname">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="password"
                                class="col-md-3 control-label">Passwort</label>
                         <div class="col-md-9">
-                            <input type="password"
+                            <input id="registerPassword"
+                                   type="password"
                                    class="form-control"
                                    name="passwd"
                                    placeholder="Passwort">
@@ -144,7 +133,7 @@
                         <button id="btn-register"
                                 class="btn btn-info form-control">
                             <i class="icon-hand-right"></i>
-                            jetzt registieren!
+                            jetzt registrieren!
                         </button>
                     </div>
 
@@ -181,4 +170,5 @@
 </div>
 {% block javascript %}
     <script src="javascript/login.js"></script>
+    <script src="javascript/register.js"></script>
 {% endblock %}

@@ -359,7 +359,7 @@ abstract class SexesQuery extends ModelCriteria
     {
         if ($animals instanceof \Animals) {
             return $this
-                ->addUsingAlias(SexesTableMap::COL_SEX, $animals->getSexid(), $comparison);
+                ->addUsingAlias(SexesTableMap::COL_SEX, $animals->getSex(), $comparison);
         } elseif ($animals instanceof ObjectCollection) {
             return $this
                 ->useAnimalsQuery()

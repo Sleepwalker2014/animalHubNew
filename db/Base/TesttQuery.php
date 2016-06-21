@@ -2,11 +2,11 @@
 
 namespace Base;
 
-use \Colours as ChildColours;
-use \ColoursQuery as ChildColoursQuery;
+use \Testt as ChildTestt;
+use \TesttQuery as ChildTesttQuery;
 use \Exception;
 use \PDO;
-use Map\ColoursTableMap;
+use Map\TesttTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -15,72 +15,67 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 
 /**
- * Base class that represents a query for the 'colours' table.
+ * Base class that represents a query for the 'testt' table.
  *
  *
  *
- * @method     ChildColoursQuery orderByColour($order = Criteria::ASC) Order by the colour column
- * @method     ChildColoursQuery orderByCode($order = Criteria::ASC) Order by the code column
+ * @method     ChildTesttQuery orderByF($order = Criteria::ASC) Order by the f column
  *
- * @method     ChildColoursQuery groupByColour() Group by the colour column
- * @method     ChildColoursQuery groupByCode() Group by the code column
+ * @method     ChildTesttQuery groupByF() Group by the f column
  *
- * @method     ChildColoursQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
- * @method     ChildColoursQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
- * @method     ChildColoursQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ * @method     ChildTesttQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
+ * @method     ChildTesttQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
+ * @method     ChildTesttQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildColoursQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
- * @method     ChildColoursQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
- * @method     ChildColoursQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
+ * @method     ChildTesttQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
+ * @method     ChildTesttQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
+ * @method     ChildTesttQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildColours findOne(ConnectionInterface $con = null) Return the first ChildColours matching the query
- * @method     ChildColours findOneOrCreate(ConnectionInterface $con = null) Return the first ChildColours matching the query, or a new ChildColours object populated from the query conditions when no match is found
+ * @method     ChildTestt findOne(ConnectionInterface $con = null) Return the first ChildTestt matching the query
+ * @method     ChildTestt findOneOrCreate(ConnectionInterface $con = null) Return the first ChildTestt matching the query, or a new ChildTestt object populated from the query conditions when no match is found
  *
- * @method     ChildColours findOneByColour(int $colour) Return the first ChildColours filtered by the colour column
- * @method     ChildColours findOneByCode(string $code) Return the first ChildColours filtered by the code column *
+ * @method     ChildTestt findOneByF(string $f) Return the first ChildTestt filtered by the f column *
 
- * @method     ChildColours requirePk($key, ConnectionInterface $con = null) Return the ChildColours by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildColours requireOne(ConnectionInterface $con = null) Return the first ChildColours matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTestt requirePk($key, ConnectionInterface $con = null) Return the ChildTestt by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTestt requireOne(ConnectionInterface $con = null) Return the first ChildTestt matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildColours requireOneByColour(int $colour) Return the first ChildColours filtered by the colour column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildColours requireOneByCode(string $code) Return the first ChildColours filtered by the code column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTestt requireOneByF(string $f) Return the first ChildTestt filtered by the f column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildColours[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildColours objects based on current ModelCriteria
- * @method     ChildColours[]|ObjectCollection findByColour(int $colour) Return ChildColours objects filtered by the colour column
- * @method     ChildColours[]|ObjectCollection findByCode(string $code) Return ChildColours objects filtered by the code column
- * @method     ChildColours[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     ChildTestt[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildTestt objects based on current ModelCriteria
+ * @method     ChildTestt[]|ObjectCollection findByF(string $f) Return ChildTestt objects filtered by the f column
+ * @method     ChildTestt[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
-abstract class ColoursQuery extends ModelCriteria
+abstract class TesttQuery extends ModelCriteria
 {
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
-     * Initializes internal state of \Base\ColoursQuery object.
+     * Initializes internal state of \Base\TesttQuery object.
      *
      * @param     string $dbName The database name
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'default', $modelName = '\\Colours', $modelAlias = null)
+    public function __construct($dbName = 'default', $modelName = '\\Testt', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }
 
     /**
-     * Returns a new ChildColoursQuery object.
+     * Returns a new ChildTesttQuery object.
      *
      * @param     string $modelAlias The alias of a model in the query
      * @param     Criteria $criteria Optional Criteria to build the query from
      *
-     * @return ChildColoursQuery
+     * @return ChildTesttQuery
      */
     public static function create($modelAlias = null, Criteria $criteria = null)
     {
-        if ($criteria instanceof ChildColoursQuery) {
+        if ($criteria instanceof ChildTesttQuery) {
             return $criteria;
         }
-        $query = new ChildColoursQuery();
+        $query = new ChildTesttQuery();
         if (null !== $modelAlias) {
             $query->setModelAlias($modelAlias);
         }
@@ -103,19 +98,19 @@ abstract class ColoursQuery extends ModelCriteria
      * @param mixed $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
-     * @return ChildColours|array|mixed the result, formatted by the current formatter
+     * @return ChildTestt|array|mixed the result, formatted by the current formatter
      */
     public function findPk($key, ConnectionInterface $con = null)
     {
         if ($key === null) {
             return null;
         }
-        if ((null !== ($obj = ColoursTableMap::getInstanceFromPool((string) $key))) && !$this->formatter) {
+        if ((null !== ($obj = TesttTableMap::getInstanceFromPool((string) $key))) && !$this->formatter) {
             // the object is already in the instance pool
             return $obj;
         }
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(ColoursTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(TesttTableMap::DATABASE_NAME);
         }
         $this->basePreSelect($con);
         if ($this->formatter || $this->modelAlias || $this->with || $this->select
@@ -136,14 +131,14 @@ abstract class ColoursQuery extends ModelCriteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildColours A model object, or null if the key is not found
+     * @return ChildTestt A model object, or null if the key is not found
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT colour, code FROM colours WHERE colour = :p0';
+        $sql = 'SELECT f FROM testt WHERE f = :p0';
         try {
             $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
+            $stmt->bindValue(':p0', $key ? $key->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
             Propel::log($e->getMessage(), Propel::LOG_ERR);
@@ -151,10 +146,10 @@ abstract class ColoursQuery extends ModelCriteria
         }
         $obj = null;
         if ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
-            /** @var ChildColours $obj */
-            $obj = new ChildColours();
+            /** @var ChildTestt $obj */
+            $obj = new ChildTestt();
             $obj->hydrate($row);
-            ColoursTableMap::addInstanceToPool($obj, (string) $key);
+            TesttTableMap::addInstanceToPool($obj, (string) $key);
         }
         $stmt->closeCursor();
 
@@ -167,7 +162,7 @@ abstract class ColoursQuery extends ModelCriteria
      * @param     mixed $key Primary key to use for the query
      * @param     ConnectionInterface $con A connection object
      *
-     * @return ChildColours|array|mixed the result, formatted by the current formatter
+     * @return ChildTestt|array|mixed the result, formatted by the current formatter
      */
     protected function findPkComplex($key, ConnectionInterface $con)
     {
@@ -209,12 +204,12 @@ abstract class ColoursQuery extends ModelCriteria
      *
      * @param     mixed $key Primary key to use for the query
      *
-     * @return $this|ChildColoursQuery The current query, for fluid interface
+     * @return $this|ChildTesttQuery The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(ColoursTableMap::COL_COLOUR, $key, Criteria::EQUAL);
+        return $this->addUsingAlias(TesttTableMap::COL_F, $key, Criteria::EQUAL);
     }
 
     /**
@@ -222,42 +217,44 @@ abstract class ColoursQuery extends ModelCriteria
      *
      * @param     array $keys The list of primary key to use for the query
      *
-     * @return $this|ChildColoursQuery The current query, for fluid interface
+     * @return $this|ChildTesttQuery The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(ColoursTableMap::COL_COLOUR, $keys, Criteria::IN);
+        return $this->addUsingAlias(TesttTableMap::COL_F, $keys, Criteria::IN);
     }
 
     /**
-     * Filter the query on the colour column
+     * Filter the query on the f column
      *
      * Example usage:
      * <code>
-     * $query->filterByColour(1234); // WHERE colour = 1234
-     * $query->filterByColour(array(12, 34)); // WHERE colour IN (12, 34)
-     * $query->filterByColour(array('min' => 12)); // WHERE colour > 12
+     * $query->filterByF('2011-03-14'); // WHERE f = '2011-03-14'
+     * $query->filterByF('now'); // WHERE f = '2011-03-14'
+     * $query->filterByF(array('max' => 'yesterday')); // WHERE f > '2011-03-13'
      * </code>
      *
-     * @param     mixed $colour The value to use as filter.
+     * @param     mixed $f The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildColoursQuery The current query, for fluid interface
+     * @return $this|ChildTesttQuery The current query, for fluid interface
      */
-    public function filterByColour($colour = null, $comparison = null)
+    public function filterByF($f = null, $comparison = null)
     {
-        if (is_array($colour)) {
+        if (is_array($f)) {
             $useMinMax = false;
-            if (isset($colour['min'])) {
-                $this->addUsingAlias(ColoursTableMap::COL_COLOUR, $colour['min'], Criteria::GREATER_EQUAL);
+            if (isset($f['min'])) {
+                $this->addUsingAlias(TesttTableMap::COL_F, $f['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($colour['max'])) {
-                $this->addUsingAlias(ColoursTableMap::COL_COLOUR, $colour['max'], Criteria::LESS_EQUAL);
+            if (isset($f['max'])) {
+                $this->addUsingAlias(TesttTableMap::COL_F, $f['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -268,56 +265,27 @@ abstract class ColoursQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(ColoursTableMap::COL_COLOUR, $colour, $comparison);
-    }
-
-    /**
-     * Filter the query on the code column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByCode('fooValue');   // WHERE code = 'fooValue'
-     * $query->filterByCode('%fooValue%'); // WHERE code LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $code The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildColoursQuery The current query, for fluid interface
-     */
-    public function filterByCode($code = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($code)) {
-                $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $code)) {
-                $code = str_replace('*', '%', $code);
-                $comparison = Criteria::LIKE;
-            }
-        }
-
-        return $this->addUsingAlias(ColoursTableMap::COL_CODE, $code, $comparison);
+        return $this->addUsingAlias(TesttTableMap::COL_F, $f, $comparison);
     }
 
     /**
      * Exclude object from result
      *
-     * @param   ChildColours $colours Object to remove from the list of results
+     * @param   ChildTestt $testt Object to remove from the list of results
      *
-     * @return $this|ChildColoursQuery The current query, for fluid interface
+     * @return $this|ChildTesttQuery The current query, for fluid interface
      */
-    public function prune($colours = null)
+    public function prune($testt = null)
     {
-        if ($colours) {
-            $this->addUsingAlias(ColoursTableMap::COL_COLOUR, $colours->getColour(), Criteria::NOT_EQUAL);
+        if ($testt) {
+            $this->addUsingAlias(TesttTableMap::COL_F, $testt->getF(), Criteria::NOT_EQUAL);
         }
 
         return $this;
     }
 
     /**
-     * Deletes all rows from the colours table.
+     * Deletes all rows from the testt table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
@@ -325,7 +293,7 @@ abstract class ColoursQuery extends ModelCriteria
     public function doDeleteAll(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ColoursTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TesttTableMap::DATABASE_NAME);
         }
 
         // use transaction because $criteria could contain info
@@ -336,8 +304,8 @@ abstract class ColoursQuery extends ModelCriteria
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            ColoursTableMap::clearInstancePool();
-            ColoursTableMap::clearRelatedInstancePool();
+            TesttTableMap::clearInstancePool();
+            TesttTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
@@ -355,26 +323,26 @@ abstract class ColoursQuery extends ModelCriteria
     public function delete(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ColoursTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TesttTableMap::DATABASE_NAME);
         }
 
         $criteria = $this;
 
         // Set the correct dbName
-        $criteria->setDbName(ColoursTableMap::DATABASE_NAME);
+        $criteria->setDbName(TesttTableMap::DATABASE_NAME);
 
         // use transaction because $criteria could contain info
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
 
-            ColoursTableMap::removeInstanceFromPool($criteria);
+            TesttTableMap::removeInstanceFromPool($criteria);
 
             $affectedRows += ModelCriteria::delete($con);
-            ColoursTableMap::clearRelatedInstancePool();
+            TesttTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
     }
 
-} // ColoursQuery
+} // TesttQuery

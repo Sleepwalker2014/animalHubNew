@@ -2,18 +2,9 @@
 
 namespace Base;
 
-use \Animals as ChildAnimals;
 use \AnimalsQuery as ChildAnimalsQuery;
-use \Colours as ChildColours;
-use \ColoursQuery as ChildColoursQuery;
-use \Notifications as ChildNotifications;
-use \NotificationsQuery as ChildNotificationsQuery;
-use \Races as ChildRaces;
-use \RacesQuery as ChildRacesQuery;
 use \Sexes as ChildSexes;
 use \SexesQuery as ChildSexesQuery;
-use \Species as ChildSpecies;
-use \SpeciesQuery as ChildSpeciesQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -23,7 +14,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
@@ -92,28 +82,29 @@ abstract class Animals implements ActiveRecordInterface
     protected $birthday;
 
     /**
-     * The value for the sexid field.
+     * The value for the sex field.
      * @var        int
      */
-    protected $sexid;
+    protected $sex;
 
     /**
-     * The value for the furcolourid field.
+     * The value for the furcolour field.
+     * Note: this column has a database default value of: 2
      * @var        int
      */
-    protected $furcolourid;
+    protected $furcolour;
 
     /**
-     * The value for the eyecolourid field.
+     * The value for the eyecolour field.
      * @var        int
      */
-    protected $eyecolourid;
+    protected $eyecolour;
 
     /**
-     * The value for the speciesid field.
+     * The value for the species field.
      * @var        int
      */
-    protected $speciesid;
+    protected $species;
 
     /**
      * The value for the size field.
@@ -128,41 +119,27 @@ abstract class Animals implements ActiveRecordInterface
     protected $specification;
 
     /**
-     * The value for the raceid field.
+     * The value for the race field.
      * @var        int
      */
-    protected $raceid;
+    protected $race;
 
     /**
-     * @var        ChildRaces
+     * The value for the test field.
+     * @var        int
      */
-    protected $aRaces;
+    protected $test;
 
     /**
-     * @var        ChildSpecies
+     * The value for the blah field.
+     * @var        \DateTime
      */
-    protected $aSpecies;
+    protected $blah;
 
     /**
      * @var        ChildSexes
      */
     protected $aSexes;
-
-    /**
-     * @var        ChildColours
-     */
-    protected $aColoursRelatedByFurcolourid;
-
-    /**
-     * @var        ChildColours
-     */
-    protected $aColoursRelatedByEyecolourid;
-
-    /**
-     * @var        ObjectCollection|ChildNotifications[] Collection to store aggregation of ChildNotifications objects.
-     */
-    protected $collNotificationss;
-    protected $collNotificationssPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -173,16 +150,23 @@ abstract class Animals implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildNotifications[]
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
      */
-    protected $notificationssScheduledForDeletion = null;
+    public function applyDefaultValues()
+    {
+        $this->furcolour = 2;
+    }
 
     /**
      * Initializes internal state of Base\Animals object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -436,43 +420,43 @@ abstract class Animals implements ActiveRecordInterface
     }
 
     /**
-     * Get the [sexid] column value.
+     * Get the [sex] column value.
      *
      * @return int
      */
-    public function getSexid()
+    public function getSex()
     {
-        return $this->sexid;
+        return $this->sex;
     }
 
     /**
-     * Get the [furcolourid] column value.
+     * Get the [furcolour] column value.
      *
      * @return int
      */
-    public function getFurcolourid()
+    public function getFurcolour()
     {
-        return $this->furcolourid;
+        return $this->furcolour;
     }
 
     /**
-     * Get the [eyecolourid] column value.
+     * Get the [eyecolour] column value.
      *
      * @return int
      */
-    public function getEyecolourid()
+    public function getEyecolour()
     {
-        return $this->eyecolourid;
+        return $this->eyecolour;
     }
 
     /**
-     * Get the [speciesid] column value.
+     * Get the [species] column value.
      *
      * @return int
      */
-    public function getSpeciesid()
+    public function getSpecies()
     {
-        return $this->speciesid;
+        return $this->species;
     }
 
     /**
@@ -496,13 +480,43 @@ abstract class Animals implements ActiveRecordInterface
     }
 
     /**
-     * Get the [raceid] column value.
+     * Get the [race] column value.
      *
      * @return int
      */
-    public function getRaceid()
+    public function getRace()
     {
-        return $this->raceid;
+        return $this->race;
+    }
+
+    /**
+     * Get the [test] column value.
+     *
+     * @return int
+     */
+    public function getTest()
+    {
+        return $this->test;
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [blah] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getBlah($format = NULL)
+    {
+        if ($format === null) {
+            return $this->blah;
+        } else {
+            return $this->blah instanceof \DateTime ? $this->blah->format($format) : null;
+        }
     }
 
     /**
@@ -566,20 +580,20 @@ abstract class Animals implements ActiveRecordInterface
     } // setBirthday()
 
     /**
-     * Set the value of [sexid] column.
+     * Set the value of [sex] column.
      *
      * @param int $v new value
      * @return $this|\Animals The current object (for fluent API support)
      */
-    public function setSexid($v)
+    public function setSex($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->sexid !== $v) {
-            $this->sexid = $v;
-            $this->modifiedColumns[AnimalsTableMap::COL_SEXID] = true;
+        if ($this->sex !== $v) {
+            $this->sex = $v;
+            $this->modifiedColumns[AnimalsTableMap::COL_SEX] = true;
         }
 
         if ($this->aSexes !== null && $this->aSexes->getSex() !== $v) {
@@ -587,79 +601,67 @@ abstract class Animals implements ActiveRecordInterface
         }
 
         return $this;
-    } // setSexid()
+    } // setSex()
 
     /**
-     * Set the value of [furcolourid] column.
+     * Set the value of [furcolour] column.
      *
      * @param int $v new value
      * @return $this|\Animals The current object (for fluent API support)
      */
-    public function setFurcolourid($v)
+    public function setFurcolour($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->furcolourid !== $v) {
-            $this->furcolourid = $v;
-            $this->modifiedColumns[AnimalsTableMap::COL_FURCOLOURID] = true;
-        }
-
-        if ($this->aColoursRelatedByFurcolourid !== null && $this->aColoursRelatedByFurcolourid->getColour() !== $v) {
-            $this->aColoursRelatedByFurcolourid = null;
+        if ($this->furcolour !== $v) {
+            $this->furcolour = $v;
+            $this->modifiedColumns[AnimalsTableMap::COL_FURCOLOUR] = true;
         }
 
         return $this;
-    } // setFurcolourid()
+    } // setFurcolour()
 
     /**
-     * Set the value of [eyecolourid] column.
+     * Set the value of [eyecolour] column.
      *
      * @param int $v new value
      * @return $this|\Animals The current object (for fluent API support)
      */
-    public function setEyecolourid($v)
+    public function setEyecolour($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->eyecolourid !== $v) {
-            $this->eyecolourid = $v;
-            $this->modifiedColumns[AnimalsTableMap::COL_EYECOLOURID] = true;
-        }
-
-        if ($this->aColoursRelatedByEyecolourid !== null && $this->aColoursRelatedByEyecolourid->getColour() !== $v) {
-            $this->aColoursRelatedByEyecolourid = null;
+        if ($this->eyecolour !== $v) {
+            $this->eyecolour = $v;
+            $this->modifiedColumns[AnimalsTableMap::COL_EYECOLOUR] = true;
         }
 
         return $this;
-    } // setEyecolourid()
+    } // setEyecolour()
 
     /**
-     * Set the value of [speciesid] column.
+     * Set the value of [species] column.
      *
      * @param int $v new value
      * @return $this|\Animals The current object (for fluent API support)
      */
-    public function setSpeciesid($v)
+    public function setSpecies($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->speciesid !== $v) {
-            $this->speciesid = $v;
-            $this->modifiedColumns[AnimalsTableMap::COL_SPECIESID] = true;
-        }
-
-        if ($this->aSpecies !== null && $this->aSpecies->getSpecies() !== $v) {
-            $this->aSpecies = null;
+        if ($this->species !== $v) {
+            $this->species = $v;
+            $this->modifiedColumns[AnimalsTableMap::COL_SPECIES] = true;
         }
 
         return $this;
-    } // setSpeciesid()
+    } // setSpecies()
 
     /**
      * Set the value of [size] column.
@@ -702,28 +704,64 @@ abstract class Animals implements ActiveRecordInterface
     } // setSpecification()
 
     /**
-     * Set the value of [raceid] column.
+     * Set the value of [race] column.
      *
      * @param int $v new value
      * @return $this|\Animals The current object (for fluent API support)
      */
-    public function setRaceid($v)
+    public function setRace($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->raceid !== $v) {
-            $this->raceid = $v;
-            $this->modifiedColumns[AnimalsTableMap::COL_RACEID] = true;
-        }
-
-        if ($this->aRaces !== null && $this->aRaces->getRace() !== $v) {
-            $this->aRaces = null;
+        if ($this->race !== $v) {
+            $this->race = $v;
+            $this->modifiedColumns[AnimalsTableMap::COL_RACE] = true;
         }
 
         return $this;
-    } // setRaceid()
+    } // setRace()
+
+    /**
+     * Set the value of [test] column.
+     *
+     * @param int $v new value
+     * @return $this|\Animals The current object (for fluent API support)
+     */
+    public function setTest($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->test !== $v) {
+            $this->test = $v;
+            $this->modifiedColumns[AnimalsTableMap::COL_TEST] = true;
+        }
+
+        return $this;
+    } // setTest()
+
+    /**
+     * Sets the value of [blah] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\Animals The current object (for fluent API support)
+     */
+    public function setBlah($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->blah !== null || $dt !== null) {
+            if ($this->blah === null || $dt === null || $dt->format("Y-m-d") !== $this->blah->format("Y-m-d")) {
+                $this->blah = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[AnimalsTableMap::COL_BLAH] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setBlah()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -735,6 +773,10 @@ abstract class Animals implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->furcolour !== 2) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -773,17 +815,17 @@ abstract class Animals implements ActiveRecordInterface
             }
             $this->birthday = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : AnimalsTableMap::translateFieldName('Sexid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->sexid = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : AnimalsTableMap::translateFieldName('Sex', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->sex = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : AnimalsTableMap::translateFieldName('Furcolourid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->furcolourid = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : AnimalsTableMap::translateFieldName('Furcolour', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->furcolour = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : AnimalsTableMap::translateFieldName('Eyecolourid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->eyecolourid = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : AnimalsTableMap::translateFieldName('Eyecolour', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->eyecolour = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : AnimalsTableMap::translateFieldName('Speciesid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->speciesid = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : AnimalsTableMap::translateFieldName('Species', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->species = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : AnimalsTableMap::translateFieldName('Size', TableMap::TYPE_PHPNAME, $indexType)];
             $this->size = (null !== $col) ? (int) $col : null;
@@ -791,8 +833,17 @@ abstract class Animals implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : AnimalsTableMap::translateFieldName('Specification', TableMap::TYPE_PHPNAME, $indexType)];
             $this->specification = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : AnimalsTableMap::translateFieldName('Raceid', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->raceid = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : AnimalsTableMap::translateFieldName('Race', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->race = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : AnimalsTableMap::translateFieldName('Test', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->test = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : AnimalsTableMap::translateFieldName('Blah', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00') {
+                $col = null;
+            }
+            $this->blah = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -801,7 +852,7 @@ abstract class Animals implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 10; // 10 = AnimalsTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 12; // 12 = AnimalsTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Animals'), 0, $e);
@@ -823,20 +874,8 @@ abstract class Animals implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aSexes !== null && $this->sexid !== $this->aSexes->getSex()) {
+        if ($this->aSexes !== null && $this->sex !== $this->aSexes->getSex()) {
             $this->aSexes = null;
-        }
-        if ($this->aColoursRelatedByFurcolourid !== null && $this->furcolourid !== $this->aColoursRelatedByFurcolourid->getColour()) {
-            $this->aColoursRelatedByFurcolourid = null;
-        }
-        if ($this->aColoursRelatedByEyecolourid !== null && $this->eyecolourid !== $this->aColoursRelatedByEyecolourid->getColour()) {
-            $this->aColoursRelatedByEyecolourid = null;
-        }
-        if ($this->aSpecies !== null && $this->speciesid !== $this->aSpecies->getSpecies()) {
-            $this->aSpecies = null;
-        }
-        if ($this->aRaces !== null && $this->raceid !== $this->aRaces->getRace()) {
-            $this->aRaces = null;
         }
     } // ensureConsistency
 
@@ -877,13 +916,7 @@ abstract class Animals implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aRaces = null;
-            $this->aSpecies = null;
             $this->aSexes = null;
-            $this->aColoursRelatedByFurcolourid = null;
-            $this->aColoursRelatedByEyecolourid = null;
-            $this->collNotificationss = null;
-
         } // if (deep)
     }
 
@@ -988,39 +1021,11 @@ abstract class Animals implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aRaces !== null) {
-                if ($this->aRaces->isModified() || $this->aRaces->isNew()) {
-                    $affectedRows += $this->aRaces->save($con);
-                }
-                $this->setRaces($this->aRaces);
-            }
-
-            if ($this->aSpecies !== null) {
-                if ($this->aSpecies->isModified() || $this->aSpecies->isNew()) {
-                    $affectedRows += $this->aSpecies->save($con);
-                }
-                $this->setSpecies($this->aSpecies);
-            }
-
             if ($this->aSexes !== null) {
                 if ($this->aSexes->isModified() || $this->aSexes->isNew()) {
                     $affectedRows += $this->aSexes->save($con);
                 }
                 $this->setSexes($this->aSexes);
-            }
-
-            if ($this->aColoursRelatedByFurcolourid !== null) {
-                if ($this->aColoursRelatedByFurcolourid->isModified() || $this->aColoursRelatedByFurcolourid->isNew()) {
-                    $affectedRows += $this->aColoursRelatedByFurcolourid->save($con);
-                }
-                $this->setColoursRelatedByFurcolourid($this->aColoursRelatedByFurcolourid);
-            }
-
-            if ($this->aColoursRelatedByEyecolourid !== null) {
-                if ($this->aColoursRelatedByEyecolourid->isModified() || $this->aColoursRelatedByEyecolourid->isNew()) {
-                    $affectedRows += $this->aColoursRelatedByEyecolourid->save($con);
-                }
-                $this->setColoursRelatedByEyecolourid($this->aColoursRelatedByEyecolourid);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -1032,23 +1037,6 @@ abstract class Animals implements ActiveRecordInterface
                     $affectedRows += $this->doUpdate($con);
                 }
                 $this->resetModified();
-            }
-
-            if ($this->notificationssScheduledForDeletion !== null) {
-                if (!$this->notificationssScheduledForDeletion->isEmpty()) {
-                    \NotificationsQuery::create()
-                        ->filterByPrimaryKeys($this->notificationssScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->notificationssScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collNotificationss !== null) {
-                foreach ($this->collNotificationss as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
             }
 
             $this->alreadyInSave = false;
@@ -1086,17 +1074,17 @@ abstract class Animals implements ActiveRecordInterface
         if ($this->isColumnModified(AnimalsTableMap::COL_BIRTHDAY)) {
             $modifiedColumns[':p' . $index++]  = 'birthDay';
         }
-        if ($this->isColumnModified(AnimalsTableMap::COL_SEXID)) {
-            $modifiedColumns[':p' . $index++]  = 'sexId';
+        if ($this->isColumnModified(AnimalsTableMap::COL_SEX)) {
+            $modifiedColumns[':p' . $index++]  = 'sex';
         }
-        if ($this->isColumnModified(AnimalsTableMap::COL_FURCOLOURID)) {
-            $modifiedColumns[':p' . $index++]  = 'furColourId';
+        if ($this->isColumnModified(AnimalsTableMap::COL_FURCOLOUR)) {
+            $modifiedColumns[':p' . $index++]  = 'furColour';
         }
-        if ($this->isColumnModified(AnimalsTableMap::COL_EYECOLOURID)) {
-            $modifiedColumns[':p' . $index++]  = 'eyeColourId';
+        if ($this->isColumnModified(AnimalsTableMap::COL_EYECOLOUR)) {
+            $modifiedColumns[':p' . $index++]  = 'eyeColour';
         }
-        if ($this->isColumnModified(AnimalsTableMap::COL_SPECIESID)) {
-            $modifiedColumns[':p' . $index++]  = 'speciesId';
+        if ($this->isColumnModified(AnimalsTableMap::COL_SPECIES)) {
+            $modifiedColumns[':p' . $index++]  = 'species';
         }
         if ($this->isColumnModified(AnimalsTableMap::COL_SIZE)) {
             $modifiedColumns[':p' . $index++]  = 'size';
@@ -1104,8 +1092,14 @@ abstract class Animals implements ActiveRecordInterface
         if ($this->isColumnModified(AnimalsTableMap::COL_SPECIFICATION)) {
             $modifiedColumns[':p' . $index++]  = 'specification';
         }
-        if ($this->isColumnModified(AnimalsTableMap::COL_RACEID)) {
-            $modifiedColumns[':p' . $index++]  = 'raceId';
+        if ($this->isColumnModified(AnimalsTableMap::COL_RACE)) {
+            $modifiedColumns[':p' . $index++]  = 'race';
+        }
+        if ($this->isColumnModified(AnimalsTableMap::COL_TEST)) {
+            $modifiedColumns[':p' . $index++]  = 'test';
+        }
+        if ($this->isColumnModified(AnimalsTableMap::COL_BLAH)) {
+            $modifiedColumns[':p' . $index++]  = 'blah';
         }
 
         $sql = sprintf(
@@ -1127,17 +1121,17 @@ abstract class Animals implements ActiveRecordInterface
                     case 'birthDay':
                         $stmt->bindValue($identifier, $this->birthday ? $this->birthday->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'sexId':
-                        $stmt->bindValue($identifier, $this->sexid, PDO::PARAM_INT);
+                    case 'sex':
+                        $stmt->bindValue($identifier, $this->sex, PDO::PARAM_INT);
                         break;
-                    case 'furColourId':
-                        $stmt->bindValue($identifier, $this->furcolourid, PDO::PARAM_INT);
+                    case 'furColour':
+                        $stmt->bindValue($identifier, $this->furcolour, PDO::PARAM_INT);
                         break;
-                    case 'eyeColourId':
-                        $stmt->bindValue($identifier, $this->eyecolourid, PDO::PARAM_INT);
+                    case 'eyeColour':
+                        $stmt->bindValue($identifier, $this->eyecolour, PDO::PARAM_INT);
                         break;
-                    case 'speciesId':
-                        $stmt->bindValue($identifier, $this->speciesid, PDO::PARAM_INT);
+                    case 'species':
+                        $stmt->bindValue($identifier, $this->species, PDO::PARAM_INT);
                         break;
                     case 'size':
                         $stmt->bindValue($identifier, $this->size, PDO::PARAM_INT);
@@ -1145,8 +1139,14 @@ abstract class Animals implements ActiveRecordInterface
                     case 'specification':
                         $stmt->bindValue($identifier, $this->specification, PDO::PARAM_STR);
                         break;
-                    case 'raceId':
-                        $stmt->bindValue($identifier, $this->raceid, PDO::PARAM_INT);
+                    case 'race':
+                        $stmt->bindValue($identifier, $this->race, PDO::PARAM_INT);
+                        break;
+                    case 'test':
+                        $stmt->bindValue($identifier, $this->test, PDO::PARAM_INT);
+                        break;
+                    case 'blah':
+                        $stmt->bindValue($identifier, $this->blah ? $this->blah->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1220,16 +1220,16 @@ abstract class Animals implements ActiveRecordInterface
                 return $this->getBirthday();
                 break;
             case 3:
-                return $this->getSexid();
+                return $this->getSex();
                 break;
             case 4:
-                return $this->getFurcolourid();
+                return $this->getFurcolour();
                 break;
             case 5:
-                return $this->getEyecolourid();
+                return $this->getEyecolour();
                 break;
             case 6:
-                return $this->getSpeciesid();
+                return $this->getSpecies();
                 break;
             case 7:
                 return $this->getSize();
@@ -1238,7 +1238,13 @@ abstract class Animals implements ActiveRecordInterface
                 return $this->getSpecification();
                 break;
             case 9:
-                return $this->getRaceid();
+                return $this->getRace();
+                break;
+            case 10:
+                return $this->getTest();
+                break;
+            case 11:
+                return $this->getBlah();
                 break;
             default:
                 return null;
@@ -1273,13 +1279,15 @@ abstract class Animals implements ActiveRecordInterface
             $keys[0] => $this->getAnimal(),
             $keys[1] => $this->getName(),
             $keys[2] => $this->getBirthday(),
-            $keys[3] => $this->getSexid(),
-            $keys[4] => $this->getFurcolourid(),
-            $keys[5] => $this->getEyecolourid(),
-            $keys[6] => $this->getSpeciesid(),
+            $keys[3] => $this->getSex(),
+            $keys[4] => $this->getFurcolour(),
+            $keys[5] => $this->getEyecolour(),
+            $keys[6] => $this->getSpecies(),
             $keys[7] => $this->getSize(),
             $keys[8] => $this->getSpecification(),
-            $keys[9] => $this->getRaceid(),
+            $keys[9] => $this->getRace(),
+            $keys[10] => $this->getTest(),
+            $keys[11] => $this->getBlah(),
         );
 
         $utc = new \DateTimeZone('utc');
@@ -1289,42 +1297,18 @@ abstract class Animals implements ActiveRecordInterface
             $result[$keys[2]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
         }
 
+        if ($result[$keys[11]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[11]];
+            $result[$keys[11]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aRaces) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'races';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'races';
-                        break;
-                    default:
-                        $key = 'Races';
-                }
-
-                $result[$key] = $this->aRaces->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aSpecies) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'species';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'species';
-                        break;
-                    default:
-                        $key = 'Species';
-                }
-
-                $result[$key] = $this->aSpecies->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
             if (null !== $this->aSexes) {
 
                 switch ($keyType) {
@@ -1339,51 +1323,6 @@ abstract class Animals implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aSexes->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aColoursRelatedByFurcolourid) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'colours';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'colours';
-                        break;
-                    default:
-                        $key = 'Colours';
-                }
-
-                $result[$key] = $this->aColoursRelatedByFurcolourid->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aColoursRelatedByEyecolourid) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'colours';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'colours';
-                        break;
-                    default:
-                        $key = 'Colours';
-                }
-
-                $result[$key] = $this->aColoursRelatedByEyecolourid->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->collNotificationss) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'notificationss';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'notificationss';
-                        break;
-                    default:
-                        $key = 'Notificationss';
-                }
-
-                $result[$key] = $this->collNotificationss->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1429,16 +1368,16 @@ abstract class Animals implements ActiveRecordInterface
                 $this->setBirthday($value);
                 break;
             case 3:
-                $this->setSexid($value);
+                $this->setSex($value);
                 break;
             case 4:
-                $this->setFurcolourid($value);
+                $this->setFurcolour($value);
                 break;
             case 5:
-                $this->setEyecolourid($value);
+                $this->setEyecolour($value);
                 break;
             case 6:
-                $this->setSpeciesid($value);
+                $this->setSpecies($value);
                 break;
             case 7:
                 $this->setSize($value);
@@ -1447,7 +1386,13 @@ abstract class Animals implements ActiveRecordInterface
                 $this->setSpecification($value);
                 break;
             case 9:
-                $this->setRaceid($value);
+                $this->setRace($value);
+                break;
+            case 10:
+                $this->setTest($value);
+                break;
+            case 11:
+                $this->setBlah($value);
                 break;
         } // switch()
 
@@ -1485,16 +1430,16 @@ abstract class Animals implements ActiveRecordInterface
             $this->setBirthday($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setSexid($arr[$keys[3]]);
+            $this->setSex($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setFurcolourid($arr[$keys[4]]);
+            $this->setFurcolour($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setEyecolourid($arr[$keys[5]]);
+            $this->setEyecolour($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setSpeciesid($arr[$keys[6]]);
+            $this->setSpecies($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
             $this->setSize($arr[$keys[7]]);
@@ -1503,7 +1448,13 @@ abstract class Animals implements ActiveRecordInterface
             $this->setSpecification($arr[$keys[8]]);
         }
         if (array_key_exists($keys[9], $arr)) {
-            $this->setRaceid($arr[$keys[9]]);
+            $this->setRace($arr[$keys[9]]);
+        }
+        if (array_key_exists($keys[10], $arr)) {
+            $this->setTest($arr[$keys[10]]);
+        }
+        if (array_key_exists($keys[11], $arr)) {
+            $this->setBlah($arr[$keys[11]]);
         }
     }
 
@@ -1555,17 +1506,17 @@ abstract class Animals implements ActiveRecordInterface
         if ($this->isColumnModified(AnimalsTableMap::COL_BIRTHDAY)) {
             $criteria->add(AnimalsTableMap::COL_BIRTHDAY, $this->birthday);
         }
-        if ($this->isColumnModified(AnimalsTableMap::COL_SEXID)) {
-            $criteria->add(AnimalsTableMap::COL_SEXID, $this->sexid);
+        if ($this->isColumnModified(AnimalsTableMap::COL_SEX)) {
+            $criteria->add(AnimalsTableMap::COL_SEX, $this->sex);
         }
-        if ($this->isColumnModified(AnimalsTableMap::COL_FURCOLOURID)) {
-            $criteria->add(AnimalsTableMap::COL_FURCOLOURID, $this->furcolourid);
+        if ($this->isColumnModified(AnimalsTableMap::COL_FURCOLOUR)) {
+            $criteria->add(AnimalsTableMap::COL_FURCOLOUR, $this->furcolour);
         }
-        if ($this->isColumnModified(AnimalsTableMap::COL_EYECOLOURID)) {
-            $criteria->add(AnimalsTableMap::COL_EYECOLOURID, $this->eyecolourid);
+        if ($this->isColumnModified(AnimalsTableMap::COL_EYECOLOUR)) {
+            $criteria->add(AnimalsTableMap::COL_EYECOLOUR, $this->eyecolour);
         }
-        if ($this->isColumnModified(AnimalsTableMap::COL_SPECIESID)) {
-            $criteria->add(AnimalsTableMap::COL_SPECIESID, $this->speciesid);
+        if ($this->isColumnModified(AnimalsTableMap::COL_SPECIES)) {
+            $criteria->add(AnimalsTableMap::COL_SPECIES, $this->species);
         }
         if ($this->isColumnModified(AnimalsTableMap::COL_SIZE)) {
             $criteria->add(AnimalsTableMap::COL_SIZE, $this->size);
@@ -1573,8 +1524,14 @@ abstract class Animals implements ActiveRecordInterface
         if ($this->isColumnModified(AnimalsTableMap::COL_SPECIFICATION)) {
             $criteria->add(AnimalsTableMap::COL_SPECIFICATION, $this->specification);
         }
-        if ($this->isColumnModified(AnimalsTableMap::COL_RACEID)) {
-            $criteria->add(AnimalsTableMap::COL_RACEID, $this->raceid);
+        if ($this->isColumnModified(AnimalsTableMap::COL_RACE)) {
+            $criteria->add(AnimalsTableMap::COL_RACE, $this->race);
+        }
+        if ($this->isColumnModified(AnimalsTableMap::COL_TEST)) {
+            $criteria->add(AnimalsTableMap::COL_TEST, $this->test);
+        }
+        if ($this->isColumnModified(AnimalsTableMap::COL_BLAH)) {
+            $criteria->add(AnimalsTableMap::COL_BLAH, $this->blah);
         }
 
         return $criteria;
@@ -1664,27 +1621,15 @@ abstract class Animals implements ActiveRecordInterface
     {
         $copyObj->setName($this->getName());
         $copyObj->setBirthday($this->getBirthday());
-        $copyObj->setSexid($this->getSexid());
-        $copyObj->setFurcolourid($this->getFurcolourid());
-        $copyObj->setEyecolourid($this->getEyecolourid());
-        $copyObj->setSpeciesid($this->getSpeciesid());
+        $copyObj->setSex($this->getSex());
+        $copyObj->setFurcolour($this->getFurcolour());
+        $copyObj->setEyecolour($this->getEyecolour());
+        $copyObj->setSpecies($this->getSpecies());
         $copyObj->setSize($this->getSize());
         $copyObj->setSpecification($this->getSpecification());
-        $copyObj->setRaceid($this->getRaceid());
-
-        if ($deepCopy) {
-            // important: temporarily setNew(false) because this affects the behavior of
-            // the getter/setter methods for fkey referrer objects.
-            $copyObj->setNew(false);
-
-            foreach ($this->getNotificationss() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addNotifications($relObj->copy($deepCopy));
-                }
-            }
-
-        } // if ($deepCopy)
-
+        $copyObj->setRace($this->getRace());
+        $copyObj->setTest($this->getTest());
+        $copyObj->setBlah($this->getBlah());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setAnimal(NULL); // this is a auto-increment column, so set to default value
@@ -1714,108 +1659,6 @@ abstract class Animals implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildRaces object.
-     *
-     * @param  ChildRaces $v
-     * @return $this|\Animals The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setRaces(ChildRaces $v = null)
-    {
-        if ($v === null) {
-            $this->setRaceid(NULL);
-        } else {
-            $this->setRaceid($v->getRace());
-        }
-
-        $this->aRaces = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildRaces object, it will not be re-added.
-        if ($v !== null) {
-            $v->addAnimals($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildRaces object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildRaces The associated ChildRaces object.
-     * @throws PropelException
-     */
-    public function getRaces(ConnectionInterface $con = null)
-    {
-        if ($this->aRaces === null && ($this->raceid !== null)) {
-            $this->aRaces = ChildRacesQuery::create()->findPk($this->raceid, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aRaces->addAnimalss($this);
-             */
-        }
-
-        return $this->aRaces;
-    }
-
-    /**
-     * Declares an association between this object and a ChildSpecies object.
-     *
-     * @param  ChildSpecies $v
-     * @return $this|\Animals The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setSpecies(ChildSpecies $v = null)
-    {
-        if ($v === null) {
-            $this->setSpeciesid(NULL);
-        } else {
-            $this->setSpeciesid($v->getSpecies());
-        }
-
-        $this->aSpecies = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildSpecies object, it will not be re-added.
-        if ($v !== null) {
-            $v->addAnimals($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildSpecies object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildSpecies The associated ChildSpecies object.
-     * @throws PropelException
-     */
-    public function getSpecies(ConnectionInterface $con = null)
-    {
-        if ($this->aSpecies === null && ($this->speciesid !== null)) {
-            $this->aSpecies = ChildSpeciesQuery::create()->findPk($this->speciesid, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aSpecies->addAnimalss($this);
-             */
-        }
-
-        return $this->aSpecies;
-    }
-
-    /**
      * Declares an association between this object and a ChildSexes object.
      *
      * @param  ChildSexes $v
@@ -1825,9 +1668,9 @@ abstract class Animals implements ActiveRecordInterface
     public function setSexes(ChildSexes $v = null)
     {
         if ($v === null) {
-            $this->setSexid(NULL);
+            $this->setSex(NULL);
         } else {
-            $this->setSexid($v->getSex());
+            $this->setSex($v->getSex());
         }
 
         $this->aSexes = $v;
@@ -1852,8 +1695,8 @@ abstract class Animals implements ActiveRecordInterface
      */
     public function getSexes(ConnectionInterface $con = null)
     {
-        if ($this->aSexes === null && ($this->sexid !== null)) {
-            $this->aSexes = ChildSexesQuery::create()->findPk($this->sexid, $con);
+        if ($this->aSexes === null && ($this->sex !== null)) {
+            $this->aSexes = ChildSexesQuery::create()->findPk($this->sex, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
@@ -1867,400 +1710,30 @@ abstract class Animals implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildColours object.
-     *
-     * @param  ChildColours $v
-     * @return $this|\Animals The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setColoursRelatedByFurcolourid(ChildColours $v = null)
-    {
-        if ($v === null) {
-            $this->setFurcolourid(NULL);
-        } else {
-            $this->setFurcolourid($v->getColour());
-        }
-
-        $this->aColoursRelatedByFurcolourid = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildColours object, it will not be re-added.
-        if ($v !== null) {
-            $v->addAnimalsRelatedByFurcolourid($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildColours object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildColours The associated ChildColours object.
-     * @throws PropelException
-     */
-    public function getColoursRelatedByFurcolourid(ConnectionInterface $con = null)
-    {
-        if ($this->aColoursRelatedByFurcolourid === null && ($this->furcolourid !== null)) {
-            $this->aColoursRelatedByFurcolourid = ChildColoursQuery::create()->findPk($this->furcolourid, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aColoursRelatedByFurcolourid->addAnimalssRelatedByFurcolourid($this);
-             */
-        }
-
-        return $this->aColoursRelatedByFurcolourid;
-    }
-
-    /**
-     * Declares an association between this object and a ChildColours object.
-     *
-     * @param  ChildColours $v
-     * @return $this|\Animals The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setColoursRelatedByEyecolourid(ChildColours $v = null)
-    {
-        if ($v === null) {
-            $this->setEyecolourid(NULL);
-        } else {
-            $this->setEyecolourid($v->getColour());
-        }
-
-        $this->aColoursRelatedByEyecolourid = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildColours object, it will not be re-added.
-        if ($v !== null) {
-            $v->addAnimalsRelatedByEyecolourid($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildColours object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildColours The associated ChildColours object.
-     * @throws PropelException
-     */
-    public function getColoursRelatedByEyecolourid(ConnectionInterface $con = null)
-    {
-        if ($this->aColoursRelatedByEyecolourid === null && ($this->eyecolourid !== null)) {
-            $this->aColoursRelatedByEyecolourid = ChildColoursQuery::create()->findPk($this->eyecolourid, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aColoursRelatedByEyecolourid->addAnimalssRelatedByEyecolourid($this);
-             */
-        }
-
-        return $this->aColoursRelatedByEyecolourid;
-    }
-
-
-    /**
-     * Initializes a collection based on the name of a relation.
-     * Avoids crafting an 'init[$relationName]s' method name
-     * that wouldn't work when StandardEnglishPluralizer is used.
-     *
-     * @param      string $relationName The name of the relation to initialize
-     * @return void
-     */
-    public function initRelation($relationName)
-    {
-        if ('Notifications' == $relationName) {
-            return $this->initNotificationss();
-        }
-    }
-
-    /**
-     * Clears out the collNotificationss collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addNotificationss()
-     */
-    public function clearNotificationss()
-    {
-        $this->collNotificationss = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collNotificationss collection loaded partially.
-     */
-    public function resetPartialNotificationss($v = true)
-    {
-        $this->collNotificationssPartial = $v;
-    }
-
-    /**
-     * Initializes the collNotificationss collection.
-     *
-     * By default this just sets the collNotificationss collection to an empty array (like clearcollNotificationss());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initNotificationss($overrideExisting = true)
-    {
-        if (null !== $this->collNotificationss && !$overrideExisting) {
-            return;
-        }
-        $this->collNotificationss = new ObjectCollection();
-        $this->collNotificationss->setModel('\Notifications');
-    }
-
-    /**
-     * Gets an array of ChildNotifications objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildAnimals is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildNotifications[] List of ChildNotifications objects
-     * @throws PropelException
-     */
-    public function getNotificationss(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collNotificationssPartial && !$this->isNew();
-        if (null === $this->collNotificationss || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collNotificationss) {
-                // return empty collection
-                $this->initNotificationss();
-            } else {
-                $collNotificationss = ChildNotificationsQuery::create(null, $criteria)
-                    ->filterByAnimals($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collNotificationssPartial && count($collNotificationss)) {
-                        $this->initNotificationss(false);
-
-                        foreach ($collNotificationss as $obj) {
-                            if (false == $this->collNotificationss->contains($obj)) {
-                                $this->collNotificationss->append($obj);
-                            }
-                        }
-
-                        $this->collNotificationssPartial = true;
-                    }
-
-                    return $collNotificationss;
-                }
-
-                if ($partial && $this->collNotificationss) {
-                    foreach ($this->collNotificationss as $obj) {
-                        if ($obj->isNew()) {
-                            $collNotificationss[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collNotificationss = $collNotificationss;
-                $this->collNotificationssPartial = false;
-            }
-        }
-
-        return $this->collNotificationss;
-    }
-
-    /**
-     * Sets a collection of ChildNotifications objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $notificationss A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildAnimals The current object (for fluent API support)
-     */
-    public function setNotificationss(Collection $notificationss, ConnectionInterface $con = null)
-    {
-        /** @var ChildNotifications[] $notificationssToDelete */
-        $notificationssToDelete = $this->getNotificationss(new Criteria(), $con)->diff($notificationss);
-
-
-        $this->notificationssScheduledForDeletion = $notificationssToDelete;
-
-        foreach ($notificationssToDelete as $notificationsRemoved) {
-            $notificationsRemoved->setAnimals(null);
-        }
-
-        $this->collNotificationss = null;
-        foreach ($notificationss as $notifications) {
-            $this->addNotifications($notifications);
-        }
-
-        $this->collNotificationss = $notificationss;
-        $this->collNotificationssPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Notifications objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Notifications objects.
-     * @throws PropelException
-     */
-    public function countNotificationss(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collNotificationssPartial && !$this->isNew();
-        if (null === $this->collNotificationss || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collNotificationss) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getNotificationss());
-            }
-
-            $query = ChildNotificationsQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByAnimals($this)
-                ->count($con);
-        }
-
-        return count($this->collNotificationss);
-    }
-
-    /**
-     * Method called to associate a ChildNotifications object to this object
-     * through the ChildNotifications foreign key attribute.
-     *
-     * @param  ChildNotifications $l ChildNotifications
-     * @return $this|\Animals The current object (for fluent API support)
-     */
-    public function addNotifications(ChildNotifications $l)
-    {
-        if ($this->collNotificationss === null) {
-            $this->initNotificationss();
-            $this->collNotificationssPartial = true;
-        }
-
-        if (!$this->collNotificationss->contains($l)) {
-            $this->doAddNotifications($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildNotifications $notifications The ChildNotifications object to add.
-     */
-    protected function doAddNotifications(ChildNotifications $notifications)
-    {
-        $this->collNotificationss[]= $notifications;
-        $notifications->setAnimals($this);
-    }
-
-    /**
-     * @param  ChildNotifications $notifications The ChildNotifications object to remove.
-     * @return $this|ChildAnimals The current object (for fluent API support)
-     */
-    public function removeNotifications(ChildNotifications $notifications)
-    {
-        if ($this->getNotificationss()->contains($notifications)) {
-            $pos = $this->collNotificationss->search($notifications);
-            $this->collNotificationss->remove($pos);
-            if (null === $this->notificationssScheduledForDeletion) {
-                $this->notificationssScheduledForDeletion = clone $this->collNotificationss;
-                $this->notificationssScheduledForDeletion->clear();
-            }
-            $this->notificationssScheduledForDeletion[]= clone $notifications;
-            $notifications->setAnimals(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Animals is new, it will return
-     * an empty collection; or if this Animals has previously
-     * been saved, it will retrieve related Notificationss from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Animals.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildNotifications[] List of ChildNotifications objects
-     */
-    public function getNotificationssJoinNotificationtype(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildNotificationsQuery::create(null, $criteria);
-        $query->joinWith('Notificationtype', $joinBehavior);
-
-        return $this->getNotificationss($query, $con);
-    }
-
-    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
-        if (null !== $this->aRaces) {
-            $this->aRaces->removeAnimals($this);
-        }
-        if (null !== $this->aSpecies) {
-            $this->aSpecies->removeAnimals($this);
-        }
         if (null !== $this->aSexes) {
             $this->aSexes->removeAnimals($this);
-        }
-        if (null !== $this->aColoursRelatedByFurcolourid) {
-            $this->aColoursRelatedByFurcolourid->removeAnimalsRelatedByFurcolourid($this);
-        }
-        if (null !== $this->aColoursRelatedByEyecolourid) {
-            $this->aColoursRelatedByEyecolourid->removeAnimalsRelatedByEyecolourid($this);
         }
         $this->animal = null;
         $this->name = null;
         $this->birthday = null;
-        $this->sexid = null;
-        $this->furcolourid = null;
-        $this->eyecolourid = null;
-        $this->speciesid = null;
+        $this->sex = null;
+        $this->furcolour = null;
+        $this->eyecolour = null;
+        $this->species = null;
         $this->size = null;
         $this->specification = null;
-        $this->raceid = null;
+        $this->race = null;
+        $this->test = null;
+        $this->blah = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
@@ -2277,19 +1750,9 @@ abstract class Animals implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collNotificationss) {
-                foreach ($this->collNotificationss as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
         } // if ($deep)
 
-        $this->collNotificationss = null;
-        $this->aRaces = null;
-        $this->aSpecies = null;
         $this->aSexes = null;
-        $this->aColoursRelatedByFurcolourid = null;
-        $this->aColoursRelatedByEyecolourid = null;
     }
 
     /**

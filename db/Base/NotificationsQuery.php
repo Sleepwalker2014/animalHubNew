@@ -10,7 +10,6 @@ use Map\NotificationsTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -20,20 +19,20 @@ use Propel\Runtime\Exception\PropelException;
  *
  *
  *
- * @method     ChildNotificationsQuery orderByNotification($order = Criteria::ASC) Order by the notification column
+ * @method     ChildNotificationsQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildNotificationsQuery orderByLatitude($order = Criteria::ASC) Order by the latitude column
- * @method     ChildNotificationsQuery orderByNotificationtypeid($order = Criteria::ASC) Order by the notificationTypeId column
+ * @method     ChildNotificationsQuery orderByNotificationtype($order = Criteria::ASC) Order by the notificationType column
  * @method     ChildNotificationsQuery orderByCreationdate($order = Criteria::ASC) Order by the creationDate column
  * @method     ChildNotificationsQuery orderByDescription($order = Criteria::ASC) Order by the description column
- * @method     ChildNotificationsQuery orderByAnimalid($order = Criteria::ASC) Order by the animalId column
+ * @method     ChildNotificationsQuery orderByAnimal($order = Criteria::ASC) Order by the animal column
  * @method     ChildNotificationsQuery orderByLongitude($order = Criteria::ASC) Order by the longitude column
  *
- * @method     ChildNotificationsQuery groupByNotification() Group by the notification column
+ * @method     ChildNotificationsQuery groupById() Group by the id column
  * @method     ChildNotificationsQuery groupByLatitude() Group by the latitude column
- * @method     ChildNotificationsQuery groupByNotificationtypeid() Group by the notificationTypeId column
+ * @method     ChildNotificationsQuery groupByNotificationtype() Group by the notificationType column
  * @method     ChildNotificationsQuery groupByCreationdate() Group by the creationDate column
  * @method     ChildNotificationsQuery groupByDescription() Group by the description column
- * @method     ChildNotificationsQuery groupByAnimalid() Group by the animalId column
+ * @method     ChildNotificationsQuery groupByAnimal() Group by the animal column
  * @method     ChildNotificationsQuery groupByLongitude() Group by the longitude column
  *
  * @method     ChildNotificationsQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
@@ -44,67 +43,35 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildNotificationsQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildNotificationsQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildNotificationsQuery leftJoinNotificationtype($relationAlias = null) Adds a LEFT JOIN clause to the query using the Notificationtype relation
- * @method     ChildNotificationsQuery rightJoinNotificationtype($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Notificationtype relation
- * @method     ChildNotificationsQuery innerJoinNotificationtype($relationAlias = null) Adds a INNER JOIN clause to the query using the Notificationtype relation
- *
- * @method     ChildNotificationsQuery joinWithNotificationtype($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Notificationtype relation
- *
- * @method     ChildNotificationsQuery leftJoinWithNotificationtype() Adds a LEFT JOIN clause and with to the query using the Notificationtype relation
- * @method     ChildNotificationsQuery rightJoinWithNotificationtype() Adds a RIGHT JOIN clause and with to the query using the Notificationtype relation
- * @method     ChildNotificationsQuery innerJoinWithNotificationtype() Adds a INNER JOIN clause and with to the query using the Notificationtype relation
- *
- * @method     ChildNotificationsQuery leftJoinAnimals($relationAlias = null) Adds a LEFT JOIN clause to the query using the Animals relation
- * @method     ChildNotificationsQuery rightJoinAnimals($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Animals relation
- * @method     ChildNotificationsQuery innerJoinAnimals($relationAlias = null) Adds a INNER JOIN clause to the query using the Animals relation
- *
- * @method     ChildNotificationsQuery joinWithAnimals($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Animals relation
- *
- * @method     ChildNotificationsQuery leftJoinWithAnimals() Adds a LEFT JOIN clause and with to the query using the Animals relation
- * @method     ChildNotificationsQuery rightJoinWithAnimals() Adds a RIGHT JOIN clause and with to the query using the Animals relation
- * @method     ChildNotificationsQuery innerJoinWithAnimals() Adds a INNER JOIN clause and with to the query using the Animals relation
- *
- * @method     ChildNotificationsQuery leftJoinSearchnotifications($relationAlias = null) Adds a LEFT JOIN clause to the query using the Searchnotifications relation
- * @method     ChildNotificationsQuery rightJoinSearchnotifications($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Searchnotifications relation
- * @method     ChildNotificationsQuery innerJoinSearchnotifications($relationAlias = null) Adds a INNER JOIN clause to the query using the Searchnotifications relation
- *
- * @method     ChildNotificationsQuery joinWithSearchnotifications($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Searchnotifications relation
- *
- * @method     ChildNotificationsQuery leftJoinWithSearchnotifications() Adds a LEFT JOIN clause and with to the query using the Searchnotifications relation
- * @method     ChildNotificationsQuery rightJoinWithSearchnotifications() Adds a RIGHT JOIN clause and with to the query using the Searchnotifications relation
- * @method     ChildNotificationsQuery innerJoinWithSearchnotifications() Adds a INNER JOIN clause and with to the query using the Searchnotifications relation
- *
- * @method     \NotificationtypeQuery|\AnimalsQuery|\SearchnotificationsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
- *
  * @method     ChildNotifications findOne(ConnectionInterface $con = null) Return the first ChildNotifications matching the query
  * @method     ChildNotifications findOneOrCreate(ConnectionInterface $con = null) Return the first ChildNotifications matching the query, or a new ChildNotifications object populated from the query conditions when no match is found
  *
- * @method     ChildNotifications findOneByNotification(int $notification) Return the first ChildNotifications filtered by the notification column
+ * @method     ChildNotifications findOneById(int $id) Return the first ChildNotifications filtered by the id column
  * @method     ChildNotifications findOneByLatitude(double $latitude) Return the first ChildNotifications filtered by the latitude column
- * @method     ChildNotifications findOneByNotificationtypeid(int $notificationTypeId) Return the first ChildNotifications filtered by the notificationTypeId column
+ * @method     ChildNotifications findOneByNotificationtype(int $notificationType) Return the first ChildNotifications filtered by the notificationType column
  * @method     ChildNotifications findOneByCreationdate(string $creationDate) Return the first ChildNotifications filtered by the creationDate column
  * @method     ChildNotifications findOneByDescription(string $description) Return the first ChildNotifications filtered by the description column
- * @method     ChildNotifications findOneByAnimalid(int $animalId) Return the first ChildNotifications filtered by the animalId column
+ * @method     ChildNotifications findOneByAnimal(int $animal) Return the first ChildNotifications filtered by the animal column
  * @method     ChildNotifications findOneByLongitude(double $longitude) Return the first ChildNotifications filtered by the longitude column *
 
  * @method     ChildNotifications requirePk($key, ConnectionInterface $con = null) Return the ChildNotifications by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildNotifications requireOne(ConnectionInterface $con = null) Return the first ChildNotifications matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildNotifications requireOneByNotification(int $notification) Return the first ChildNotifications filtered by the notification column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildNotifications requireOneById(int $id) Return the first ChildNotifications filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildNotifications requireOneByLatitude(double $latitude) Return the first ChildNotifications filtered by the latitude column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildNotifications requireOneByNotificationtypeid(int $notificationTypeId) Return the first ChildNotifications filtered by the notificationTypeId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildNotifications requireOneByNotificationtype(int $notificationType) Return the first ChildNotifications filtered by the notificationType column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildNotifications requireOneByCreationdate(string $creationDate) Return the first ChildNotifications filtered by the creationDate column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildNotifications requireOneByDescription(string $description) Return the first ChildNotifications filtered by the description column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildNotifications requireOneByAnimalid(int $animalId) Return the first ChildNotifications filtered by the animalId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildNotifications requireOneByAnimal(int $animal) Return the first ChildNotifications filtered by the animal column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildNotifications requireOneByLongitude(double $longitude) Return the first ChildNotifications filtered by the longitude column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildNotifications[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildNotifications objects based on current ModelCriteria
- * @method     ChildNotifications[]|ObjectCollection findByNotification(int $notification) Return ChildNotifications objects filtered by the notification column
+ * @method     ChildNotifications[]|ObjectCollection findById(int $id) Return ChildNotifications objects filtered by the id column
  * @method     ChildNotifications[]|ObjectCollection findByLatitude(double $latitude) Return ChildNotifications objects filtered by the latitude column
- * @method     ChildNotifications[]|ObjectCollection findByNotificationtypeid(int $notificationTypeId) Return ChildNotifications objects filtered by the notificationTypeId column
+ * @method     ChildNotifications[]|ObjectCollection findByNotificationtype(int $notificationType) Return ChildNotifications objects filtered by the notificationType column
  * @method     ChildNotifications[]|ObjectCollection findByCreationdate(string $creationDate) Return ChildNotifications objects filtered by the creationDate column
  * @method     ChildNotifications[]|ObjectCollection findByDescription(string $description) Return ChildNotifications objects filtered by the description column
- * @method     ChildNotifications[]|ObjectCollection findByAnimalid(int $animalId) Return ChildNotifications objects filtered by the animalId column
+ * @method     ChildNotifications[]|ObjectCollection findByAnimal(int $animal) Return ChildNotifications objects filtered by the animal column
  * @method     ChildNotifications[]|ObjectCollection findByLongitude(double $longitude) Return ChildNotifications objects filtered by the longitude column
  * @method     ChildNotifications[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
@@ -198,7 +165,7 @@ abstract class NotificationsQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT notification, latitude, notificationTypeId, creationDate, description, animalId, longitude FROM notifications WHERE notification = :p0';
+        $sql = 'SELECT id, latitude, notificationType, creationDate, description, animal, longitude FROM notifications WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -272,7 +239,7 @@ abstract class NotificationsQuery extends ModelCriteria
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(NotificationsTableMap::COL_NOTIFICATION, $key, Criteria::EQUAL);
+        return $this->addUsingAlias(NotificationsTableMap::COL_ID, $key, Criteria::EQUAL);
     }
 
     /**
@@ -285,20 +252,20 @@ abstract class NotificationsQuery extends ModelCriteria
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(NotificationsTableMap::COL_NOTIFICATION, $keys, Criteria::IN);
+        return $this->addUsingAlias(NotificationsTableMap::COL_ID, $keys, Criteria::IN);
     }
 
     /**
-     * Filter the query on the notification column
+     * Filter the query on the id column
      *
      * Example usage:
      * <code>
-     * $query->filterByNotification(1234); // WHERE notification = 1234
-     * $query->filterByNotification(array(12, 34)); // WHERE notification IN (12, 34)
-     * $query->filterByNotification(array('min' => 12)); // WHERE notification > 12
+     * $query->filterById(1234); // WHERE id = 1234
+     * $query->filterById(array(12, 34)); // WHERE id IN (12, 34)
+     * $query->filterById(array('min' => 12)); // WHERE id > 12
      * </code>
      *
-     * @param     mixed $notification The value to use as filter.
+     * @param     mixed $id The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -306,16 +273,16 @@ abstract class NotificationsQuery extends ModelCriteria
      *
      * @return $this|ChildNotificationsQuery The current query, for fluid interface
      */
-    public function filterByNotification($notification = null, $comparison = null)
+    public function filterById($id = null, $comparison = null)
     {
-        if (is_array($notification)) {
+        if (is_array($id)) {
             $useMinMax = false;
-            if (isset($notification['min'])) {
-                $this->addUsingAlias(NotificationsTableMap::COL_NOTIFICATION, $notification['min'], Criteria::GREATER_EQUAL);
+            if (isset($id['min'])) {
+                $this->addUsingAlias(NotificationsTableMap::COL_ID, $id['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($notification['max'])) {
-                $this->addUsingAlias(NotificationsTableMap::COL_NOTIFICATION, $notification['max'], Criteria::LESS_EQUAL);
+            if (isset($id['max'])) {
+                $this->addUsingAlias(NotificationsTableMap::COL_ID, $id['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -326,7 +293,7 @@ abstract class NotificationsQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(NotificationsTableMap::COL_NOTIFICATION, $notification, $comparison);
+        return $this->addUsingAlias(NotificationsTableMap::COL_ID, $id, $comparison);
     }
 
     /**
@@ -371,18 +338,16 @@ abstract class NotificationsQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the notificationTypeId column
+     * Filter the query on the notificationType column
      *
      * Example usage:
      * <code>
-     * $query->filterByNotificationtypeid(1234); // WHERE notificationTypeId = 1234
-     * $query->filterByNotificationtypeid(array(12, 34)); // WHERE notificationTypeId IN (12, 34)
-     * $query->filterByNotificationtypeid(array('min' => 12)); // WHERE notificationTypeId > 12
+     * $query->filterByNotificationtype(1234); // WHERE notificationType = 1234
+     * $query->filterByNotificationtype(array(12, 34)); // WHERE notificationType IN (12, 34)
+     * $query->filterByNotificationtype(array('min' => 12)); // WHERE notificationType > 12
      * </code>
      *
-     * @see       filterByNotificationtype()
-     *
-     * @param     mixed $notificationtypeid The value to use as filter.
+     * @param     mixed $notificationtype The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -390,16 +355,16 @@ abstract class NotificationsQuery extends ModelCriteria
      *
      * @return $this|ChildNotificationsQuery The current query, for fluid interface
      */
-    public function filterByNotificationtypeid($notificationtypeid = null, $comparison = null)
+    public function filterByNotificationtype($notificationtype = null, $comparison = null)
     {
-        if (is_array($notificationtypeid)) {
+        if (is_array($notificationtype)) {
             $useMinMax = false;
-            if (isset($notificationtypeid['min'])) {
-                $this->addUsingAlias(NotificationsTableMap::COL_NOTIFICATIONTYPEID, $notificationtypeid['min'], Criteria::GREATER_EQUAL);
+            if (isset($notificationtype['min'])) {
+                $this->addUsingAlias(NotificationsTableMap::COL_NOTIFICATIONTYPE, $notificationtype['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($notificationtypeid['max'])) {
-                $this->addUsingAlias(NotificationsTableMap::COL_NOTIFICATIONTYPEID, $notificationtypeid['max'], Criteria::LESS_EQUAL);
+            if (isset($notificationtype['max'])) {
+                $this->addUsingAlias(NotificationsTableMap::COL_NOTIFICATIONTYPE, $notificationtype['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -410,7 +375,7 @@ abstract class NotificationsQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(NotificationsTableMap::COL_NOTIFICATIONTYPEID, $notificationtypeid, $comparison);
+        return $this->addUsingAlias(NotificationsTableMap::COL_NOTIFICATIONTYPE, $notificationtype, $comparison);
     }
 
     /**
@@ -486,18 +451,16 @@ abstract class NotificationsQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the animalId column
+     * Filter the query on the animal column
      *
      * Example usage:
      * <code>
-     * $query->filterByAnimalid(1234); // WHERE animalId = 1234
-     * $query->filterByAnimalid(array(12, 34)); // WHERE animalId IN (12, 34)
-     * $query->filterByAnimalid(array('min' => 12)); // WHERE animalId > 12
+     * $query->filterByAnimal(1234); // WHERE animal = 1234
+     * $query->filterByAnimal(array(12, 34)); // WHERE animal IN (12, 34)
+     * $query->filterByAnimal(array('min' => 12)); // WHERE animal > 12
      * </code>
      *
-     * @see       filterByAnimals()
-     *
-     * @param     mixed $animalid The value to use as filter.
+     * @param     mixed $animal The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -505,16 +468,16 @@ abstract class NotificationsQuery extends ModelCriteria
      *
      * @return $this|ChildNotificationsQuery The current query, for fluid interface
      */
-    public function filterByAnimalid($animalid = null, $comparison = null)
+    public function filterByAnimal($animal = null, $comparison = null)
     {
-        if (is_array($animalid)) {
+        if (is_array($animal)) {
             $useMinMax = false;
-            if (isset($animalid['min'])) {
-                $this->addUsingAlias(NotificationsTableMap::COL_ANIMALID, $animalid['min'], Criteria::GREATER_EQUAL);
+            if (isset($animal['min'])) {
+                $this->addUsingAlias(NotificationsTableMap::COL_ANIMAL, $animal['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($animalid['max'])) {
-                $this->addUsingAlias(NotificationsTableMap::COL_ANIMALID, $animalid['max'], Criteria::LESS_EQUAL);
+            if (isset($animal['max'])) {
+                $this->addUsingAlias(NotificationsTableMap::COL_ANIMAL, $animal['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -525,7 +488,7 @@ abstract class NotificationsQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(NotificationsTableMap::COL_ANIMALID, $animalid, $comparison);
+        return $this->addUsingAlias(NotificationsTableMap::COL_ANIMAL, $animal, $comparison);
     }
 
     /**
@@ -570,233 +533,6 @@ abstract class NotificationsQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \Notificationtype object
-     *
-     * @param \Notificationtype|ObjectCollection $notificationtype The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildNotificationsQuery The current query, for fluid interface
-     */
-    public function filterByNotificationtype($notificationtype, $comparison = null)
-    {
-        if ($notificationtype instanceof \Notificationtype) {
-            return $this
-                ->addUsingAlias(NotificationsTableMap::COL_NOTIFICATIONTYPEID, $notificationtype->getNotificationtype(), $comparison);
-        } elseif ($notificationtype instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(NotificationsTableMap::COL_NOTIFICATIONTYPEID, $notificationtype->toKeyValue('PrimaryKey', 'Notificationtype'), $comparison);
-        } else {
-            throw new PropelException('filterByNotificationtype() only accepts arguments of type \Notificationtype or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Notificationtype relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildNotificationsQuery The current query, for fluid interface
-     */
-    public function joinNotificationtype($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Notificationtype');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Notificationtype');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Notificationtype relation Notificationtype object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \NotificationtypeQuery A secondary query class using the current class as primary query
-     */
-    public function useNotificationtypeQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinNotificationtype($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Notificationtype', '\NotificationtypeQuery');
-    }
-
-    /**
-     * Filter the query by a related \Animals object
-     *
-     * @param \Animals|ObjectCollection $animals The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildNotificationsQuery The current query, for fluid interface
-     */
-    public function filterByAnimals($animals, $comparison = null)
-    {
-        if ($animals instanceof \Animals) {
-            return $this
-                ->addUsingAlias(NotificationsTableMap::COL_ANIMALID, $animals->getAnimal(), $comparison);
-        } elseif ($animals instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(NotificationsTableMap::COL_ANIMALID, $animals->toKeyValue('PrimaryKey', 'Animal'), $comparison);
-        } else {
-            throw new PropelException('filterByAnimals() only accepts arguments of type \Animals or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Animals relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildNotificationsQuery The current query, for fluid interface
-     */
-    public function joinAnimals($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Animals');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Animals');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Animals relation Animals object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \AnimalsQuery A secondary query class using the current class as primary query
-     */
-    public function useAnimalsQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinAnimals($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Animals', '\AnimalsQuery');
-    }
-
-    /**
-     * Filter the query by a related \Searchnotifications object
-     *
-     * @param \Searchnotifications|ObjectCollection $searchnotifications the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildNotificationsQuery The current query, for fluid interface
-     */
-    public function filterBySearchnotifications($searchnotifications, $comparison = null)
-    {
-        if ($searchnotifications instanceof \Searchnotifications) {
-            return $this
-                ->addUsingAlias(NotificationsTableMap::COL_NOTIFICATION, $searchnotifications->getNotification(), $comparison);
-        } elseif ($searchnotifications instanceof ObjectCollection) {
-            return $this
-                ->useSearchnotificationsQuery()
-                ->filterByPrimaryKeys($searchnotifications->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterBySearchnotifications() only accepts arguments of type \Searchnotifications or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Searchnotifications relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildNotificationsQuery The current query, for fluid interface
-     */
-    public function joinSearchnotifications($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Searchnotifications');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Searchnotifications');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Searchnotifications relation Searchnotifications object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \SearchnotificationsQuery A secondary query class using the current class as primary query
-     */
-    public function useSearchnotificationsQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinSearchnotifications($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Searchnotifications', '\SearchnotificationsQuery');
-    }
-
-    /**
      * Exclude object from result
      *
      * @param   ChildNotifications $notifications Object to remove from the list of results
@@ -806,7 +542,7 @@ abstract class NotificationsQuery extends ModelCriteria
     public function prune($notifications = null)
     {
         if ($notifications) {
-            $this->addUsingAlias(NotificationsTableMap::COL_NOTIFICATION, $notifications->getNotification(), Criteria::NOT_EQUAL);
+            $this->addUsingAlias(NotificationsTableMap::COL_ID, $notifications->getId(), Criteria::NOT_EQUAL);
         }
 
         return $this;

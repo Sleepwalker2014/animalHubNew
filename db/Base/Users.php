@@ -72,6 +72,12 @@ abstract class Users implements ActiveRecordInterface
     protected $name;
 
     /**
+     * The value for the email field.
+     * @var        string
+     */
+    protected $email;
+
+    /**
      * The value for the password field.
      * @var        string
      */
@@ -323,6 +329,16 @@ abstract class Users implements ActiveRecordInterface
     }
 
     /**
+     * Get the [email] column value.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
      * Get the [password] column value.
      *
      * @return string
@@ -371,6 +387,26 @@ abstract class Users implements ActiveRecordInterface
 
         return $this;
     } // setName()
+
+    /**
+     * Set the value of [email] column.
+     *
+     * @param string $v new value
+     * @return $this|\Users The current object (for fluent API support)
+     */
+    public function setEmail($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->email !== $v) {
+            $this->email = $v;
+            $this->modifiedColumns[UsersTableMap::COL_EMAIL] = true;
+        }
+
+        return $this;
+    } // setEmail()
 
     /**
      * Set the value of [password] column.
@@ -434,7 +470,10 @@ abstract class Users implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UsersTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
             $this->name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UsersTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UsersTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->email = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UsersTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
             $this->password = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -444,7 +483,7 @@ abstract class Users implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 3; // 3 = UsersTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 4; // 4 = UsersTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Users'), 0, $e);
@@ -647,6 +686,9 @@ abstract class Users implements ActiveRecordInterface
         if ($this->isColumnModified(UsersTableMap::COL_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'name';
         }
+        if ($this->isColumnModified(UsersTableMap::COL_EMAIL)) {
+            $modifiedColumns[':p' . $index++]  = 'email';
+        }
         if ($this->isColumnModified(UsersTableMap::COL_PASSWORD)) {
             $modifiedColumns[':p' . $index++]  = 'password';
         }
@@ -666,6 +708,9 @@ abstract class Users implements ActiveRecordInterface
                         break;
                     case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
+                        break;
+                    case 'email':
+                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
                         break;
                     case 'password':
                         $stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
@@ -739,6 +784,9 @@ abstract class Users implements ActiveRecordInterface
                 return $this->getName();
                 break;
             case 2:
+                return $this->getEmail();
+                break;
+            case 3:
                 return $this->getPassword();
                 break;
             default:
@@ -772,7 +820,8 @@ abstract class Users implements ActiveRecordInterface
         $result = array(
             $keys[0] => $this->getUser(),
             $keys[1] => $this->getName(),
-            $keys[2] => $this->getPassword(),
+            $keys[2] => $this->getEmail(),
+            $keys[3] => $this->getPassword(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -819,6 +868,9 @@ abstract class Users implements ActiveRecordInterface
                 $this->setName($value);
                 break;
             case 2:
+                $this->setEmail($value);
+                break;
+            case 3:
                 $this->setPassword($value);
                 break;
         } // switch()
@@ -854,7 +906,10 @@ abstract class Users implements ActiveRecordInterface
             $this->setName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setPassword($arr[$keys[2]]);
+            $this->setEmail($arr[$keys[2]]);
+        }
+        if (array_key_exists($keys[3], $arr)) {
+            $this->setPassword($arr[$keys[3]]);
         }
     }
 
@@ -902,6 +957,9 @@ abstract class Users implements ActiveRecordInterface
         }
         if ($this->isColumnModified(UsersTableMap::COL_NAME)) {
             $criteria->add(UsersTableMap::COL_NAME, $this->name);
+        }
+        if ($this->isColumnModified(UsersTableMap::COL_EMAIL)) {
+            $criteria->add(UsersTableMap::COL_EMAIL, $this->email);
         }
         if ($this->isColumnModified(UsersTableMap::COL_PASSWORD)) {
             $criteria->add(UsersTableMap::COL_PASSWORD, $this->password);
@@ -993,6 +1051,7 @@ abstract class Users implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setName($this->getName());
+        $copyObj->setEmail($this->getEmail());
         $copyObj->setPassword($this->getPassword());
         if ($makeNew) {
             $copyObj->setNew(true);
@@ -1031,6 +1090,7 @@ abstract class Users implements ActiveRecordInterface
     {
         $this->user = null;
         $this->name = null;
+        $this->email = null;
         $this->password = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();

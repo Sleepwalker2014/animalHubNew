@@ -59,7 +59,7 @@ class UsersTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class UsersTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the user field
@@ -80,6 +80,11 @@ class UsersTableMap extends TableMap
      * the column name for the name field
      */
     const COL_NAME = 'users.name';
+
+    /**
+     * the column name for the email field
+     */
+    const COL_EMAIL = 'users.email';
 
     /**
      * the column name for the password field
@@ -98,11 +103,11 @@ class UsersTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('User', 'Name', 'Password', ),
-        self::TYPE_CAMELNAME     => array('user', 'name', 'password', ),
-        self::TYPE_COLNAME       => array(UsersTableMap::COL_USER, UsersTableMap::COL_NAME, UsersTableMap::COL_PASSWORD, ),
-        self::TYPE_FIELDNAME     => array('user', 'name', 'password', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('User', 'Name', 'Email', 'Password', ),
+        self::TYPE_CAMELNAME     => array('user', 'name', 'email', 'password', ),
+        self::TYPE_COLNAME       => array(UsersTableMap::COL_USER, UsersTableMap::COL_NAME, UsersTableMap::COL_EMAIL, UsersTableMap::COL_PASSWORD, ),
+        self::TYPE_FIELDNAME     => array('user', 'name', 'email', 'password', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -112,11 +117,11 @@ class UsersTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('User' => 0, 'Name' => 1, 'Password' => 2, ),
-        self::TYPE_CAMELNAME     => array('user' => 0, 'name' => 1, 'password' => 2, ),
-        self::TYPE_COLNAME       => array(UsersTableMap::COL_USER => 0, UsersTableMap::COL_NAME => 1, UsersTableMap::COL_PASSWORD => 2, ),
-        self::TYPE_FIELDNAME     => array('user' => 0, 'name' => 1, 'password' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('User' => 0, 'Name' => 1, 'Email' => 2, 'Password' => 3, ),
+        self::TYPE_CAMELNAME     => array('user' => 0, 'name' => 1, 'email' => 2, 'password' => 3, ),
+        self::TYPE_COLNAME       => array(UsersTableMap::COL_USER => 0, UsersTableMap::COL_NAME => 1, UsersTableMap::COL_EMAIL => 2, UsersTableMap::COL_PASSWORD => 3, ),
+        self::TYPE_FIELDNAME     => array('user' => 0, 'name' => 1, 'email' => 2, 'password' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -137,8 +142,9 @@ class UsersTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('user', 'User', 'INTEGER', true, 10, null);
-        $this->addColumn('name', 'Name', 'VARCHAR', true, 64, null);
-        $this->addColumn('password', 'Password', 'VARCHAR', true, 128, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', true, 255, null);
+        $this->addColumn('email', 'Email', 'VARCHAR', true, 255, null);
+        $this->addColumn('password', 'Password', 'VARCHAR', true, 255, null);
     } // initialize()
 
     /**
@@ -291,10 +297,12 @@ class UsersTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(UsersTableMap::COL_USER);
             $criteria->addSelectColumn(UsersTableMap::COL_NAME);
+            $criteria->addSelectColumn(UsersTableMap::COL_EMAIL);
             $criteria->addSelectColumn(UsersTableMap::COL_PASSWORD);
         } else {
             $criteria->addSelectColumn($alias . '.user');
             $criteria->addSelectColumn($alias . '.name');
+            $criteria->addSelectColumn($alias . '.email');
             $criteria->addSelectColumn($alias . '.password');
         }
     }

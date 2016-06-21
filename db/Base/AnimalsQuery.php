@@ -23,24 +23,28 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildAnimalsQuery orderByAnimal($order = Criteria::ASC) Order by the animal column
  * @method     ChildAnimalsQuery orderByName($order = Criteria::ASC) Order by the name column
  * @method     ChildAnimalsQuery orderByBirthday($order = Criteria::ASC) Order by the birthDay column
- * @method     ChildAnimalsQuery orderBySexid($order = Criteria::ASC) Order by the sexId column
- * @method     ChildAnimalsQuery orderByFurcolourid($order = Criteria::ASC) Order by the furColourId column
- * @method     ChildAnimalsQuery orderByEyecolourid($order = Criteria::ASC) Order by the eyeColourId column
- * @method     ChildAnimalsQuery orderBySpeciesid($order = Criteria::ASC) Order by the speciesId column
+ * @method     ChildAnimalsQuery orderBySex($order = Criteria::ASC) Order by the sex column
+ * @method     ChildAnimalsQuery orderByFurcolour($order = Criteria::ASC) Order by the furColour column
+ * @method     ChildAnimalsQuery orderByEyecolour($order = Criteria::ASC) Order by the eyeColour column
+ * @method     ChildAnimalsQuery orderBySpecies($order = Criteria::ASC) Order by the species column
  * @method     ChildAnimalsQuery orderBySize($order = Criteria::ASC) Order by the size column
  * @method     ChildAnimalsQuery orderBySpecification($order = Criteria::ASC) Order by the specification column
- * @method     ChildAnimalsQuery orderByRaceid($order = Criteria::ASC) Order by the raceId column
+ * @method     ChildAnimalsQuery orderByRace($order = Criteria::ASC) Order by the race column
+ * @method     ChildAnimalsQuery orderByTest($order = Criteria::ASC) Order by the test column
+ * @method     ChildAnimalsQuery orderByBlah($order = Criteria::ASC) Order by the blah column
  *
  * @method     ChildAnimalsQuery groupByAnimal() Group by the animal column
  * @method     ChildAnimalsQuery groupByName() Group by the name column
  * @method     ChildAnimalsQuery groupByBirthday() Group by the birthDay column
- * @method     ChildAnimalsQuery groupBySexid() Group by the sexId column
- * @method     ChildAnimalsQuery groupByFurcolourid() Group by the furColourId column
- * @method     ChildAnimalsQuery groupByEyecolourid() Group by the eyeColourId column
- * @method     ChildAnimalsQuery groupBySpeciesid() Group by the speciesId column
+ * @method     ChildAnimalsQuery groupBySex() Group by the sex column
+ * @method     ChildAnimalsQuery groupByFurcolour() Group by the furColour column
+ * @method     ChildAnimalsQuery groupByEyecolour() Group by the eyeColour column
+ * @method     ChildAnimalsQuery groupBySpecies() Group by the species column
  * @method     ChildAnimalsQuery groupBySize() Group by the size column
  * @method     ChildAnimalsQuery groupBySpecification() Group by the specification column
- * @method     ChildAnimalsQuery groupByRaceid() Group by the raceId column
+ * @method     ChildAnimalsQuery groupByRace() Group by the race column
+ * @method     ChildAnimalsQuery groupByTest() Group by the test column
+ * @method     ChildAnimalsQuery groupByBlah() Group by the blah column
  *
  * @method     ChildAnimalsQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildAnimalsQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -49,26 +53,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildAnimalsQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
  * @method     ChildAnimalsQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildAnimalsQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
- *
- * @method     ChildAnimalsQuery leftJoinRaces($relationAlias = null) Adds a LEFT JOIN clause to the query using the Races relation
- * @method     ChildAnimalsQuery rightJoinRaces($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Races relation
- * @method     ChildAnimalsQuery innerJoinRaces($relationAlias = null) Adds a INNER JOIN clause to the query using the Races relation
- *
- * @method     ChildAnimalsQuery joinWithRaces($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Races relation
- *
- * @method     ChildAnimalsQuery leftJoinWithRaces() Adds a LEFT JOIN clause and with to the query using the Races relation
- * @method     ChildAnimalsQuery rightJoinWithRaces() Adds a RIGHT JOIN clause and with to the query using the Races relation
- * @method     ChildAnimalsQuery innerJoinWithRaces() Adds a INNER JOIN clause and with to the query using the Races relation
- *
- * @method     ChildAnimalsQuery leftJoinSpecies($relationAlias = null) Adds a LEFT JOIN clause to the query using the Species relation
- * @method     ChildAnimalsQuery rightJoinSpecies($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Species relation
- * @method     ChildAnimalsQuery innerJoinSpecies($relationAlias = null) Adds a INNER JOIN clause to the query using the Species relation
- *
- * @method     ChildAnimalsQuery joinWithSpecies($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Species relation
- *
- * @method     ChildAnimalsQuery leftJoinWithSpecies() Adds a LEFT JOIN clause and with to the query using the Species relation
- * @method     ChildAnimalsQuery rightJoinWithSpecies() Adds a RIGHT JOIN clause and with to the query using the Species relation
- * @method     ChildAnimalsQuery innerJoinWithSpecies() Adds a INNER JOIN clause and with to the query using the Species relation
  *
  * @method     ChildAnimalsQuery leftJoinSexes($relationAlias = null) Adds a LEFT JOIN clause to the query using the Sexes relation
  * @method     ChildAnimalsQuery rightJoinSexes($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Sexes relation
@@ -80,37 +64,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildAnimalsQuery rightJoinWithSexes() Adds a RIGHT JOIN clause and with to the query using the Sexes relation
  * @method     ChildAnimalsQuery innerJoinWithSexes() Adds a INNER JOIN clause and with to the query using the Sexes relation
  *
- * @method     ChildAnimalsQuery leftJoinColoursRelatedByFurcolourid($relationAlias = null) Adds a LEFT JOIN clause to the query using the ColoursRelatedByFurcolourid relation
- * @method     ChildAnimalsQuery rightJoinColoursRelatedByFurcolourid($relationAlias = null) Adds a RIGHT JOIN clause to the query using the ColoursRelatedByFurcolourid relation
- * @method     ChildAnimalsQuery innerJoinColoursRelatedByFurcolourid($relationAlias = null) Adds a INNER JOIN clause to the query using the ColoursRelatedByFurcolourid relation
- *
- * @method     ChildAnimalsQuery joinWithColoursRelatedByFurcolourid($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the ColoursRelatedByFurcolourid relation
- *
- * @method     ChildAnimalsQuery leftJoinWithColoursRelatedByFurcolourid() Adds a LEFT JOIN clause and with to the query using the ColoursRelatedByFurcolourid relation
- * @method     ChildAnimalsQuery rightJoinWithColoursRelatedByFurcolourid() Adds a RIGHT JOIN clause and with to the query using the ColoursRelatedByFurcolourid relation
- * @method     ChildAnimalsQuery innerJoinWithColoursRelatedByFurcolourid() Adds a INNER JOIN clause and with to the query using the ColoursRelatedByFurcolourid relation
- *
- * @method     ChildAnimalsQuery leftJoinColoursRelatedByEyecolourid($relationAlias = null) Adds a LEFT JOIN clause to the query using the ColoursRelatedByEyecolourid relation
- * @method     ChildAnimalsQuery rightJoinColoursRelatedByEyecolourid($relationAlias = null) Adds a RIGHT JOIN clause to the query using the ColoursRelatedByEyecolourid relation
- * @method     ChildAnimalsQuery innerJoinColoursRelatedByEyecolourid($relationAlias = null) Adds a INNER JOIN clause to the query using the ColoursRelatedByEyecolourid relation
- *
- * @method     ChildAnimalsQuery joinWithColoursRelatedByEyecolourid($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the ColoursRelatedByEyecolourid relation
- *
- * @method     ChildAnimalsQuery leftJoinWithColoursRelatedByEyecolourid() Adds a LEFT JOIN clause and with to the query using the ColoursRelatedByEyecolourid relation
- * @method     ChildAnimalsQuery rightJoinWithColoursRelatedByEyecolourid() Adds a RIGHT JOIN clause and with to the query using the ColoursRelatedByEyecolourid relation
- * @method     ChildAnimalsQuery innerJoinWithColoursRelatedByEyecolourid() Adds a INNER JOIN clause and with to the query using the ColoursRelatedByEyecolourid relation
- *
- * @method     ChildAnimalsQuery leftJoinNotifications($relationAlias = null) Adds a LEFT JOIN clause to the query using the Notifications relation
- * @method     ChildAnimalsQuery rightJoinNotifications($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Notifications relation
- * @method     ChildAnimalsQuery innerJoinNotifications($relationAlias = null) Adds a INNER JOIN clause to the query using the Notifications relation
- *
- * @method     ChildAnimalsQuery joinWithNotifications($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Notifications relation
- *
- * @method     ChildAnimalsQuery leftJoinWithNotifications() Adds a LEFT JOIN clause and with to the query using the Notifications relation
- * @method     ChildAnimalsQuery rightJoinWithNotifications() Adds a RIGHT JOIN clause and with to the query using the Notifications relation
- * @method     ChildAnimalsQuery innerJoinWithNotifications() Adds a INNER JOIN clause and with to the query using the Notifications relation
- *
- * @method     \RacesQuery|\SpeciesQuery|\SexesQuery|\ColoursQuery|\NotificationsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \SexesQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildAnimals findOne(ConnectionInterface $con = null) Return the first ChildAnimals matching the query
  * @method     ChildAnimals findOneOrCreate(ConnectionInterface $con = null) Return the first ChildAnimals matching the query, or a new ChildAnimals object populated from the query conditions when no match is found
@@ -118,13 +72,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildAnimals findOneByAnimal(int $animal) Return the first ChildAnimals filtered by the animal column
  * @method     ChildAnimals findOneByName(string $name) Return the first ChildAnimals filtered by the name column
  * @method     ChildAnimals findOneByBirthday(string $birthDay) Return the first ChildAnimals filtered by the birthDay column
- * @method     ChildAnimals findOneBySexid(int $sexId) Return the first ChildAnimals filtered by the sexId column
- * @method     ChildAnimals findOneByFurcolourid(int $furColourId) Return the first ChildAnimals filtered by the furColourId column
- * @method     ChildAnimals findOneByEyecolourid(int $eyeColourId) Return the first ChildAnimals filtered by the eyeColourId column
- * @method     ChildAnimals findOneBySpeciesid(int $speciesId) Return the first ChildAnimals filtered by the speciesId column
+ * @method     ChildAnimals findOneBySex(int $sex) Return the first ChildAnimals filtered by the sex column
+ * @method     ChildAnimals findOneByFurcolour(int $furColour) Return the first ChildAnimals filtered by the furColour column
+ * @method     ChildAnimals findOneByEyecolour(int $eyeColour) Return the first ChildAnimals filtered by the eyeColour column
+ * @method     ChildAnimals findOneBySpecies(int $species) Return the first ChildAnimals filtered by the species column
  * @method     ChildAnimals findOneBySize(int $size) Return the first ChildAnimals filtered by the size column
  * @method     ChildAnimals findOneBySpecification(string $specification) Return the first ChildAnimals filtered by the specification column
- * @method     ChildAnimals findOneByRaceid(int $raceId) Return the first ChildAnimals filtered by the raceId column *
+ * @method     ChildAnimals findOneByRace(int $race) Return the first ChildAnimals filtered by the race column
+ * @method     ChildAnimals findOneByTest(int $test) Return the first ChildAnimals filtered by the test column
+ * @method     ChildAnimals findOneByBlah(string $blah) Return the first ChildAnimals filtered by the blah column *
 
  * @method     ChildAnimals requirePk($key, ConnectionInterface $con = null) Return the ChildAnimals by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildAnimals requireOne(ConnectionInterface $con = null) Return the first ChildAnimals matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -132,25 +88,29 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildAnimals requireOneByAnimal(int $animal) Return the first ChildAnimals filtered by the animal column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildAnimals requireOneByName(string $name) Return the first ChildAnimals filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildAnimals requireOneByBirthday(string $birthDay) Return the first ChildAnimals filtered by the birthDay column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildAnimals requireOneBySexid(int $sexId) Return the first ChildAnimals filtered by the sexId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildAnimals requireOneByFurcolourid(int $furColourId) Return the first ChildAnimals filtered by the furColourId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildAnimals requireOneByEyecolourid(int $eyeColourId) Return the first ChildAnimals filtered by the eyeColourId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildAnimals requireOneBySpeciesid(int $speciesId) Return the first ChildAnimals filtered by the speciesId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildAnimals requireOneBySex(int $sex) Return the first ChildAnimals filtered by the sex column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildAnimals requireOneByFurcolour(int $furColour) Return the first ChildAnimals filtered by the furColour column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildAnimals requireOneByEyecolour(int $eyeColour) Return the first ChildAnimals filtered by the eyeColour column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildAnimals requireOneBySpecies(int $species) Return the first ChildAnimals filtered by the species column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildAnimals requireOneBySize(int $size) Return the first ChildAnimals filtered by the size column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildAnimals requireOneBySpecification(string $specification) Return the first ChildAnimals filtered by the specification column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildAnimals requireOneByRaceid(int $raceId) Return the first ChildAnimals filtered by the raceId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildAnimals requireOneByRace(int $race) Return the first ChildAnimals filtered by the race column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildAnimals requireOneByTest(int $test) Return the first ChildAnimals filtered by the test column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildAnimals requireOneByBlah(string $blah) Return the first ChildAnimals filtered by the blah column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildAnimals[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildAnimals objects based on current ModelCriteria
  * @method     ChildAnimals[]|ObjectCollection findByAnimal(int $animal) Return ChildAnimals objects filtered by the animal column
  * @method     ChildAnimals[]|ObjectCollection findByName(string $name) Return ChildAnimals objects filtered by the name column
  * @method     ChildAnimals[]|ObjectCollection findByBirthday(string $birthDay) Return ChildAnimals objects filtered by the birthDay column
- * @method     ChildAnimals[]|ObjectCollection findBySexid(int $sexId) Return ChildAnimals objects filtered by the sexId column
- * @method     ChildAnimals[]|ObjectCollection findByFurcolourid(int $furColourId) Return ChildAnimals objects filtered by the furColourId column
- * @method     ChildAnimals[]|ObjectCollection findByEyecolourid(int $eyeColourId) Return ChildAnimals objects filtered by the eyeColourId column
- * @method     ChildAnimals[]|ObjectCollection findBySpeciesid(int $speciesId) Return ChildAnimals objects filtered by the speciesId column
+ * @method     ChildAnimals[]|ObjectCollection findBySex(int $sex) Return ChildAnimals objects filtered by the sex column
+ * @method     ChildAnimals[]|ObjectCollection findByFurcolour(int $furColour) Return ChildAnimals objects filtered by the furColour column
+ * @method     ChildAnimals[]|ObjectCollection findByEyecolour(int $eyeColour) Return ChildAnimals objects filtered by the eyeColour column
+ * @method     ChildAnimals[]|ObjectCollection findBySpecies(int $species) Return ChildAnimals objects filtered by the species column
  * @method     ChildAnimals[]|ObjectCollection findBySize(int $size) Return ChildAnimals objects filtered by the size column
  * @method     ChildAnimals[]|ObjectCollection findBySpecification(string $specification) Return ChildAnimals objects filtered by the specification column
- * @method     ChildAnimals[]|ObjectCollection findByRaceid(int $raceId) Return ChildAnimals objects filtered by the raceId column
+ * @method     ChildAnimals[]|ObjectCollection findByRace(int $race) Return ChildAnimals objects filtered by the race column
+ * @method     ChildAnimals[]|ObjectCollection findByTest(int $test) Return ChildAnimals objects filtered by the test column
+ * @method     ChildAnimals[]|ObjectCollection findByBlah(string $blah) Return ChildAnimals objects filtered by the blah column
  * @method     ChildAnimals[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -243,7 +203,7 @@ abstract class AnimalsQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT animal, name, birthDay, sexId, furColourId, eyeColourId, speciesId, size, specification, raceId FROM animals WHERE animal = :p0';
+        $sql = 'SELECT animal, name, birthDay, sex, furColour, eyeColour, species, size, specification, race, test, blah FROM animals WHERE animal = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -447,18 +407,18 @@ abstract class AnimalsQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the sexId column
+     * Filter the query on the sex column
      *
      * Example usage:
      * <code>
-     * $query->filterBySexid(1234); // WHERE sexId = 1234
-     * $query->filterBySexid(array(12, 34)); // WHERE sexId IN (12, 34)
-     * $query->filterBySexid(array('min' => 12)); // WHERE sexId > 12
+     * $query->filterBySex(1234); // WHERE sex = 1234
+     * $query->filterBySex(array(12, 34)); // WHERE sex IN (12, 34)
+     * $query->filterBySex(array('min' => 12)); // WHERE sex > 12
      * </code>
      *
      * @see       filterBySexes()
      *
-     * @param     mixed $sexid The value to use as filter.
+     * @param     mixed $sex The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -466,16 +426,16 @@ abstract class AnimalsQuery extends ModelCriteria
      *
      * @return $this|ChildAnimalsQuery The current query, for fluid interface
      */
-    public function filterBySexid($sexid = null, $comparison = null)
+    public function filterBySex($sex = null, $comparison = null)
     {
-        if (is_array($sexid)) {
+        if (is_array($sex)) {
             $useMinMax = false;
-            if (isset($sexid['min'])) {
-                $this->addUsingAlias(AnimalsTableMap::COL_SEXID, $sexid['min'], Criteria::GREATER_EQUAL);
+            if (isset($sex['min'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_SEX, $sex['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($sexid['max'])) {
-                $this->addUsingAlias(AnimalsTableMap::COL_SEXID, $sexid['max'], Criteria::LESS_EQUAL);
+            if (isset($sex['max'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_SEX, $sex['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -486,22 +446,20 @@ abstract class AnimalsQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(AnimalsTableMap::COL_SEXID, $sexid, $comparison);
+        return $this->addUsingAlias(AnimalsTableMap::COL_SEX, $sex, $comparison);
     }
 
     /**
-     * Filter the query on the furColourId column
+     * Filter the query on the furColour column
      *
      * Example usage:
      * <code>
-     * $query->filterByFurcolourid(1234); // WHERE furColourId = 1234
-     * $query->filterByFurcolourid(array(12, 34)); // WHERE furColourId IN (12, 34)
-     * $query->filterByFurcolourid(array('min' => 12)); // WHERE furColourId > 12
+     * $query->filterByFurcolour(1234); // WHERE furColour = 1234
+     * $query->filterByFurcolour(array(12, 34)); // WHERE furColour IN (12, 34)
+     * $query->filterByFurcolour(array('min' => 12)); // WHERE furColour > 12
      * </code>
      *
-     * @see       filterByColoursRelatedByFurcolourid()
-     *
-     * @param     mixed $furcolourid The value to use as filter.
+     * @param     mixed $furcolour The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -509,16 +467,16 @@ abstract class AnimalsQuery extends ModelCriteria
      *
      * @return $this|ChildAnimalsQuery The current query, for fluid interface
      */
-    public function filterByFurcolourid($furcolourid = null, $comparison = null)
+    public function filterByFurcolour($furcolour = null, $comparison = null)
     {
-        if (is_array($furcolourid)) {
+        if (is_array($furcolour)) {
             $useMinMax = false;
-            if (isset($furcolourid['min'])) {
-                $this->addUsingAlias(AnimalsTableMap::COL_FURCOLOURID, $furcolourid['min'], Criteria::GREATER_EQUAL);
+            if (isset($furcolour['min'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_FURCOLOUR, $furcolour['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($furcolourid['max'])) {
-                $this->addUsingAlias(AnimalsTableMap::COL_FURCOLOURID, $furcolourid['max'], Criteria::LESS_EQUAL);
+            if (isset($furcolour['max'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_FURCOLOUR, $furcolour['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -529,22 +487,20 @@ abstract class AnimalsQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(AnimalsTableMap::COL_FURCOLOURID, $furcolourid, $comparison);
+        return $this->addUsingAlias(AnimalsTableMap::COL_FURCOLOUR, $furcolour, $comparison);
     }
 
     /**
-     * Filter the query on the eyeColourId column
+     * Filter the query on the eyeColour column
      *
      * Example usage:
      * <code>
-     * $query->filterByEyecolourid(1234); // WHERE eyeColourId = 1234
-     * $query->filterByEyecolourid(array(12, 34)); // WHERE eyeColourId IN (12, 34)
-     * $query->filterByEyecolourid(array('min' => 12)); // WHERE eyeColourId > 12
+     * $query->filterByEyecolour(1234); // WHERE eyeColour = 1234
+     * $query->filterByEyecolour(array(12, 34)); // WHERE eyeColour IN (12, 34)
+     * $query->filterByEyecolour(array('min' => 12)); // WHERE eyeColour > 12
      * </code>
      *
-     * @see       filterByColoursRelatedByEyecolourid()
-     *
-     * @param     mixed $eyecolourid The value to use as filter.
+     * @param     mixed $eyecolour The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -552,16 +508,16 @@ abstract class AnimalsQuery extends ModelCriteria
      *
      * @return $this|ChildAnimalsQuery The current query, for fluid interface
      */
-    public function filterByEyecolourid($eyecolourid = null, $comparison = null)
+    public function filterByEyecolour($eyecolour = null, $comparison = null)
     {
-        if (is_array($eyecolourid)) {
+        if (is_array($eyecolour)) {
             $useMinMax = false;
-            if (isset($eyecolourid['min'])) {
-                $this->addUsingAlias(AnimalsTableMap::COL_EYECOLOURID, $eyecolourid['min'], Criteria::GREATER_EQUAL);
+            if (isset($eyecolour['min'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_EYECOLOUR, $eyecolour['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($eyecolourid['max'])) {
-                $this->addUsingAlias(AnimalsTableMap::COL_EYECOLOURID, $eyecolourid['max'], Criteria::LESS_EQUAL);
+            if (isset($eyecolour['max'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_EYECOLOUR, $eyecolour['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -572,22 +528,20 @@ abstract class AnimalsQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(AnimalsTableMap::COL_EYECOLOURID, $eyecolourid, $comparison);
+        return $this->addUsingAlias(AnimalsTableMap::COL_EYECOLOUR, $eyecolour, $comparison);
     }
 
     /**
-     * Filter the query on the speciesId column
+     * Filter the query on the species column
      *
      * Example usage:
      * <code>
-     * $query->filterBySpeciesid(1234); // WHERE speciesId = 1234
-     * $query->filterBySpeciesid(array(12, 34)); // WHERE speciesId IN (12, 34)
-     * $query->filterBySpeciesid(array('min' => 12)); // WHERE speciesId > 12
+     * $query->filterBySpecies(1234); // WHERE species = 1234
+     * $query->filterBySpecies(array(12, 34)); // WHERE species IN (12, 34)
+     * $query->filterBySpecies(array('min' => 12)); // WHERE species > 12
      * </code>
      *
-     * @see       filterBySpecies()
-     *
-     * @param     mixed $speciesid The value to use as filter.
+     * @param     mixed $species The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -595,16 +549,16 @@ abstract class AnimalsQuery extends ModelCriteria
      *
      * @return $this|ChildAnimalsQuery The current query, for fluid interface
      */
-    public function filterBySpeciesid($speciesid = null, $comparison = null)
+    public function filterBySpecies($species = null, $comparison = null)
     {
-        if (is_array($speciesid)) {
+        if (is_array($species)) {
             $useMinMax = false;
-            if (isset($speciesid['min'])) {
-                $this->addUsingAlias(AnimalsTableMap::COL_SPECIESID, $speciesid['min'], Criteria::GREATER_EQUAL);
+            if (isset($species['min'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_SPECIES, $species['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($speciesid['max'])) {
-                $this->addUsingAlias(AnimalsTableMap::COL_SPECIESID, $speciesid['max'], Criteria::LESS_EQUAL);
+            if (isset($species['max'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_SPECIES, $species['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -615,7 +569,7 @@ abstract class AnimalsQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(AnimalsTableMap::COL_SPECIESID, $speciesid, $comparison);
+        return $this->addUsingAlias(AnimalsTableMap::COL_SPECIES, $species, $comparison);
     }
 
     /**
@@ -689,18 +643,16 @@ abstract class AnimalsQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the raceId column
+     * Filter the query on the race column
      *
      * Example usage:
      * <code>
-     * $query->filterByRaceid(1234); // WHERE raceId = 1234
-     * $query->filterByRaceid(array(12, 34)); // WHERE raceId IN (12, 34)
-     * $query->filterByRaceid(array('min' => 12)); // WHERE raceId > 12
+     * $query->filterByRace(1234); // WHERE race = 1234
+     * $query->filterByRace(array(12, 34)); // WHERE race IN (12, 34)
+     * $query->filterByRace(array('min' => 12)); // WHERE race > 12
      * </code>
      *
-     * @see       filterByRaces()
-     *
-     * @param     mixed $raceid The value to use as filter.
+     * @param     mixed $race The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -708,16 +660,16 @@ abstract class AnimalsQuery extends ModelCriteria
      *
      * @return $this|ChildAnimalsQuery The current query, for fluid interface
      */
-    public function filterByRaceid($raceid = null, $comparison = null)
+    public function filterByRace($race = null, $comparison = null)
     {
-        if (is_array($raceid)) {
+        if (is_array($race)) {
             $useMinMax = false;
-            if (isset($raceid['min'])) {
-                $this->addUsingAlias(AnimalsTableMap::COL_RACEID, $raceid['min'], Criteria::GREATER_EQUAL);
+            if (isset($race['min'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_RACE, $race['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($raceid['max'])) {
-                $this->addUsingAlias(AnimalsTableMap::COL_RACEID, $raceid['max'], Criteria::LESS_EQUAL);
+            if (isset($race['max'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_RACE, $race['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -728,161 +680,91 @@ abstract class AnimalsQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(AnimalsTableMap::COL_RACEID, $raceid, $comparison);
+        return $this->addUsingAlias(AnimalsTableMap::COL_RACE, $race, $comparison);
     }
 
     /**
-     * Filter the query by a related \Races object
+     * Filter the query on the test column
      *
-     * @param \Races|ObjectCollection $races The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     * Example usage:
+     * <code>
+     * $query->filterByTest(1234); // WHERE test = 1234
+     * $query->filterByTest(array(12, 34)); // WHERE test IN (12, 34)
+     * $query->filterByTest(array('min' => 12)); // WHERE test > 12
+     * </code>
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildAnimalsQuery The current query, for fluid interface
-     */
-    public function filterByRaces($races, $comparison = null)
-    {
-        if ($races instanceof \Races) {
-            return $this
-                ->addUsingAlias(AnimalsTableMap::COL_RACEID, $races->getRace(), $comparison);
-        } elseif ($races instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(AnimalsTableMap::COL_RACEID, $races->toKeyValue('PrimaryKey', 'Race'), $comparison);
-        } else {
-            throw new PropelException('filterByRaces() only accepts arguments of type \Races or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Races relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     * @param     mixed $test The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildAnimalsQuery The current query, for fluid interface
      */
-    public function joinRaces($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    public function filterByTest($test = null, $comparison = null)
     {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Races');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Races');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Races relation Races object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \RacesQuery A secondary query class using the current class as primary query
-     */
-    public function useRacesQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
-    {
-        return $this
-            ->joinRaces($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Races', '\RacesQuery');
-    }
-
-    /**
-     * Filter the query by a related \Species object
-     *
-     * @param \Species|ObjectCollection $species The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildAnimalsQuery The current query, for fluid interface
-     */
-    public function filterBySpecies($species, $comparison = null)
-    {
-        if ($species instanceof \Species) {
-            return $this
-                ->addUsingAlias(AnimalsTableMap::COL_SPECIESID, $species->getSpecies(), $comparison);
-        } elseif ($species instanceof ObjectCollection) {
+        if (is_array($test)) {
+            $useMinMax = false;
+            if (isset($test['min'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_TEST, $test['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($test['max'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_TEST, $test['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
-
-            return $this
-                ->addUsingAlias(AnimalsTableMap::COL_SPECIESID, $species->toKeyValue('PrimaryKey', 'Species'), $comparison);
-        } else {
-            throw new PropelException('filterBySpecies() only accepts arguments of type \Species or Collection');
         }
+
+        return $this->addUsingAlias(AnimalsTableMap::COL_TEST, $test, $comparison);
     }
 
     /**
-     * Adds a JOIN clause to the query using the Species relation
+     * Filter the query on the blah column
      *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     * Example usage:
+     * <code>
+     * $query->filterByBlah('2011-03-14'); // WHERE blah = '2011-03-14'
+     * $query->filterByBlah('now'); // WHERE blah = '2011-03-14'
+     * $query->filterByBlah(array('max' => 'yesterday')); // WHERE blah > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $blah The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildAnimalsQuery The current query, for fluid interface
      */
-    public function joinSpecies($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function filterByBlah($blah = null, $comparison = null)
     {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Species');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
+        if (is_array($blah)) {
+            $useMinMax = false;
+            if (isset($blah['min'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_BLAH, $blah['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($blah['max'])) {
+                $this->addUsingAlias(AnimalsTableMap::COL_BLAH, $blah['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
         }
 
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Species');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Species relation Species object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \SpeciesQuery A secondary query class using the current class as primary query
-     */
-    public function useSpeciesQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinSpecies($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Species', '\SpeciesQuery');
+        return $this->addUsingAlias(AnimalsTableMap::COL_BLAH, $blah, $comparison);
     }
 
     /**
@@ -899,14 +781,14 @@ abstract class AnimalsQuery extends ModelCriteria
     {
         if ($sexes instanceof \Sexes) {
             return $this
-                ->addUsingAlias(AnimalsTableMap::COL_SEXID, $sexes->getSex(), $comparison);
+                ->addUsingAlias(AnimalsTableMap::COL_SEX, $sexes->getSex(), $comparison);
         } elseif ($sexes instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(AnimalsTableMap::COL_SEXID, $sexes->toKeyValue('PrimaryKey', 'Sex'), $comparison);
+                ->addUsingAlias(AnimalsTableMap::COL_SEX, $sexes->toKeyValue('PrimaryKey', 'Sex'), $comparison);
         } else {
             throw new PropelException('filterBySexes() only accepts arguments of type \Sexes or Collection');
         }
@@ -960,233 +842,6 @@ abstract class AnimalsQuery extends ModelCriteria
         return $this
             ->joinSexes($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Sexes', '\SexesQuery');
-    }
-
-    /**
-     * Filter the query by a related \Colours object
-     *
-     * @param \Colours|ObjectCollection $colours The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildAnimalsQuery The current query, for fluid interface
-     */
-    public function filterByColoursRelatedByFurcolourid($colours, $comparison = null)
-    {
-        if ($colours instanceof \Colours) {
-            return $this
-                ->addUsingAlias(AnimalsTableMap::COL_FURCOLOURID, $colours->getColour(), $comparison);
-        } elseif ($colours instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(AnimalsTableMap::COL_FURCOLOURID, $colours->toKeyValue('PrimaryKey', 'Colour'), $comparison);
-        } else {
-            throw new PropelException('filterByColoursRelatedByFurcolourid() only accepts arguments of type \Colours or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the ColoursRelatedByFurcolourid relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildAnimalsQuery The current query, for fluid interface
-     */
-    public function joinColoursRelatedByFurcolourid($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('ColoursRelatedByFurcolourid');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'ColoursRelatedByFurcolourid');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the ColoursRelatedByFurcolourid relation Colours object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \ColoursQuery A secondary query class using the current class as primary query
-     */
-    public function useColoursRelatedByFurcolouridQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinColoursRelatedByFurcolourid($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'ColoursRelatedByFurcolourid', '\ColoursQuery');
-    }
-
-    /**
-     * Filter the query by a related \Colours object
-     *
-     * @param \Colours|ObjectCollection $colours The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildAnimalsQuery The current query, for fluid interface
-     */
-    public function filterByColoursRelatedByEyecolourid($colours, $comparison = null)
-    {
-        if ($colours instanceof \Colours) {
-            return $this
-                ->addUsingAlias(AnimalsTableMap::COL_EYECOLOURID, $colours->getColour(), $comparison);
-        } elseif ($colours instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(AnimalsTableMap::COL_EYECOLOURID, $colours->toKeyValue('PrimaryKey', 'Colour'), $comparison);
-        } else {
-            throw new PropelException('filterByColoursRelatedByEyecolourid() only accepts arguments of type \Colours or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the ColoursRelatedByEyecolourid relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildAnimalsQuery The current query, for fluid interface
-     */
-    public function joinColoursRelatedByEyecolourid($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('ColoursRelatedByEyecolourid');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'ColoursRelatedByEyecolourid');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the ColoursRelatedByEyecolourid relation Colours object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \ColoursQuery A secondary query class using the current class as primary query
-     */
-    public function useColoursRelatedByEyecolouridQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinColoursRelatedByEyecolourid($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'ColoursRelatedByEyecolourid', '\ColoursQuery');
-    }
-
-    /**
-     * Filter the query by a related \Notifications object
-     *
-     * @param \Notifications|ObjectCollection $notifications the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildAnimalsQuery The current query, for fluid interface
-     */
-    public function filterByNotifications($notifications, $comparison = null)
-    {
-        if ($notifications instanceof \Notifications) {
-            return $this
-                ->addUsingAlias(AnimalsTableMap::COL_ANIMAL, $notifications->getAnimalid(), $comparison);
-        } elseif ($notifications instanceof ObjectCollection) {
-            return $this
-                ->useNotificationsQuery()
-                ->filterByPrimaryKeys($notifications->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByNotifications() only accepts arguments of type \Notifications or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Notifications relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildAnimalsQuery The current query, for fluid interface
-     */
-    public function joinNotifications($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Notifications');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Notifications');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Notifications relation Notifications object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \NotificationsQuery A secondary query class using the current class as primary query
-     */
-    public function useNotificationsQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinNotifications($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Notifications', '\NotificationsQuery');
     }
 
     /**

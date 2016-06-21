@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \Sessions;
-use \SessionsQuery;
+use \Testt;
+use \TesttQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'sessions' table.
+ * This class defines the structure of the 'testt' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class SessionsTableMap extends TableMap
+class TesttTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class SessionsTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.SessionsTableMap';
+    const CLASS_NAME = '.Map.TesttTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class SessionsTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'sessions';
+    const TABLE_NAME = 'testt';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Sessions';
+    const OM_CLASS = '\\Testt';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Sessions';
+    const CLASS_DEFAULT = 'Testt';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 1;
 
     /**
      * The number of lazy-loaded columns
@@ -69,22 +69,12 @@ class SessionsTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 1;
 
     /**
-     * the column name for the session field
+     * the column name for the f field
      */
-    const COL_SESSION = 'sessions.session';
-
-    /**
-     * the column name for the user field
-     */
-    const COL_USER = 'sessions.user';
-
-    /**
-     * the column name for the sessionID field
-     */
-    const COL_SESSIONID = 'sessions.sessionID';
+    const COL_F = 'testt.f';
 
     /**
      * The default string format for model objects of the related table
@@ -98,11 +88,11 @@ class SessionsTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Session', 'User', 'Sessionid', ),
-        self::TYPE_CAMELNAME     => array('session', 'user', 'sessionid', ),
-        self::TYPE_COLNAME       => array(SessionsTableMap::COL_SESSION, SessionsTableMap::COL_USER, SessionsTableMap::COL_SESSIONID, ),
-        self::TYPE_FIELDNAME     => array('session', 'user', 'sessionID', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('F', ),
+        self::TYPE_CAMELNAME     => array('f', ),
+        self::TYPE_COLNAME       => array(TesttTableMap::COL_F, ),
+        self::TYPE_FIELDNAME     => array('f', ),
+        self::TYPE_NUM           => array(0, )
     );
 
     /**
@@ -112,11 +102,11 @@ class SessionsTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Session' => 0, 'User' => 1, 'Sessionid' => 2, ),
-        self::TYPE_CAMELNAME     => array('session' => 0, 'user' => 1, 'sessionid' => 2, ),
-        self::TYPE_COLNAME       => array(SessionsTableMap::COL_SESSION => 0, SessionsTableMap::COL_USER => 1, SessionsTableMap::COL_SESSIONID => 2, ),
-        self::TYPE_FIELDNAME     => array('session' => 0, 'user' => 1, 'sessionID' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('F' => 0, ),
+        self::TYPE_CAMELNAME     => array('f' => 0, ),
+        self::TYPE_COLNAME       => array(TesttTableMap::COL_F => 0, ),
+        self::TYPE_FIELDNAME     => array('f' => 0, ),
+        self::TYPE_NUM           => array(0, )
     );
 
     /**
@@ -129,16 +119,14 @@ class SessionsTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('sessions');
-        $this->setPhpName('Sessions');
+        $this->setName('testt');
+        $this->setPhpName('Testt');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Sessions');
+        $this->setClassName('\\Testt');
         $this->setPackage('');
-        $this->setUseIdGenerator(true);
+        $this->setUseIdGenerator(false);
         // columns
-        $this->addPrimaryKey('session', 'Session', 'INTEGER', true, 10, null);
-        $this->addColumn('user', 'User', 'INTEGER', true, 10, null);
-        $this->addColumn('sessionID', 'Sessionid', 'VARCHAR', true, 45, null);
+        $this->addPrimaryKey('f', 'F', 'DATE', true, null, null);
     } // initialize()
 
     /**
@@ -164,11 +152,11 @@ class SessionsTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Session', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('F', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Session', TableMap::TYPE_PHPNAME, $indexType)];
+        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('F', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -185,10 +173,10 @@ class SessionsTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return (int) $row[
+        return (string) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('Session', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('F', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -205,7 +193,7 @@ class SessionsTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? SessionsTableMap::CLASS_DEFAULT : SessionsTableMap::OM_CLASS;
+        return $withPrefix ? TesttTableMap::CLASS_DEFAULT : TesttTableMap::OM_CLASS;
     }
 
     /**
@@ -219,22 +207,22 @@ class SessionsTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Sessions object, last column rank)
+     * @return array           (Testt object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = SessionsTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = SessionsTableMap::getInstanceFromPool($key))) {
+        $key = TesttTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = TesttTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + SessionsTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + TesttTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = SessionsTableMap::OM_CLASS;
-            /** @var Sessions $obj */
+            $cls = TesttTableMap::OM_CLASS;
+            /** @var Testt $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            SessionsTableMap::addInstanceToPool($obj, $key);
+            TesttTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -257,18 +245,18 @@ class SessionsTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = SessionsTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = SessionsTableMap::getInstanceFromPool($key))) {
+            $key = TesttTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = TesttTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Sessions $obj */
+                /** @var Testt $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                SessionsTableMap::addInstanceToPool($obj, $key);
+                TesttTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -289,13 +277,9 @@ class SessionsTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(SessionsTableMap::COL_SESSION);
-            $criteria->addSelectColumn(SessionsTableMap::COL_USER);
-            $criteria->addSelectColumn(SessionsTableMap::COL_SESSIONID);
+            $criteria->addSelectColumn(TesttTableMap::COL_F);
         } else {
-            $criteria->addSelectColumn($alias . '.session');
-            $criteria->addSelectColumn($alias . '.user');
-            $criteria->addSelectColumn($alias . '.sessionID');
+            $criteria->addSelectColumn($alias . '.f');
         }
     }
 
@@ -308,7 +292,7 @@ class SessionsTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(SessionsTableMap::DATABASE_NAME)->getTable(SessionsTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(TesttTableMap::DATABASE_NAME)->getTable(TesttTableMap::TABLE_NAME);
     }
 
     /**
@@ -316,16 +300,16 @@ class SessionsTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(SessionsTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(SessionsTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new SessionsTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(TesttTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(TesttTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new TesttTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Sessions or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Testt or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Sessions object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Testt object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -336,27 +320,27 @@ class SessionsTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(SessionsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TesttTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Sessions) { // it's a model object
+        } elseif ($values instanceof \Testt) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(SessionsTableMap::DATABASE_NAME);
-            $criteria->add(SessionsTableMap::COL_SESSION, (array) $values, Criteria::IN);
+            $criteria = new Criteria(TesttTableMap::DATABASE_NAME);
+            $criteria->add(TesttTableMap::COL_F, (array) $values, Criteria::IN);
         }
 
-        $query = SessionsQuery::create()->mergeWith($criteria);
+        $query = TesttQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            SessionsTableMap::clearInstancePool();
+            TesttTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                SessionsTableMap::removeInstanceFromPool($singleval);
+                TesttTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -364,20 +348,20 @@ class SessionsTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the sessions table.
+     * Deletes all rows from the testt table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return SessionsQuery::create()->doDeleteAll($con);
+        return TesttQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Sessions or Criteria object.
+     * Performs an INSERT on the database, given a Testt or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Sessions object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Testt object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -386,22 +370,18 @@ class SessionsTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(SessionsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TesttTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Sessions object
-        }
-
-        if ($criteria->containsKey(SessionsTableMap::COL_SESSION) && $criteria->keyContainsValue(SessionsTableMap::COL_SESSION) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.SessionsTableMap::COL_SESSION.')');
+            $criteria = $criteria->buildCriteria(); // build Criteria from Testt object
         }
 
 
         // Set the correct dbName
-        $query = SessionsQuery::create()->mergeWith($criteria);
+        $query = TesttQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -410,7 +390,7 @@ class SessionsTableMap extends TableMap
         });
     }
 
-} // SessionsTableMap
+} // TesttTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-SessionsTableMap::buildTableMap();
+TesttTableMap::buildTableMap();

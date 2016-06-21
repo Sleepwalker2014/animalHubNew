@@ -14,6 +14,7 @@ $manager->setConfiguration([
     'attributes' =>
         [
             'ATTR_EMULATE_PREPARES' => false,
+            'ATTR_ERRMODE' => PDO::ERRMODE_EXCEPTION
         ],
 ]);
 $manager->setName('default');

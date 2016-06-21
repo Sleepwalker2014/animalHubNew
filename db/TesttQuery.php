@@ -1,9 +1,9 @@
 <?php
 
-use Base\Sessions as BaseSessions;
+use Base\TesttQuery as BaseTesttQuery;
 
 /**
- * Skeleton subclass for representing a row from the 'sessions' table.
+ * Skeleton subclass for performing query and update operations on the 'testt' table.
  *
  *
  *
@@ -12,7 +12,7 @@ use Base\Sessions as BaseSessions;
  * long as it does not already exist in the output directory.
  *
  */
-class Sessions extends BaseSessions
+class TesttQuery extends BaseTesttQuery
 {
 
 }

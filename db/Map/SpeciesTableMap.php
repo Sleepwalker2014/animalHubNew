@@ -146,13 +146,6 @@ class SpeciesTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Animals', '\\Animals', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':speciesId',
-    1 => ':species',
-  ),
-), null, 'CASCADE', 'Animalss', false);
     } // buildRelations()
 
     /**
