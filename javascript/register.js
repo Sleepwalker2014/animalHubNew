@@ -17,6 +17,9 @@ $(function () {
                 if (result.success == false) {
                     $('#registerAlert').html(result.templateData)
                         .removeClass('hide');
+                } else if(result.success == true) {
+                    $('#registerAlert').html(result.templateData)
+                        .removeClass('hide');
                 }
             }).always(function () {
                 $('#loginSpinner').hide();

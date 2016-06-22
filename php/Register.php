@@ -52,9 +52,10 @@ class Register {
                                      'Erfolgreich registiert man!',
                                      'support@animalHub.de')
         ) {
-            return false;
+            //return false;
         }
 
+        echo $this->getSuccessfulRegisterResponse();
         return true;
     }
 
@@ -83,6 +84,11 @@ class Register {
     public function getFailResponse () {
         return json_encode(['success' => false, 'templateData' => 'Die E-Mail oder der Benutzername wird bereits verwendet.']);
     }
+
+    public function getSuccessfulRegisterResponse () {
+        return json_encode(['success' => true, 'templateData' => $this->template->getHTMLAsString('register\registerMailSend.html.twig')]);
+    }
+
 
     public function sendRegisterMail ($receiverAddress, $subject, $message, $senderAddress) {
         $header  = "MIME-Version: 1.0\r\n".
