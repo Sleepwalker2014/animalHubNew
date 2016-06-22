@@ -12,6 +12,7 @@ class MainRouter
                                 'LoginUser' => ['class' => 'Login', 'method' => 'handleLogin'],
                                 'LogoutUser' => ['class' => 'Logout', 'method' => 'handleLogout'],
                                 'Register' => ['class' => 'Register', 'method' => 'handleRegister'],
+                                'CompleteRegister' => ['class' => 'Register', 'method' => 'handleCompleteRegistration'],
                                 'Home' => ['class' => 'Home', 'method' => 'getHTML'],
                                 'Overview' => ['class' => 'Overview', 'method' => 'getHTML'],
                                 'UserSettings' => ['class' => 'UserSettings', 'method' => 'getHTML']];

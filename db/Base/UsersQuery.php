@@ -10,6 +10,7 @@ use Map\UsersTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -23,11 +24,13 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUsersQuery orderByName($order = Criteria::ASC) Order by the name column
  * @method     ChildUsersQuery orderByEmail($order = Criteria::ASC) Order by the email column
  * @method     ChildUsersQuery orderByPassword($order = Criteria::ASC) Order by the password column
+ * @method     ChildUsersQuery orderByActive($order = Criteria::ASC) Order by the active column
  *
  * @method     ChildUsersQuery groupByUser() Group by the user column
  * @method     ChildUsersQuery groupByName() Group by the name column
  * @method     ChildUsersQuery groupByEmail() Group by the email column
  * @method     ChildUsersQuery groupByPassword() Group by the password column
+ * @method     ChildUsersQuery groupByActive() Group by the active column
  *
  * @method     ChildUsersQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildUsersQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -37,13 +40,26 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUsersQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildUsersQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
+ * @method     ChildUsersQuery leftJoinRegistrations($relationAlias = null) Adds a LEFT JOIN clause to the query using the Registrations relation
+ * @method     ChildUsersQuery rightJoinRegistrations($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Registrations relation
+ * @method     ChildUsersQuery innerJoinRegistrations($relationAlias = null) Adds a INNER JOIN clause to the query using the Registrations relation
+ *
+ * @method     ChildUsersQuery joinWithRegistrations($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Registrations relation
+ *
+ * @method     ChildUsersQuery leftJoinWithRegistrations() Adds a LEFT JOIN clause and with to the query using the Registrations relation
+ * @method     ChildUsersQuery rightJoinWithRegistrations() Adds a RIGHT JOIN clause and with to the query using the Registrations relation
+ * @method     ChildUsersQuery innerJoinWithRegistrations() Adds a INNER JOIN clause and with to the query using the Registrations relation
+ *
+ * @method     \RegistrationsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ *
  * @method     ChildUsers findOne(ConnectionInterface $con = null) Return the first ChildUsers matching the query
  * @method     ChildUsers findOneOrCreate(ConnectionInterface $con = null) Return the first ChildUsers matching the query, or a new ChildUsers object populated from the query conditions when no match is found
  *
  * @method     ChildUsers findOneByUser(int $user) Return the first ChildUsers filtered by the user column
  * @method     ChildUsers findOneByName(string $name) Return the first ChildUsers filtered by the name column
  * @method     ChildUsers findOneByEmail(string $email) Return the first ChildUsers filtered by the email column
- * @method     ChildUsers findOneByPassword(string $password) Return the first ChildUsers filtered by the password column *
+ * @method     ChildUsers findOneByPassword(string $password) Return the first ChildUsers filtered by the password column
+ * @method     ChildUsers findOneByActive(boolean $active) Return the first ChildUsers filtered by the active column *
 
  * @method     ChildUsers requirePk($key, ConnectionInterface $con = null) Return the ChildUsers by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUsers requireOne(ConnectionInterface $con = null) Return the first ChildUsers matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -52,12 +68,14 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUsers requireOneByName(string $name) Return the first ChildUsers filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUsers requireOneByEmail(string $email) Return the first ChildUsers filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUsers requireOneByPassword(string $password) Return the first ChildUsers filtered by the password column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUsers requireOneByActive(boolean $active) Return the first ChildUsers filtered by the active column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildUsers[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildUsers objects based on current ModelCriteria
  * @method     ChildUsers[]|ObjectCollection findByUser(int $user) Return ChildUsers objects filtered by the user column
  * @method     ChildUsers[]|ObjectCollection findByName(string $name) Return ChildUsers objects filtered by the name column
  * @method     ChildUsers[]|ObjectCollection findByEmail(string $email) Return ChildUsers objects filtered by the email column
  * @method     ChildUsers[]|ObjectCollection findByPassword(string $password) Return ChildUsers objects filtered by the password column
+ * @method     ChildUsers[]|ObjectCollection findByActive(boolean $active) Return ChildUsers objects filtered by the active column
  * @method     ChildUsers[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -150,7 +168,7 @@ abstract class UsersQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT user, name, email, password FROM users WHERE user = :p0';
+        $sql = 'SELECT user, name, email, password, active FROM users WHERE user = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -366,6 +384,106 @@ abstract class UsersQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UsersTableMap::COL_PASSWORD, $password, $comparison);
+    }
+
+    /**
+     * Filter the query on the active column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByActive(true); // WHERE active = true
+     * $query->filterByActive('yes'); // WHERE active = true
+     * </code>
+     *
+     * @param     boolean|string $active The value to use as filter.
+     *              Non-boolean arguments are converted using the following rules:
+     *                * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+     *                * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     *              Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUsersQuery The current query, for fluid interface
+     */
+    public function filterByActive($active = null, $comparison = null)
+    {
+        if (is_string($active)) {
+            $active = in_array(strtolower($active), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+        }
+
+        return $this->addUsingAlias(UsersTableMap::COL_ACTIVE, $active, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \Registrations object
+     *
+     * @param \Registrations|ObjectCollection $registrations the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildUsersQuery The current query, for fluid interface
+     */
+    public function filterByRegistrations($registrations, $comparison = null)
+    {
+        if ($registrations instanceof \Registrations) {
+            return $this
+                ->addUsingAlias(UsersTableMap::COL_USER, $registrations->getUser(), $comparison);
+        } elseif ($registrations instanceof ObjectCollection) {
+            return $this
+                ->useRegistrationsQuery()
+                ->filterByPrimaryKeys($registrations->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByRegistrations() only accepts arguments of type \Registrations or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Registrations relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildUsersQuery The current query, for fluid interface
+     */
+    public function joinRegistrations($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Registrations');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Registrations');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Registrations relation Registrations object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \RegistrationsQuery A secondary query class using the current class as primary query
+     */
+    public function useRegistrationsQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinRegistrations($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Registrations', '\RegistrationsQuery');
     }
 
     /**

@@ -4,6 +4,7 @@ namespace BeatHeat\Register;
 use BeatHeat\SessionHandler;
 use BeatHeat\Template;
 use Propel\Runtime\Exception\PropelException;
+use RegistrationsQuery;
 use Users;
 
 class Register {
@@ -34,7 +35,6 @@ class Register {
                    $_POST['registerEmail'],
                    $_POST['registerPassword'])
         ) {
-
             return false;
         }
 
@@ -44,6 +44,15 @@ class Register {
             if ($e->getPrevious()->getCode() == 23000) {
                 echo $this->getFailResponse();
             }
+            return false;
+        }
+
+        if (!$this->sendRegisterMail('marcel.roa@gmx.de',
+                                     'Registrierung erfolgreich',
+                                     'Erfolgreich registiert man!',
+                                     'support@animalHub.de')
+        ) {
+            return false;
         }
 
         return true;
@@ -73,5 +82,40 @@ class Register {
 
     public function getFailResponse () {
         return json_encode(['success' => false, 'templateData' => 'Die E-Mail oder der Benutzername wird bereits verwendet.']);
+    }
+
+    public function sendRegisterMail ($receiverAddress, $subject, $message, $senderAddress) {
+        $header  = "MIME-Version: 1.0\r\n".
+                   "Content-type: text/html; charset=iso-8859-1\r\n".
+                   "From: $senderAddress\r\n".
+                   "X-Mailer: PHP ". phpversion();
+
+        return mail($receiverAddress, $subject, $message, $header);
+    }
+
+    public function handleCompleteRegistration () {
+        if (!isset($_POST['registrationCode'])) {
+            echo $this->template->getHTMLAsString('register\register.html.twig');
+            return false;
+        }
+
+        $registration = $this->findOpenRegistrationByCode($_POST['registrationCode']);
+        if (empty($registration)) {
+            return false;
+        }
+
+        $registration->delete();
+
+        $registration->getUsers()
+                     ->setActive(true)
+                     ->save();
+
+        return true;
+    }
+
+    public function findOpenRegistrationByCode ($registrationCode) {
+        $registrationQuery = new RegistrationsQuery();
+
+        return $registrationQuery->findOneByCode($registrationCode);
     }
 }

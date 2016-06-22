@@ -61,6 +61,23 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+  <table name="registrations" idMethod="native" phpName="Registrations">
+    <column name="registration" phpName="Registration" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="user" phpName="User" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="32" required="true"/>
+    <foreign-key foreignTable="users" name="fk_users_user" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="user" foreign="user"/>
+    </foreign-key>
+    <unique name="user">
+      <unique-column name="user"/>
+    </unique>
+    <unique name="code">
+      <unique-column name="code"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="sexes" idMethod="native" phpName="Sexes">
     <column name="sex" phpName="Sex" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="code" phpName="Code" type="VARCHAR" size="10" required="true"/>
@@ -107,6 +124,7 @@
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
     <column name="email" phpName="Email" type="VARCHAR" size="255" required="true"/>
     <column name="password" phpName="Password" type="VARCHAR" size="255" required="true"/>
+    <column name="active" phpName="Active" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
     <unique name="email">
       <unique-column name="email"/>
     </unique>

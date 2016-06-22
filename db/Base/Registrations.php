@@ -2,19 +2,17 @@
 
 namespace Base;
 
-use \Registrations as ChildRegistrations;
 use \RegistrationsQuery as ChildRegistrationsQuery;
 use \Users as ChildUsers;
 use \UsersQuery as ChildUsersQuery;
 use \Exception;
 use \PDO;
-use Map\UsersTableMap;
+use Map\RegistrationsTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
@@ -23,18 +21,18 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 
 /**
- * Base class that represents a row from the 'users' table.
+ * Base class that represents a row from the 'registrations' table.
  *
  *
  *
 * @package    propel.generator..Base
 */
-abstract class Users implements ActiveRecordInterface
+abstract class Registrations implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\UsersTableMap';
+    const TABLE_MAP = '\\Map\\RegistrationsTableMap';
 
 
     /**
@@ -64,41 +62,27 @@ abstract class Users implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
+     * The value for the registration field.
+     * @var        int
+     */
+    protected $registration;
+
+    /**
      * The value for the user field.
      * @var        int
      */
     protected $user;
 
     /**
-     * The value for the name field.
+     * The value for the code field.
      * @var        string
      */
-    protected $name;
+    protected $code;
 
     /**
-     * The value for the email field.
-     * @var        string
+     * @var        ChildUsers
      */
-    protected $email;
-
-    /**
-     * The value for the password field.
-     * @var        string
-     */
-    protected $password;
-
-    /**
-     * The value for the active field.
-     * Note: this column has a database default value of: false
-     * @var        boolean
-     */
-    protected $active;
-
-    /**
-     * @var        ObjectCollection|ChildRegistrations[] Collection to store aggregation of ChildRegistrations objects.
-     */
-    protected $collRegistrationss;
-    protected $collRegistrationssPartial;
+    protected $aUsers;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -109,29 +93,10 @@ abstract class Users implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildRegistrations[]
-     */
-    protected $registrationssScheduledForDeletion = null;
-
-    /**
-     * Applies default values to this object.
-     * This method should be called from the object's constructor (or
-     * equivalent initialization method).
-     * @see __construct()
-     */
-    public function applyDefaultValues()
-    {
-        $this->active = false;
-    }
-
-    /**
-     * Initializes internal state of Base\Users object.
-     * @see applyDefaults()
+     * Initializes internal state of Base\Registrations object.
      */
     public function __construct()
     {
-        $this->applyDefaultValues();
     }
 
     /**
@@ -223,9 +188,9 @@ abstract class Users implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Users</code> instance.  If
-     * <code>obj</code> is an instance of <code>Users</code>, delegates to
-     * <code>equals(Users)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Registrations</code> instance.  If
+     * <code>obj</code> is an instance of <code>Registrations</code>, delegates to
+     * <code>equals(Registrations)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -291,7 +256,7 @@ abstract class Users implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Users The current object, for fluid interface
+     * @return $this|Registrations The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -345,6 +310,16 @@ abstract class Users implements ActiveRecordInterface
     }
 
     /**
+     * Get the [registration] column value.
+     *
+     * @return int
+     */
+    public function getRegistration()
+    {
+        return $this->registration;
+    }
+
+    /**
      * Get the [user] column value.
      *
      * @return int
@@ -355,60 +330,40 @@ abstract class Users implements ActiveRecordInterface
     }
 
     /**
-     * Get the [name] column value.
+     * Get the [code] column value.
      *
      * @return string
      */
-    public function getName()
+    public function getCode()
     {
-        return $this->name;
+        return $this->code;
     }
 
     /**
-     * Get the [email] column value.
+     * Set the value of [registration] column.
      *
-     * @return string
+     * @param int $v new value
+     * @return $this|\Registrations The current object (for fluent API support)
      */
-    public function getEmail()
+    public function setRegistration($v)
     {
-        return $this->email;
-    }
+        if ($v !== null) {
+            $v = (int) $v;
+        }
 
-    /**
-     * Get the [password] column value.
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
+        if ($this->registration !== $v) {
+            $this->registration = $v;
+            $this->modifiedColumns[RegistrationsTableMap::COL_REGISTRATION] = true;
+        }
 
-    /**
-     * Get the [active] column value.
-     *
-     * @return boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * Get the [active] column value.
-     *
-     * @return boolean
-     */
-    public function isActive()
-    {
-        return $this->getActive();
-    }
+        return $this;
+    } // setRegistration()
 
     /**
      * Set the value of [user] column.
      *
      * @param int $v new value
-     * @return $this|\Users The current object (for fluent API support)
+     * @return $this|\Registrations The current object (for fluent API support)
      */
     public function setUser($v)
     {
@@ -418,99 +373,35 @@ abstract class Users implements ActiveRecordInterface
 
         if ($this->user !== $v) {
             $this->user = $v;
-            $this->modifiedColumns[UsersTableMap::COL_USER] = true;
+            $this->modifiedColumns[RegistrationsTableMap::COL_USER] = true;
+        }
+
+        if ($this->aUsers !== null && $this->aUsers->getUser() !== $v) {
+            $this->aUsers = null;
         }
 
         return $this;
     } // setUser()
 
     /**
-     * Set the value of [name] column.
+     * Set the value of [code] column.
      *
      * @param string $v new value
-     * @return $this|\Users The current object (for fluent API support)
+     * @return $this|\Registrations The current object (for fluent API support)
      */
-    public function setName($v)
+    public function setCode($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->name !== $v) {
-            $this->name = $v;
-            $this->modifiedColumns[UsersTableMap::COL_NAME] = true;
+        if ($this->code !== $v) {
+            $this->code = $v;
+            $this->modifiedColumns[RegistrationsTableMap::COL_CODE] = true;
         }
 
         return $this;
-    } // setName()
-
-    /**
-     * Set the value of [email] column.
-     *
-     * @param string $v new value
-     * @return $this|\Users The current object (for fluent API support)
-     */
-    public function setEmail($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->email !== $v) {
-            $this->email = $v;
-            $this->modifiedColumns[UsersTableMap::COL_EMAIL] = true;
-        }
-
-        return $this;
-    } // setEmail()
-
-    /**
-     * Set the value of [password] column.
-     *
-     * @param string $v new value
-     * @return $this|\Users The current object (for fluent API support)
-     */
-    public function setPassword($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->password !== $v) {
-            $this->password = $v;
-            $this->modifiedColumns[UsersTableMap::COL_PASSWORD] = true;
-        }
-
-        return $this;
-    } // setPassword()
-
-    /**
-     * Sets the value of the [active] column.
-     * Non-boolean arguments are converted using the following rules:
-     *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
-     *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
-     * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
-     * @param  boolean|integer|string $v The new value
-     * @return $this|\Users The current object (for fluent API support)
-     */
-    public function setActive($v)
-    {
-        if ($v !== null) {
-            if (is_string($v)) {
-                $v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
-            } else {
-                $v = (boolean) $v;
-            }
-        }
-
-        if ($this->active !== $v) {
-            $this->active = $v;
-            $this->modifiedColumns[UsersTableMap::COL_ACTIVE] = true;
-        }
-
-        return $this;
-    } // setActive()
+    } // setCode()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -522,10 +413,6 @@ abstract class Users implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
-            if ($this->active !== false) {
-                return false;
-            }
-
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -552,20 +439,14 @@ abstract class Users implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UsersTableMap::translateFieldName('User', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : RegistrationsTableMap::translateFieldName('Registration', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->registration = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : RegistrationsTableMap::translateFieldName('User', TableMap::TYPE_PHPNAME, $indexType)];
             $this->user = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UsersTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->name = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UsersTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->email = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UsersTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->password = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UsersTableMap::translateFieldName('Active', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->active = (null !== $col) ? (boolean) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : RegistrationsTableMap::translateFieldName('Code', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->code = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -574,10 +455,10 @@ abstract class Users implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = UsersTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 3; // 3 = RegistrationsTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Users'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Registrations'), 0, $e);
         }
     }
 
@@ -596,6 +477,9 @@ abstract class Users implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aUsers !== null && $this->user !== $this->aUsers->getUser()) {
+            $this->aUsers = null;
+        }
     } // ensureConsistency
 
     /**
@@ -619,13 +503,13 @@ abstract class Users implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(UsersTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(RegistrationsTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildUsersQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildRegistrationsQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -635,8 +519,7 @@ abstract class Users implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collRegistrationss = null;
-
+            $this->aUsers = null;
         } // if (deep)
     }
 
@@ -646,8 +529,8 @@ abstract class Users implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Users::setDeleted()
-     * @see Users::isDeleted()
+     * @see Registrations::setDeleted()
+     * @see Registrations::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -656,11 +539,11 @@ abstract class Users implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(UsersTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(RegistrationsTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildUsersQuery::create()
+            $deleteQuery = ChildRegistrationsQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -691,7 +574,7 @@ abstract class Users implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(UsersTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(RegistrationsTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -710,7 +593,7 @@ abstract class Users implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                UsersTableMap::addInstanceToPool($this);
+                RegistrationsTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -736,6 +619,18 @@ abstract class Users implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aUsers !== null) {
+                if ($this->aUsers->isModified() || $this->aUsers->isNew()) {
+                    $affectedRows += $this->aUsers->save($con);
+                }
+                $this->setUsers($this->aUsers);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -745,23 +640,6 @@ abstract class Users implements ActiveRecordInterface
                     $affectedRows += $this->doUpdate($con);
                 }
                 $this->resetModified();
-            }
-
-            if ($this->registrationssScheduledForDeletion !== null) {
-                if (!$this->registrationssScheduledForDeletion->isEmpty()) {
-                    \RegistrationsQuery::create()
-                        ->filterByPrimaryKeys($this->registrationssScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->registrationssScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collRegistrationss !== null) {
-                foreach ($this->collRegistrationss as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
             }
 
             $this->alreadyInSave = false;
@@ -784,30 +662,24 @@ abstract class Users implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[UsersTableMap::COL_USER] = true;
-        if (null !== $this->user) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . UsersTableMap::COL_USER . ')');
+        $this->modifiedColumns[RegistrationsTableMap::COL_REGISTRATION] = true;
+        if (null !== $this->registration) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . RegistrationsTableMap::COL_REGISTRATION . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(UsersTableMap::COL_USER)) {
+        if ($this->isColumnModified(RegistrationsTableMap::COL_REGISTRATION)) {
+            $modifiedColumns[':p' . $index++]  = 'registration';
+        }
+        if ($this->isColumnModified(RegistrationsTableMap::COL_USER)) {
             $modifiedColumns[':p' . $index++]  = 'user';
         }
-        if ($this->isColumnModified(UsersTableMap::COL_NAME)) {
-            $modifiedColumns[':p' . $index++]  = 'name';
-        }
-        if ($this->isColumnModified(UsersTableMap::COL_EMAIL)) {
-            $modifiedColumns[':p' . $index++]  = 'email';
-        }
-        if ($this->isColumnModified(UsersTableMap::COL_PASSWORD)) {
-            $modifiedColumns[':p' . $index++]  = 'password';
-        }
-        if ($this->isColumnModified(UsersTableMap::COL_ACTIVE)) {
-            $modifiedColumns[':p' . $index++]  = 'active';
+        if ($this->isColumnModified(RegistrationsTableMap::COL_CODE)) {
+            $modifiedColumns[':p' . $index++]  = 'code';
         }
 
         $sql = sprintf(
-            'INSERT INTO users (%s) VALUES (%s)',
+            'INSERT INTO registrations (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -816,20 +688,14 @@ abstract class Users implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
+                    case 'registration':
+                        $stmt->bindValue($identifier, $this->registration, PDO::PARAM_INT);
+                        break;
                     case 'user':
                         $stmt->bindValue($identifier, $this->user, PDO::PARAM_INT);
                         break;
-                    case 'name':
-                        $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
-                        break;
-                    case 'email':
-                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
-                        break;
-                    case 'password':
-                        $stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
-                        break;
-                    case 'active':
-                        $stmt->bindValue($identifier, (int) $this->active, PDO::PARAM_INT);
+                    case 'code':
+                        $stmt->bindValue($identifier, $this->code, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -844,7 +710,7 @@ abstract class Users implements ActiveRecordInterface
         } catch (Exception $e) {
             throw new PropelException('Unable to get autoincrement id.', 0, $e);
         }
-        $this->setUser($pk);
+        $this->setRegistration($pk);
 
         $this->setNew(false);
     }
@@ -877,7 +743,7 @@ abstract class Users implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = UsersTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = RegistrationsTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -894,19 +760,13 @@ abstract class Users implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getUser();
+                return $this->getRegistration();
                 break;
             case 1:
-                return $this->getName();
+                return $this->getUser();
                 break;
             case 2:
-                return $this->getEmail();
-                break;
-            case 3:
-                return $this->getPassword();
-                break;
-            case 4:
-                return $this->getActive();
+                return $this->getCode();
                 break;
             default:
                 return null;
@@ -932,17 +792,15 @@ abstract class Users implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Users'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Registrations'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Users'][$this->hashCode()] = true;
-        $keys = UsersTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Registrations'][$this->hashCode()] = true;
+        $keys = RegistrationsTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getUser(),
-            $keys[1] => $this->getName(),
-            $keys[2] => $this->getEmail(),
-            $keys[3] => $this->getPassword(),
-            $keys[4] => $this->getActive(),
+            $keys[0] => $this->getRegistration(),
+            $keys[1] => $this->getUser(),
+            $keys[2] => $this->getCode(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -950,20 +808,20 @@ abstract class Users implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->collRegistrationss) {
+            if (null !== $this->aUsers) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'registrationss';
+                        $key = 'users';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'registrationss';
+                        $key = 'users';
                         break;
                     default:
-                        $key = 'Registrationss';
+                        $key = 'Users';
                 }
 
-                $result[$key] = $this->collRegistrationss->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->aUsers->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -979,11 +837,11 @@ abstract class Users implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Users
+     * @return $this|\Registrations
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = UsersTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = RegistrationsTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -994,25 +852,19 @@ abstract class Users implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Users
+     * @return $this|\Registrations
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setUser($value);
+                $this->setRegistration($value);
                 break;
             case 1:
-                $this->setName($value);
+                $this->setUser($value);
                 break;
             case 2:
-                $this->setEmail($value);
-                break;
-            case 3:
-                $this->setPassword($value);
-                break;
-            case 4:
-                $this->setActive($value);
+                $this->setCode($value);
                 break;
         } // switch()
 
@@ -1038,22 +890,16 @@ abstract class Users implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = UsersTableMap::getFieldNames($keyType);
+        $keys = RegistrationsTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setUser($arr[$keys[0]]);
+            $this->setRegistration($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setName($arr[$keys[1]]);
+            $this->setUser($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setEmail($arr[$keys[2]]);
-        }
-        if (array_key_exists($keys[3], $arr)) {
-            $this->setPassword($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setActive($arr[$keys[4]]);
+            $this->setCode($arr[$keys[2]]);
         }
     }
 
@@ -1074,7 +920,7 @@ abstract class Users implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Users The current object, for fluid interface
+     * @return $this|\Registrations The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1094,22 +940,16 @@ abstract class Users implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(UsersTableMap::DATABASE_NAME);
+        $criteria = new Criteria(RegistrationsTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(UsersTableMap::COL_USER)) {
-            $criteria->add(UsersTableMap::COL_USER, $this->user);
+        if ($this->isColumnModified(RegistrationsTableMap::COL_REGISTRATION)) {
+            $criteria->add(RegistrationsTableMap::COL_REGISTRATION, $this->registration);
         }
-        if ($this->isColumnModified(UsersTableMap::COL_NAME)) {
-            $criteria->add(UsersTableMap::COL_NAME, $this->name);
+        if ($this->isColumnModified(RegistrationsTableMap::COL_USER)) {
+            $criteria->add(RegistrationsTableMap::COL_USER, $this->user);
         }
-        if ($this->isColumnModified(UsersTableMap::COL_EMAIL)) {
-            $criteria->add(UsersTableMap::COL_EMAIL, $this->email);
-        }
-        if ($this->isColumnModified(UsersTableMap::COL_PASSWORD)) {
-            $criteria->add(UsersTableMap::COL_PASSWORD, $this->password);
-        }
-        if ($this->isColumnModified(UsersTableMap::COL_ACTIVE)) {
-            $criteria->add(UsersTableMap::COL_ACTIVE, $this->active);
+        if ($this->isColumnModified(RegistrationsTableMap::COL_CODE)) {
+            $criteria->add(RegistrationsTableMap::COL_CODE, $this->code);
         }
 
         return $criteria;
@@ -1127,8 +967,8 @@ abstract class Users implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildUsersQuery::create();
-        $criteria->add(UsersTableMap::COL_USER, $this->user);
+        $criteria = ChildRegistrationsQuery::create();
+        $criteria->add(RegistrationsTableMap::COL_REGISTRATION, $this->registration);
 
         return $criteria;
     }
@@ -1141,7 +981,7 @@ abstract class Users implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getUser();
+        $validPk = null !== $this->getRegistration();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1161,18 +1001,18 @@ abstract class Users implements ActiveRecordInterface
      */
     public function getPrimaryKey()
     {
-        return $this->getUser();
+        return $this->getRegistration();
     }
 
     /**
-     * Generic method to set the primary key (user column).
+     * Generic method to set the primary key (registration column).
      *
      * @param       int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setUser($key);
+        $this->setRegistration($key);
     }
 
     /**
@@ -1181,7 +1021,7 @@ abstract class Users implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getUser();
+        return null === $this->getRegistration();
     }
 
     /**
@@ -1190,34 +1030,18 @@ abstract class Users implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Users (or compatible) type.
+     * @param      object $copyObj An object of \Registrations (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setName($this->getName());
-        $copyObj->setEmail($this->getEmail());
-        $copyObj->setPassword($this->getPassword());
-        $copyObj->setActive($this->getActive());
-
-        if ($deepCopy) {
-            // important: temporarily setNew(false) because this affects the behavior of
-            // the getter/setter methods for fkey referrer objects.
-            $copyObj->setNew(false);
-
-            foreach ($this->getRegistrationss() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addRegistrations($relObj->copy($deepCopy));
-                }
-            }
-
-        } // if ($deepCopy)
-
+        $copyObj->setUser($this->getUser());
+        $copyObj->setCode($this->getCode());
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setUser(NULL); // this is a auto-increment column, so set to default value
+            $copyObj->setRegistration(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1230,7 +1054,7 @@ abstract class Users implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Users Clone of current object.
+     * @return \Registrations Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1243,238 +1067,55 @@ abstract class Users implements ActiveRecordInterface
         return $copyObj;
     }
 
-
     /**
-     * Initializes a collection based on the name of a relation.
-     * Avoids crafting an 'init[$relationName]s' method name
-     * that wouldn't work when StandardEnglishPluralizer is used.
+     * Declares an association between this object and a ChildUsers object.
      *
-     * @param      string $relationName The name of the relation to initialize
-     * @return void
-     */
-    public function initRelation($relationName)
-    {
-        if ('Registrations' == $relationName) {
-            return $this->initRegistrationss();
-        }
-    }
-
-    /**
-     * Clears out the collRegistrationss collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addRegistrationss()
-     */
-    public function clearRegistrationss()
-    {
-        $this->collRegistrationss = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collRegistrationss collection loaded partially.
-     */
-    public function resetPartialRegistrationss($v = true)
-    {
-        $this->collRegistrationssPartial = $v;
-    }
-
-    /**
-     * Initializes the collRegistrationss collection.
-     *
-     * By default this just sets the collRegistrationss collection to an empty array (like clearcollRegistrationss());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initRegistrationss($overrideExisting = true)
-    {
-        if (null !== $this->collRegistrationss && !$overrideExisting) {
-            return;
-        }
-        $this->collRegistrationss = new ObjectCollection();
-        $this->collRegistrationss->setModel('\Registrations');
-    }
-
-    /**
-     * Gets an array of ChildRegistrations objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildUsers is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildRegistrations[] List of ChildRegistrations objects
+     * @param  ChildUsers $v
+     * @return $this|\Registrations The current object (for fluent API support)
      * @throws PropelException
      */
-    public function getRegistrationss(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function setUsers(ChildUsers $v = null)
     {
-        $partial = $this->collRegistrationssPartial && !$this->isNew();
-        if (null === $this->collRegistrationss || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collRegistrationss) {
-                // return empty collection
-                $this->initRegistrationss();
-            } else {
-                $collRegistrationss = ChildRegistrationsQuery::create(null, $criteria)
-                    ->filterByUsers($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collRegistrationssPartial && count($collRegistrationss)) {
-                        $this->initRegistrationss(false);
-
-                        foreach ($collRegistrationss as $obj) {
-                            if (false == $this->collRegistrationss->contains($obj)) {
-                                $this->collRegistrationss->append($obj);
-                            }
-                        }
-
-                        $this->collRegistrationssPartial = true;
-                    }
-
-                    return $collRegistrationss;
-                }
-
-                if ($partial && $this->collRegistrationss) {
-                    foreach ($this->collRegistrationss as $obj) {
-                        if ($obj->isNew()) {
-                            $collRegistrationss[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collRegistrationss = $collRegistrationss;
-                $this->collRegistrationssPartial = false;
-            }
+        if ($v === null) {
+            $this->setUser(NULL);
+        } else {
+            $this->setUser($v->getUser());
         }
 
-        return $this->collRegistrationss;
-    }
+        $this->aUsers = $v;
 
-    /**
-     * Sets a collection of ChildRegistrations objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $registrationss A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildUsers The current object (for fluent API support)
-     */
-    public function setRegistrationss(Collection $registrationss, ConnectionInterface $con = null)
-    {
-        /** @var ChildRegistrations[] $registrationssToDelete */
-        $registrationssToDelete = $this->getRegistrationss(new Criteria(), $con)->diff($registrationss);
-
-
-        $this->registrationssScheduledForDeletion = $registrationssToDelete;
-
-        foreach ($registrationssToDelete as $registrationsRemoved) {
-            $registrationsRemoved->setUsers(null);
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildUsers object, it will not be re-added.
+        if ($v !== null) {
+            $v->addRegistrations($this);
         }
 
-        $this->collRegistrationss = null;
-        foreach ($registrationss as $registrations) {
-            $this->addRegistrations($registrations);
-        }
-
-        $this->collRegistrationss = $registrationss;
-        $this->collRegistrationssPartial = false;
 
         return $this;
     }
 
+
     /**
-     * Returns the number of related Registrations objects.
+     * Get the associated ChildUsers object
      *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Registrations objects.
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildUsers The associated ChildUsers object.
      * @throws PropelException
      */
-    public function countRegistrationss(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function getUsers(ConnectionInterface $con = null)
     {
-        $partial = $this->collRegistrationssPartial && !$this->isNew();
-        if (null === $this->collRegistrationss || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collRegistrationss) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getRegistrationss());
-            }
-
-            $query = ChildRegistrationsQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByUsers($this)
-                ->count($con);
+        if ($this->aUsers === null && ($this->user !== null)) {
+            $this->aUsers = ChildUsersQuery::create()->findPk($this->user, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aUsers->addRegistrationss($this);
+             */
         }
 
-        return count($this->collRegistrationss);
-    }
-
-    /**
-     * Method called to associate a ChildRegistrations object to this object
-     * through the ChildRegistrations foreign key attribute.
-     *
-     * @param  ChildRegistrations $l ChildRegistrations
-     * @return $this|\Users The current object (for fluent API support)
-     */
-    public function addRegistrations(ChildRegistrations $l)
-    {
-        if ($this->collRegistrationss === null) {
-            $this->initRegistrationss();
-            $this->collRegistrationssPartial = true;
-        }
-
-        if (!$this->collRegistrationss->contains($l)) {
-            $this->doAddRegistrations($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildRegistrations $registrations The ChildRegistrations object to add.
-     */
-    protected function doAddRegistrations(ChildRegistrations $registrations)
-    {
-        $this->collRegistrationss[]= $registrations;
-        $registrations->setUsers($this);
-    }
-
-    /**
-     * @param  ChildRegistrations $registrations The ChildRegistrations object to remove.
-     * @return $this|ChildUsers The current object (for fluent API support)
-     */
-    public function removeRegistrations(ChildRegistrations $registrations)
-    {
-        if ($this->getRegistrationss()->contains($registrations)) {
-            $pos = $this->collRegistrationss->search($registrations);
-            $this->collRegistrationss->remove($pos);
-            if (null === $this->registrationssScheduledForDeletion) {
-                $this->registrationssScheduledForDeletion = clone $this->collRegistrationss;
-                $this->registrationssScheduledForDeletion->clear();
-            }
-            $this->registrationssScheduledForDeletion[]= clone $registrations;
-            $registrations->setUsers(null);
-        }
-
-        return $this;
+        return $this->aUsers;
     }
 
     /**
@@ -1484,14 +1125,14 @@ abstract class Users implements ActiveRecordInterface
      */
     public function clear()
     {
+        if (null !== $this->aUsers) {
+            $this->aUsers->removeRegistrations($this);
+        }
+        $this->registration = null;
         $this->user = null;
-        $this->name = null;
-        $this->email = null;
-        $this->password = null;
-        $this->active = null;
+        $this->code = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
-        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
@@ -1508,14 +1149,9 @@ abstract class Users implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collRegistrationss) {
-                foreach ($this->collRegistrationss as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
         } // if ($deep)
 
-        $this->collRegistrationss = null;
+        $this->aUsers = null;
     }
 
     /**
@@ -1525,7 +1161,7 @@ abstract class Users implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(UsersTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(RegistrationsTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**
