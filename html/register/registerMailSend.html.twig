@@ -1,71 +1,9 @@
-{% block content %}
-    {% include 'navbar/navbar.html.twig' %}
+<div class="jumbotron">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="jumbotron">
-                    <h1>Deine Einstellungen...</h1>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Allgemeines</h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label for="exampleInputEmail1">E-Mail Adresse</label> <input type="email"
-                                                                                      class="form-control"
-                                                                                      id="exampleInputEmail1"
-                                                                                      placeholder="E-Mail">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <p class="help-block">Example block-level help text
-                                          here.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Sicherheit</h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label for="currentPassword">derzeitiges
-                                                     Passwort</label> <input type="password"
-                                                                             class="form-control"
-                                                                             id="currentPassword"
-                                                                             placeholder="Aktuelles Passwort">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label for="newpassword">neues Passwort</label> <input
-                                type="password"
-                                class="form-control"
-                                id="newPassword"
-                                placeholder="neues Passwort">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label for="newpasswordConfirm">erneute
-                                                        Eingabe</label> <input type="password"
-                                                                               class="form-control"
-                                                                               id="newpasswordConfirm"
-                                                                               placeholder="erneute Eingabe">
-                    </div>
-                </div>
-                <button type="btn"
-                        class="btn btn-default"
-                        id="savePasswordBtn">Speichern
-                </button>
-            </div>
-        </div>
+        <h1>Nur noch ein kleiner Schritt...</h1>
+        <p>Schaue in deine Emails und bestätige deine Registrierung!</p>
+        <p><a class="btn btn-primary btn-lg"
+              href="#"
+              role="button">zurück zum Login</a></p>
     </div>
-    <script src="javascript/passwordFunctions.js"></script>
-{% endblock %}
+</div>

@@ -18,8 +18,7 @@ $(function () {
                     $('#registerAlert').html(result.templateData)
                         .removeClass('hide');
                 } else if(result.success == true) {
-                    $('#registerAlert').html(result.templateData)
-                        .removeClass('hide');
+                    $('#mainContent').html(result.templateData)
                 }
             }).always(function () {
                 $('#loginSpinner').hide();
