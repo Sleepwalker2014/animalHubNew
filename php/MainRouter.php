@@ -48,14 +48,14 @@ class MainRouter
             if (empty($this->actionCode)) {
                 $this->actionCode = 'Overview';
             }
-        } elseif (empty($this->actionCode)) {
+        } elseif (empty($this->actionCode) || $this->actionCode != 'CompleteRegister') {
             $this->actionCode = 'Home';
         }
 
         if (isset($this->actionMethodMap[$this->actionCode])) {
             $className = "BeatHeat\\" . $this->actionMethodMap[$this->actionCode]['class'] . "\\" . $this->actionMethodMap[$this->actionCode]['class'];
 
-            $actionClass = new $className($this->template, $this->sessionHandler);
+            $actionClass = new $className($this->template, $this->sessionHandler, $this->parameters);
             $actionMethod = $this->actionMethodMap[$this->actionCode]['method'];
 
             $actionClass->$actionMethod();

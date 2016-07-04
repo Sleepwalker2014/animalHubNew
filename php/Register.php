@@ -19,12 +19,19 @@ class Register {
     private $sessionHandler;
 
     /**
+     * @var mixed[]
+     */
+    private $parameters;
+
+
+    /**
      * Register constructor.
      *
-     * @param Template       $template
+     * @param Template $template
      * @param SessionHandler $sessionHandler
+     * @param mixed[]|null $parameters
      */
-    public function __construct (Template $template, SessionHandler $sessionHandler) {
+    public function __construct (Template $template, SessionHandler $sessionHandler, $parameters = null) {
         $this->template = $template;
         $this->sessionHandler = $sessionHandler;
     }
@@ -100,13 +107,14 @@ class Register {
     }
 
     public function handleCompleteRegistration () {
-        if (!isset($_POST['registrationCode'])) {
-            echo $this->template->getHTMLAsString('register\register.html.twig');
+        if (!isset($this->parameters)) {
+            echo $this->template->getHTMLAsString('register\registerFailed.html.twig');
             return false;
         }
 
-        $registration = $this->findOpenRegistrationByCode($_POST['registrationCode']);
+        $registration = $this->findOpenRegistrationByCode($this->parameters);
         if (empty($registration)) {
+            echo $this->template->getHTMLAsString('register\registerFailed.html.twig');
             return false;
         }
 

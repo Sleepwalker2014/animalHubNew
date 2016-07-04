@@ -34,6 +34,8 @@ class Template
      */
     public function getHTMLAsString($templateFile, $content = [])
     {
+        $_SERVER['DOCUMENT_ROOT'] = '/home/marcel/webProjects/animalHubNew/';
+
         return $this->twig->render($templateFile, $content);
     }
 }

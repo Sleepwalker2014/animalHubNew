@@ -22,6 +22,7 @@ $sessionHandler = new SessionHandler();
 $templateHandler = new Template('../html');
 
 $actionCode = !empty($_GET['actionCode']) ? $_GET['actionCode'] : null;
+$parameter = !empty($_GET['parameter']) ? $_GET['parameter'] : null;
 
-$router = new MainRouter($actionCode, [], $templateHandler, $sessionHandler);
+$router = new MainRouter($actionCode, $parameter, $templateHandler, $sessionHandler);
 $router->route();
