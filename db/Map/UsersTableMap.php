@@ -158,6 +158,13 @@ class UsersTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Animals', '\\Animals', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':user',
+    1 => ':user',
+  ),
+), null, 'CASCADE', 'Animalss', false);
         $this->addRelation('Registrations', '\\Registrations', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (

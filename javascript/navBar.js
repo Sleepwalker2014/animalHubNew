@@ -19,6 +19,17 @@ $(document).ready(function () {
     });
 
     $("#editAnimalsBtn").click(function () {
+        $.ajax({
+            url: "AnimalOverview",
+            method: "POST",
+            dataType: "json"
+        }).done(function (result) {
+        }).always(function (result) {
+            $('#mainContent').html(result.responseText);
+        });
+    });
+
+    $("#editAnimalsBtn").click(function () {
         ajaxCall('php/routingHandler.php', {'actionCode': "9"}).done(function (result) {
             $('#content').html(result);
         });

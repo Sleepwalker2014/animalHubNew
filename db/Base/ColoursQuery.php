@@ -10,6 +10,7 @@ use Map\ColoursTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -32,6 +33,28 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildColoursQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
  * @method     ChildColoursQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildColoursQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
+ *
+ * @method     ChildColoursQuery leftJoinAnimalsRelatedByFurcolour($relationAlias = null) Adds a LEFT JOIN clause to the query using the AnimalsRelatedByFurcolour relation
+ * @method     ChildColoursQuery rightJoinAnimalsRelatedByFurcolour($relationAlias = null) Adds a RIGHT JOIN clause to the query using the AnimalsRelatedByFurcolour relation
+ * @method     ChildColoursQuery innerJoinAnimalsRelatedByFurcolour($relationAlias = null) Adds a INNER JOIN clause to the query using the AnimalsRelatedByFurcolour relation
+ *
+ * @method     ChildColoursQuery joinWithAnimalsRelatedByFurcolour($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the AnimalsRelatedByFurcolour relation
+ *
+ * @method     ChildColoursQuery leftJoinWithAnimalsRelatedByFurcolour() Adds a LEFT JOIN clause and with to the query using the AnimalsRelatedByFurcolour relation
+ * @method     ChildColoursQuery rightJoinWithAnimalsRelatedByFurcolour() Adds a RIGHT JOIN clause and with to the query using the AnimalsRelatedByFurcolour relation
+ * @method     ChildColoursQuery innerJoinWithAnimalsRelatedByFurcolour() Adds a INNER JOIN clause and with to the query using the AnimalsRelatedByFurcolour relation
+ *
+ * @method     ChildColoursQuery leftJoinAnimalsRelatedByEyecolour($relationAlias = null) Adds a LEFT JOIN clause to the query using the AnimalsRelatedByEyecolour relation
+ * @method     ChildColoursQuery rightJoinAnimalsRelatedByEyecolour($relationAlias = null) Adds a RIGHT JOIN clause to the query using the AnimalsRelatedByEyecolour relation
+ * @method     ChildColoursQuery innerJoinAnimalsRelatedByEyecolour($relationAlias = null) Adds a INNER JOIN clause to the query using the AnimalsRelatedByEyecolour relation
+ *
+ * @method     ChildColoursQuery joinWithAnimalsRelatedByEyecolour($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the AnimalsRelatedByEyecolour relation
+ *
+ * @method     ChildColoursQuery leftJoinWithAnimalsRelatedByEyecolour() Adds a LEFT JOIN clause and with to the query using the AnimalsRelatedByEyecolour relation
+ * @method     ChildColoursQuery rightJoinWithAnimalsRelatedByEyecolour() Adds a RIGHT JOIN clause and with to the query using the AnimalsRelatedByEyecolour relation
+ * @method     ChildColoursQuery innerJoinWithAnimalsRelatedByEyecolour() Adds a INNER JOIN clause and with to the query using the AnimalsRelatedByEyecolour relation
+ *
+ * @method     \AnimalsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildColours findOne(ConnectionInterface $con = null) Return the first ChildColours matching the query
  * @method     ChildColours findOneOrCreate(ConnectionInterface $con = null) Return the first ChildColours matching the query, or a new ChildColours object populated from the query conditions when no match is found
@@ -298,6 +321,152 @@ abstract class ColoursQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(ColoursTableMap::COL_CODE, $code, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \Animals object
+     *
+     * @param \Animals|ObjectCollection $animals the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildColoursQuery The current query, for fluid interface
+     */
+    public function filterByAnimalsRelatedByFurcolour($animals, $comparison = null)
+    {
+        if ($animals instanceof \Animals) {
+            return $this
+                ->addUsingAlias(ColoursTableMap::COL_COLOUR, $animals->getFurcolour(), $comparison);
+        } elseif ($animals instanceof ObjectCollection) {
+            return $this
+                ->useAnimalsRelatedByFurcolourQuery()
+                ->filterByPrimaryKeys($animals->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByAnimalsRelatedByFurcolour() only accepts arguments of type \Animals or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the AnimalsRelatedByFurcolour relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildColoursQuery The current query, for fluid interface
+     */
+    public function joinAnimalsRelatedByFurcolour($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('AnimalsRelatedByFurcolour');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'AnimalsRelatedByFurcolour');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the AnimalsRelatedByFurcolour relation Animals object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \AnimalsQuery A secondary query class using the current class as primary query
+     */
+    public function useAnimalsRelatedByFurcolourQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinAnimalsRelatedByFurcolour($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'AnimalsRelatedByFurcolour', '\AnimalsQuery');
+    }
+
+    /**
+     * Filter the query by a related \Animals object
+     *
+     * @param \Animals|ObjectCollection $animals the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildColoursQuery The current query, for fluid interface
+     */
+    public function filterByAnimalsRelatedByEyecolour($animals, $comparison = null)
+    {
+        if ($animals instanceof \Animals) {
+            return $this
+                ->addUsingAlias(ColoursTableMap::COL_COLOUR, $animals->getEyecolour(), $comparison);
+        } elseif ($animals instanceof ObjectCollection) {
+            return $this
+                ->useAnimalsRelatedByEyecolourQuery()
+                ->filterByPrimaryKeys($animals->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByAnimalsRelatedByEyecolour() only accepts arguments of type \Animals or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the AnimalsRelatedByEyecolour relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildColoursQuery The current query, for fluid interface
+     */
+    public function joinAnimalsRelatedByEyecolour($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('AnimalsRelatedByEyecolour');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'AnimalsRelatedByEyecolour');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the AnimalsRelatedByEyecolour relation Animals object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \AnimalsQuery A secondary query class using the current class as primary query
+     */
+    public function useAnimalsRelatedByEyecolourQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinAnimalsRelatedByEyecolour($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'AnimalsRelatedByEyecolour', '\AnimalsQuery');
     }
 
     /**

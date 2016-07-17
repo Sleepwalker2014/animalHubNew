@@ -7,17 +7,21 @@
     <column name="sex" phpName="Sex" type="INTEGER" required="true"/>
     <column name="furColour" phpName="Furcolour" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
     <column name="eyeColour" phpName="Eyecolour" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
-    <column name="species" phpName="Species" type="INTEGER" required="true"/>
+    <column name="species" phpName="Species" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
     <column name="size" phpName="Size" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
     <column name="specification" phpName="Specification" type="VARCHAR" size="255" required="true"/>
-    <column name="race" phpName="Race" type="INTEGER" required="true"/>
-    <column name="test" phpName="Test" type="INTEGER"/>
-    <column name="blah" phpName="Blah" type="DATE"/>
-    <foreign-key foreignTable="colours" name="animals_ibfk_2" onUpdate="CASCADE">
-      <reference local="eyeColour" foreign="colour"/>
+    <column name="user" phpName="User" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <foreign-key foreignTable="species" name="animals_ibfk_4" onUpdate="CASCADE">
+      <reference local="species" foreign="species"/>
     </foreign-key>
     <foreign-key foreignTable="colours" name="animals_ibfk_1" onUpdate="CASCADE">
       <reference local="furColour" foreign="colour"/>
+    </foreign-key>
+    <foreign-key foreignTable="colours" name="animals_ibfk_2" onUpdate="CASCADE">
+      <reference local="eyeColour" foreign="colour"/>
+    </foreign-key>
+    <foreign-key foreignTable="users" name="animals_ibfk_3" onUpdate="CASCADE">
+      <reference local="user" foreign="user"/>
     </foreign-key>
     <foreign-key foreignTable="sexes" name="sex" onUpdate="CASCADE">
       <reference local="sex" foreign="sex"/>
@@ -30,6 +34,12 @@
     </index>
     <index name="fk_eyeColour">
       <index-column name="eyeColour"/>
+    </index>
+    <index name="fk_user">
+      <index-column name="user"/>
+    </index>
+    <index name="fk_species">
+      <index-column name="species"/>
     </index>
     <unique name="animal">
       <unique-column name="animal"/>

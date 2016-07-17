@@ -140,6 +140,20 @@ class ColoursTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('AnimalsRelatedByFurcolour', '\\Animals', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':furColour',
+    1 => ':colour',
+  ),
+), null, 'CASCADE', 'AnimalssRelatedByFurcolour', false);
+        $this->addRelation('AnimalsRelatedByEyecolour', '\\Animals', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':eyeColour',
+    1 => ':colour',
+  ),
+), null, 'CASCADE', 'AnimalssRelatedByEyecolour', false);
     } // buildRelations()
 
     /**

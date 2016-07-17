@@ -15,7 +15,8 @@ class MainRouter
                                 'CompleteRegister' => ['class' => 'Register', 'method' => 'handleCompleteRegistration'],
                                 'Home' => ['class' => 'Home', 'method' => 'getHTML'],
                                 'Overview' => ['class' => 'Overview', 'method' => 'getHTML'],
-                                'UserSettings' => ['class' => 'UserSettings', 'method' => 'getHTML']];
+                                'UserSettings' => ['class' => 'UserSettings', 'method' => 'getHTML'],
+                                'AnimalOverview' => ['class' => 'AnimalOverview', 'method' => 'getHTML']];
     /**
      * @var Template
      */
@@ -32,7 +33,7 @@ class MainRouter
      * @param Template $template
      * @param SessionHandler $sessionHandler
      */
-    public function __construct($actionCode = null, $parameters = [], Template $template, SessionHandler $sessionHandler)
+    public function __construct($actionCode = null, $parameters = null, Template $template, SessionHandler $sessionHandler)
     {
         $this->actionCode = $actionCode;
         $this->parameters = $parameters;
@@ -48,7 +49,7 @@ class MainRouter
             if (empty($this->actionCode)) {
                 $this->actionCode = 'Overview';
             }
-        } elseif (empty($this->actionCode) || $this->actionCode != 'CompleteRegister') {
+        } elseif (empty($this->actionCode) || ($this->actionCode != 'CompleteRegister' && $this->actionCode != 'LoginUser')) {
             $this->actionCode = 'Home';
         }
 

@@ -34,6 +34,7 @@ class Register {
     public function __construct (Template $template, SessionHandler $sessionHandler, $parameters = null) {
         $this->template = $template;
         $this->sessionHandler = $sessionHandler;
+        $this->parameters = $parameters;
     }
 
     public function handleRegister()
@@ -127,6 +128,10 @@ class Register {
         return true;
     }
 
+    /**
+     * @param $registrationCode
+     * @return \Registrations
+     */
     public function findOpenRegistrationByCode ($registrationCode) {
         $registrationQuery = new RegistrationsQuery();
 

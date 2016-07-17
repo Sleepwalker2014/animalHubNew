@@ -1,5 +1,7 @@
 RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([a-zA-Z]+)$  "php/index.php?actionCode=$1" [L]
-RewriteRule ^([a-zA-Z]+)/([a-zA-Z{}]+)$  "php/index.php?actionCode=$1&parameter=$2" [L]
+RewriteRule ^([a-zA-Z]+)/([a-zA-Z{}1-9]+)$  "php/index.php?actionCode=$1&parameter=$2" [L]
 RewriteRule ^$  "php/index.php" [L]
-
+RewriteRule ^(db/|vendor/)$  "php/index.php" [L]

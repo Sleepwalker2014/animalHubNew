@@ -59,7 +59,7 @@ class AnimalsTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 12;
+    const NUM_COLUMNS = 13;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class AnimalsTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 12;
+    const NUM_HYDRATE_COLUMNS = 13;
 
     /**
      * the column name for the animal field
@@ -132,6 +132,11 @@ class AnimalsTableMap extends TableMap
     const COL_BLAH = 'animals.blah';
 
     /**
+     * the column name for the user field
+     */
+    const COL_USER = 'animals.user';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -143,11 +148,11 @@ class AnimalsTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Animal', 'Name', 'Birthday', 'Sex', 'Furcolour', 'Eyecolour', 'Species', 'Size', 'Specification', 'Race', 'Test', 'Blah', ),
-        self::TYPE_CAMELNAME     => array('animal', 'name', 'birthday', 'sex', 'furcolour', 'eyecolour', 'species', 'size', 'specification', 'race', 'test', 'blah', ),
-        self::TYPE_COLNAME       => array(AnimalsTableMap::COL_ANIMAL, AnimalsTableMap::COL_NAME, AnimalsTableMap::COL_BIRTHDAY, AnimalsTableMap::COL_SEX, AnimalsTableMap::COL_FURCOLOUR, AnimalsTableMap::COL_EYECOLOUR, AnimalsTableMap::COL_SPECIES, AnimalsTableMap::COL_SIZE, AnimalsTableMap::COL_SPECIFICATION, AnimalsTableMap::COL_RACE, AnimalsTableMap::COL_TEST, AnimalsTableMap::COL_BLAH, ),
-        self::TYPE_FIELDNAME     => array('animal', 'name', 'birthDay', 'sex', 'furColour', 'eyeColour', 'species', 'size', 'specification', 'race', 'test', 'blah', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+        self::TYPE_PHPNAME       => array('Animal', 'Name', 'Birthday', 'Sex', 'Furcolour', 'Eyecolour', 'Species', 'Size', 'Specification', 'Race', 'Test', 'Blah', 'User', ),
+        self::TYPE_CAMELNAME     => array('animal', 'name', 'birthday', 'sex', 'furcolour', 'eyecolour', 'species', 'size', 'specification', 'race', 'test', 'blah', 'user', ),
+        self::TYPE_COLNAME       => array(AnimalsTableMap::COL_ANIMAL, AnimalsTableMap::COL_NAME, AnimalsTableMap::COL_BIRTHDAY, AnimalsTableMap::COL_SEX, AnimalsTableMap::COL_FURCOLOUR, AnimalsTableMap::COL_EYECOLOUR, AnimalsTableMap::COL_SPECIES, AnimalsTableMap::COL_SIZE, AnimalsTableMap::COL_SPECIFICATION, AnimalsTableMap::COL_RACE, AnimalsTableMap::COL_TEST, AnimalsTableMap::COL_BLAH, AnimalsTableMap::COL_USER, ),
+        self::TYPE_FIELDNAME     => array('animal', 'name', 'birthDay', 'sex', 'furColour', 'eyeColour', 'species', 'size', 'specification', 'race', 'test', 'blah', 'user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
     );
 
     /**
@@ -157,11 +162,11 @@ class AnimalsTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Animal' => 0, 'Name' => 1, 'Birthday' => 2, 'Sex' => 3, 'Furcolour' => 4, 'Eyecolour' => 5, 'Species' => 6, 'Size' => 7, 'Specification' => 8, 'Race' => 9, 'Test' => 10, 'Blah' => 11, ),
-        self::TYPE_CAMELNAME     => array('animal' => 0, 'name' => 1, 'birthday' => 2, 'sex' => 3, 'furcolour' => 4, 'eyecolour' => 5, 'species' => 6, 'size' => 7, 'specification' => 8, 'race' => 9, 'test' => 10, 'blah' => 11, ),
-        self::TYPE_COLNAME       => array(AnimalsTableMap::COL_ANIMAL => 0, AnimalsTableMap::COL_NAME => 1, AnimalsTableMap::COL_BIRTHDAY => 2, AnimalsTableMap::COL_SEX => 3, AnimalsTableMap::COL_FURCOLOUR => 4, AnimalsTableMap::COL_EYECOLOUR => 5, AnimalsTableMap::COL_SPECIES => 6, AnimalsTableMap::COL_SIZE => 7, AnimalsTableMap::COL_SPECIFICATION => 8, AnimalsTableMap::COL_RACE => 9, AnimalsTableMap::COL_TEST => 10, AnimalsTableMap::COL_BLAH => 11, ),
-        self::TYPE_FIELDNAME     => array('animal' => 0, 'name' => 1, 'birthDay' => 2, 'sex' => 3, 'furColour' => 4, 'eyeColour' => 5, 'species' => 6, 'size' => 7, 'specification' => 8, 'race' => 9, 'test' => 10, 'blah' => 11, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+        self::TYPE_PHPNAME       => array('Animal' => 0, 'Name' => 1, 'Birthday' => 2, 'Sex' => 3, 'Furcolour' => 4, 'Eyecolour' => 5, 'Species' => 6, 'Size' => 7, 'Specification' => 8, 'Race' => 9, 'Test' => 10, 'Blah' => 11, 'User' => 12, ),
+        self::TYPE_CAMELNAME     => array('animal' => 0, 'name' => 1, 'birthday' => 2, 'sex' => 3, 'furcolour' => 4, 'eyecolour' => 5, 'species' => 6, 'size' => 7, 'specification' => 8, 'race' => 9, 'test' => 10, 'blah' => 11, 'user' => 12, ),
+        self::TYPE_COLNAME       => array(AnimalsTableMap::COL_ANIMAL => 0, AnimalsTableMap::COL_NAME => 1, AnimalsTableMap::COL_BIRTHDAY => 2, AnimalsTableMap::COL_SEX => 3, AnimalsTableMap::COL_FURCOLOUR => 4, AnimalsTableMap::COL_EYECOLOUR => 5, AnimalsTableMap::COL_SPECIES => 6, AnimalsTableMap::COL_SIZE => 7, AnimalsTableMap::COL_SPECIFICATION => 8, AnimalsTableMap::COL_RACE => 9, AnimalsTableMap::COL_TEST => 10, AnimalsTableMap::COL_BLAH => 11, AnimalsTableMap::COL_USER => 12, ),
+        self::TYPE_FIELDNAME     => array('animal' => 0, 'name' => 1, 'birthDay' => 2, 'sex' => 3, 'furColour' => 4, 'eyeColour' => 5, 'species' => 6, 'size' => 7, 'specification' => 8, 'race' => 9, 'test' => 10, 'blah' => 11, 'user' => 12, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
     );
 
     /**
@@ -185,14 +190,15 @@ class AnimalsTableMap extends TableMap
         $this->addColumn('name', 'Name', 'VARCHAR', true, 45, null);
         $this->addColumn('birthDay', 'Birthday', 'DATE', true, null, null);
         $this->addForeignKey('sex', 'Sex', 'INTEGER', 'sexes', 'sex', true, null, null);
-        $this->addColumn('furColour', 'Furcolour', 'INTEGER', true, null, 2);
-        $this->addColumn('eyeColour', 'Eyecolour', 'INTEGER', true, null, null);
+        $this->addForeignKey('furColour', 'Furcolour', 'INTEGER', 'colours', 'colour', true, null, null);
+        $this->addForeignKey('eyeColour', 'Eyecolour', 'INTEGER', 'colours', 'colour', true, null, null);
         $this->addColumn('species', 'Species', 'INTEGER', true, null, null);
         $this->addColumn('size', 'Size', 'INTEGER', true, 10, null);
         $this->addColumn('specification', 'Specification', 'VARCHAR', true, 255, null);
         $this->addColumn('race', 'Race', 'INTEGER', true, null, null);
         $this->addColumn('test', 'Test', 'INTEGER', false, null, null);
         $this->addColumn('blah', 'Blah', 'DATE', false, null, null);
+        $this->addForeignKey('user', 'User', 'INTEGER', 'users', 'user', true, 10, null);
     } // initialize()
 
     /**
@@ -200,6 +206,27 @@ class AnimalsTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Users', '\\Users', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':user',
+    1 => ':user',
+  ),
+), null, 'CASCADE', null, false);
+        $this->addRelation('ColoursRelatedByFurcolour', '\\Colours', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':furColour',
+    1 => ':colour',
+  ),
+), null, 'CASCADE', null, false);
+        $this->addRelation('ColoursRelatedByEyecolour', '\\Colours', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':eyeColour',
+    1 => ':colour',
+  ),
+), null, 'CASCADE', null, false);
         $this->addRelation('Sexes', '\\Sexes', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
@@ -362,6 +389,7 @@ class AnimalsTableMap extends TableMap
             $criteria->addSelectColumn(AnimalsTableMap::COL_RACE);
             $criteria->addSelectColumn(AnimalsTableMap::COL_TEST);
             $criteria->addSelectColumn(AnimalsTableMap::COL_BLAH);
+            $criteria->addSelectColumn(AnimalsTableMap::COL_USER);
         } else {
             $criteria->addSelectColumn($alias . '.animal');
             $criteria->addSelectColumn($alias . '.name');
@@ -375,6 +403,7 @@ class AnimalsTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.race');
             $criteria->addSelectColumn($alias . '.test');
             $criteria->addSelectColumn($alias . '.blah');
+            $criteria->addSelectColumn($alias . '.user');
         }
     }
 
