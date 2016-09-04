@@ -8,6 +8,8 @@
             href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
             rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ webroot }}css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ webroot }}/vendor/select2/select2/select2.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ webroot }}/vendor/eonasdan/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
     {% block css %}{% endblock %}
 
     <meta charset="UTF-8">
@@ -17,8 +19,27 @@
 <body>
 <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 <script src="{{ webroot }}/vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="{{ webroot }}/vendor/select2/select2/select2.min.js"></script>
+<script src="{{ webroot }}/vendor/moment/moment/moment.js"></script>
+<script src="{{ webroot }}/vendor/moment/moment/locale/de.js"></script>
+<script src="{{ webroot }}/vendor/eonasdan/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="{{ webroot }}ajaxHandler.js"></script>
 
-<div id="mainContent">{% block content %}{% endblock %}</div>
+{% if showNavBar %}
+    {% include "navbar/navbar.html.twig" %}
+{% endif %}
+
+<div id="messageBox">
+    <div class="alert alert-danger" hidden>
+        <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+    </div>
+</div>
+
+<div id="mainContent">
+    {% if includeFile %}
+        {% include includeFile %}
+    {% endif %}
+    {% block content %}{% endblock %}</div>
 <footer>Impressum | AGB | Kontakt | FAQ</footer>
 </body>
 

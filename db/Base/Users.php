@@ -1551,6 +1551,31 @@ abstract class Users implements ActiveRecordInterface
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
      */
+    public function getAnimalssJoinRaces(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildAnimalsQuery::create(null, $criteria);
+        $query->joinWith('Races', $joinBehavior);
+
+        return $this->getAnimalss($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Users is new, it will return
+     * an empty collection; or if this Users has previously
+     * been saved, it will retrieve related Animalss from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Users.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
+     */
     public function getAnimalssJoinColoursRelatedByFurcolour(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildAnimalsQuery::create(null, $criteria);
@@ -1580,6 +1605,31 @@ abstract class Users implements ActiveRecordInterface
     {
         $query = ChildAnimalsQuery::create(null, $criteria);
         $query->joinWith('ColoursRelatedByEyecolour', $joinBehavior);
+
+        return $this->getAnimalss($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Users is new, it will return
+     * an empty collection; or if this Users has previously
+     * been saved, it will retrieve related Animalss from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Users.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
+     */
+    public function getAnimalssJoinGenuses(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildAnimalsQuery::create(null, $criteria);
+        $query->joinWith('Genuses', $joinBehavior);
 
         return $this->getAnimalss($query, $con);
     }

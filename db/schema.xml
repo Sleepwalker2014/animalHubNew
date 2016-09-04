@@ -3,16 +3,17 @@
   <table name="animals" idMethod="native" phpName="Animals">
     <column name="animal" phpName="Animal" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="45" required="true"/>
+    <column name="genus" phpName="Genus" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
     <column name="birthDay" phpName="Birthday" type="DATE" required="true"/>
     <column name="sex" phpName="Sex" type="INTEGER" required="true"/>
     <column name="furColour" phpName="Furcolour" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
     <column name="eyeColour" phpName="Eyecolour" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
-    <column name="species" phpName="Species" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
     <column name="size" phpName="Size" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
     <column name="specification" phpName="Specification" type="VARCHAR" size="255" required="true"/>
     <column name="user" phpName="User" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
-    <foreign-key foreignTable="species" name="animals_ibfk_4" onUpdate="CASCADE">
-      <reference local="species" foreign="species"/>
+    <column name="race" phpName="Race" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <foreign-key foreignTable="races" name="animals_ibfk_5" onUpdate="CASCADE">
+      <reference local="race" foreign="race"/>
     </foreign-key>
     <foreign-key foreignTable="colours" name="animals_ibfk_1" onUpdate="CASCADE">
       <reference local="furColour" foreign="colour"/>
@@ -22,6 +23,9 @@
     </foreign-key>
     <foreign-key foreignTable="users" name="animals_ibfk_3" onUpdate="CASCADE">
       <reference local="user" foreign="user"/>
+    </foreign-key>
+    <foreign-key foreignTable="genuses" name="animals_ibfk_4" onUpdate="CASCADE">
+      <reference local="genus" foreign="genus"/>
     </foreign-key>
     <foreign-key foreignTable="sexes" name="sex" onUpdate="CASCADE">
       <reference local="sex" foreign="sex"/>
@@ -38,8 +42,11 @@
     <index name="fk_user">
       <index-column name="user"/>
     </index>
-    <index name="fk_species">
-      <index-column name="species"/>
+    <index name="fk_genus">
+      <index-column name="genus"/>
+    </index>
+    <index name="fk_race">
+      <index-column name="race"/>
     </index>
     <unique name="animal">
       <unique-column name="animal"/>
@@ -51,6 +58,18 @@
   <table name="colours" idMethod="native" phpName="Colours">
     <column name="colour" phpName="Colour" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="code" phpName="Code" type="VARCHAR" size="45" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="25" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="genuses" idMethod="native" phpName="Genuses">
+    <column name="genus" phpName="Genus" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="25" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="45" required="true"/>
+    <unique name="code">
+      <unique-column name="code"/>
+    </unique>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
@@ -79,6 +98,16 @@
     <column name="race" phpName="Race" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="code" phpName="Code" type="VARCHAR" size="15" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="25" required="true"/>
+    <column name="genus" phpName="Genus" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <foreign-key foreignTable="genuses" name="races_ibfk_1" onUpdate="CASCADE">
+      <reference local="genus" foreign="genus"/>
+    </foreign-key>
+    <index name="fk_genuses">
+      <index-column name="genus"/>
+    </index>
+    <unique name="code">
+      <unique-column name="code"/>
+    </unique>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
@@ -111,14 +140,6 @@
   <table name="sizes" idMethod="native" phpName="Sizes">
     <column name="size" phpName="Size" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="description" phpName="Description" type="VARCHAR" size="25" required="true"/>
-    <vendor type="mysql">
-      <parameter name="Engine" value="InnoDB"/>
-    </vendor>
-  </table>
-  <table name="species" idMethod="native" phpName="Species">
-    <column name="species" phpName="Species" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
-    <column name="code" phpName="Code" type="VARCHAR" size="25" required="true"/>
-    <column name="description" phpName="Description" type="VARCHAR" size="45" required="true"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>

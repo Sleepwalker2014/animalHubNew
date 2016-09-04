@@ -10,6 +10,7 @@ use Map\RacesTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -22,10 +23,12 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRacesQuery orderByRace($order = Criteria::ASC) Order by the race column
  * @method     ChildRacesQuery orderByCode($order = Criteria::ASC) Order by the code column
  * @method     ChildRacesQuery orderByName($order = Criteria::ASC) Order by the name column
+ * @method     ChildRacesQuery orderByGenus($order = Criteria::ASC) Order by the genus column
  *
  * @method     ChildRacesQuery groupByRace() Group by the race column
  * @method     ChildRacesQuery groupByCode() Group by the code column
  * @method     ChildRacesQuery groupByName() Group by the name column
+ * @method     ChildRacesQuery groupByGenus() Group by the genus column
  *
  * @method     ChildRacesQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildRacesQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -35,12 +38,35 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRacesQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildRacesQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
+ * @method     ChildRacesQuery leftJoinGenuses($relationAlias = null) Adds a LEFT JOIN clause to the query using the Genuses relation
+ * @method     ChildRacesQuery rightJoinGenuses($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Genuses relation
+ * @method     ChildRacesQuery innerJoinGenuses($relationAlias = null) Adds a INNER JOIN clause to the query using the Genuses relation
+ *
+ * @method     ChildRacesQuery joinWithGenuses($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Genuses relation
+ *
+ * @method     ChildRacesQuery leftJoinWithGenuses() Adds a LEFT JOIN clause and with to the query using the Genuses relation
+ * @method     ChildRacesQuery rightJoinWithGenuses() Adds a RIGHT JOIN clause and with to the query using the Genuses relation
+ * @method     ChildRacesQuery innerJoinWithGenuses() Adds a INNER JOIN clause and with to the query using the Genuses relation
+ *
+ * @method     ChildRacesQuery leftJoinAnimals($relationAlias = null) Adds a LEFT JOIN clause to the query using the Animals relation
+ * @method     ChildRacesQuery rightJoinAnimals($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Animals relation
+ * @method     ChildRacesQuery innerJoinAnimals($relationAlias = null) Adds a INNER JOIN clause to the query using the Animals relation
+ *
+ * @method     ChildRacesQuery joinWithAnimals($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Animals relation
+ *
+ * @method     ChildRacesQuery leftJoinWithAnimals() Adds a LEFT JOIN clause and with to the query using the Animals relation
+ * @method     ChildRacesQuery rightJoinWithAnimals() Adds a RIGHT JOIN clause and with to the query using the Animals relation
+ * @method     ChildRacesQuery innerJoinWithAnimals() Adds a INNER JOIN clause and with to the query using the Animals relation
+ *
+ * @method     \GenusesQuery|\AnimalsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ *
  * @method     ChildRaces findOne(ConnectionInterface $con = null) Return the first ChildRaces matching the query
  * @method     ChildRaces findOneOrCreate(ConnectionInterface $con = null) Return the first ChildRaces matching the query, or a new ChildRaces object populated from the query conditions when no match is found
  *
  * @method     ChildRaces findOneByRace(int $race) Return the first ChildRaces filtered by the race column
  * @method     ChildRaces findOneByCode(string $code) Return the first ChildRaces filtered by the code column
- * @method     ChildRaces findOneByName(string $name) Return the first ChildRaces filtered by the name column *
+ * @method     ChildRaces findOneByName(string $name) Return the first ChildRaces filtered by the name column
+ * @method     ChildRaces findOneByGenus(int $genus) Return the first ChildRaces filtered by the genus column *
 
  * @method     ChildRaces requirePk($key, ConnectionInterface $con = null) Return the ChildRaces by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildRaces requireOne(ConnectionInterface $con = null) Return the first ChildRaces matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -48,11 +74,13 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRaces requireOneByRace(int $race) Return the first ChildRaces filtered by the race column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildRaces requireOneByCode(string $code) Return the first ChildRaces filtered by the code column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildRaces requireOneByName(string $name) Return the first ChildRaces filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildRaces requireOneByGenus(int $genus) Return the first ChildRaces filtered by the genus column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildRaces[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildRaces objects based on current ModelCriteria
  * @method     ChildRaces[]|ObjectCollection findByRace(int $race) Return ChildRaces objects filtered by the race column
  * @method     ChildRaces[]|ObjectCollection findByCode(string $code) Return ChildRaces objects filtered by the code column
  * @method     ChildRaces[]|ObjectCollection findByName(string $name) Return ChildRaces objects filtered by the name column
+ * @method     ChildRaces[]|ObjectCollection findByGenus(int $genus) Return ChildRaces objects filtered by the genus column
  * @method     ChildRaces[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -145,7 +173,7 @@ abstract class RacesQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT race, code, name FROM races WHERE race = :p0';
+        $sql = 'SELECT race, code, name, genus FROM races WHERE race = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -332,6 +360,199 @@ abstract class RacesQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(RacesTableMap::COL_NAME, $name, $comparison);
+    }
+
+    /**
+     * Filter the query on the genus column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByGenus(1234); // WHERE genus = 1234
+     * $query->filterByGenus(array(12, 34)); // WHERE genus IN (12, 34)
+     * $query->filterByGenus(array('min' => 12)); // WHERE genus > 12
+     * </code>
+     *
+     * @see       filterByGenuses()
+     *
+     * @param     mixed $genus The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildRacesQuery The current query, for fluid interface
+     */
+    public function filterByGenus($genus = null, $comparison = null)
+    {
+        if (is_array($genus)) {
+            $useMinMax = false;
+            if (isset($genus['min'])) {
+                $this->addUsingAlias(RacesTableMap::COL_GENUS, $genus['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($genus['max'])) {
+                $this->addUsingAlias(RacesTableMap::COL_GENUS, $genus['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(RacesTableMap::COL_GENUS, $genus, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \Genuses object
+     *
+     * @param \Genuses|ObjectCollection $genuses The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildRacesQuery The current query, for fluid interface
+     */
+    public function filterByGenuses($genuses, $comparison = null)
+    {
+        if ($genuses instanceof \Genuses) {
+            return $this
+                ->addUsingAlias(RacesTableMap::COL_GENUS, $genuses->getGenus(), $comparison);
+        } elseif ($genuses instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(RacesTableMap::COL_GENUS, $genuses->toKeyValue('PrimaryKey', 'Genus'), $comparison);
+        } else {
+            throw new PropelException('filterByGenuses() only accepts arguments of type \Genuses or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Genuses relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildRacesQuery The current query, for fluid interface
+     */
+    public function joinGenuses($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Genuses');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Genuses');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Genuses relation Genuses object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \GenusesQuery A secondary query class using the current class as primary query
+     */
+    public function useGenusesQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinGenuses($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Genuses', '\GenusesQuery');
+    }
+
+    /**
+     * Filter the query by a related \Animals object
+     *
+     * @param \Animals|ObjectCollection $animals the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildRacesQuery The current query, for fluid interface
+     */
+    public function filterByAnimals($animals, $comparison = null)
+    {
+        if ($animals instanceof \Animals) {
+            return $this
+                ->addUsingAlias(RacesTableMap::COL_RACE, $animals->getRace(), $comparison);
+        } elseif ($animals instanceof ObjectCollection) {
+            return $this
+                ->useAnimalsQuery()
+                ->filterByPrimaryKeys($animals->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByAnimals() only accepts arguments of type \Animals or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Animals relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildRacesQuery The current query, for fluid interface
+     */
+    public function joinAnimals($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Animals');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Animals');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Animals relation Animals object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \AnimalsQuery A secondary query class using the current class as primary query
+     */
+    public function useAnimalsQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinAnimals($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Animals', '\AnimalsQuery');
     }
 
     /**

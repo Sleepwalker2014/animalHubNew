@@ -22,7 +22,11 @@ $sessionHandler = new SessionHandler();
 $templateHandler = new Template('../html');
 
 $actionCode = !empty($_GET['actionCode']) ? $_GET['actionCode'] : null;
+$actionCode = !empty($_POST['actionCode']) ? $_POST['actionCode'] : $actionCode;
+
+$isAjax = !empty($_POST['isAjax']) ? true : false;
+
 $parameter = !empty($_GET['parameter']) ? $_GET['parameter'] : null;
 
-$router = new MainRouter($actionCode, $parameter, $templateHandler, $sessionHandler);
+$router = new MainRouter($actionCode, $parameter, $templateHandler, $sessionHandler, $isAjax);
 $router->route();

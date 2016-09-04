@@ -4,11 +4,13 @@ namespace Base;
 
 use \Animals as ChildAnimals;
 use \AnimalsQuery as ChildAnimalsQuery;
-use \Colours as ChildColours;
-use \ColoursQuery as ChildColoursQuery;
+use \Genuses as ChildGenuses;
+use \GenusesQuery as ChildGenusesQuery;
+use \Races as ChildRaces;
+use \RacesQuery as ChildRacesQuery;
 use \Exception;
 use \PDO;
-use Map\ColoursTableMap;
+use Map\GenusesTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -23,18 +25,18 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 
 /**
- * Base class that represents a row from the 'colours' table.
+ * Base class that represents a row from the 'genuses' table.
  *
  *
  *
 * @package    propel.generator..Base
 */
-abstract class Colours implements ActiveRecordInterface
+abstract class Genuses implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\ColoursTableMap';
+    const TABLE_MAP = '\\Map\\GenusesTableMap';
 
 
     /**
@@ -64,10 +66,10 @@ abstract class Colours implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the colour field.
+     * The value for the genus field.
      * @var        int
      */
-    protected $colour;
+    protected $genus;
 
     /**
      * The value for the code field.
@@ -84,14 +86,14 @@ abstract class Colours implements ActiveRecordInterface
     /**
      * @var        ObjectCollection|ChildAnimals[] Collection to store aggregation of ChildAnimals objects.
      */
-    protected $collAnimalssRelatedByFurcolour;
-    protected $collAnimalssRelatedByFurcolourPartial;
+    protected $collAnimalss;
+    protected $collAnimalssPartial;
 
     /**
-     * @var        ObjectCollection|ChildAnimals[] Collection to store aggregation of ChildAnimals objects.
+     * @var        ObjectCollection|ChildRaces[] Collection to store aggregation of ChildRaces objects.
      */
-    protected $collAnimalssRelatedByEyecolour;
-    protected $collAnimalssRelatedByEyecolourPartial;
+    protected $collRacess;
+    protected $collRacessPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -105,16 +107,16 @@ abstract class Colours implements ActiveRecordInterface
      * An array of objects scheduled for deletion.
      * @var ObjectCollection|ChildAnimals[]
      */
-    protected $animalssRelatedByFurcolourScheduledForDeletion = null;
+    protected $animalssScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildAnimals[]
+     * @var ObjectCollection|ChildRaces[]
      */
-    protected $animalssRelatedByEyecolourScheduledForDeletion = null;
+    protected $racessScheduledForDeletion = null;
 
     /**
-     * Initializes internal state of Base\Colours object.
+     * Initializes internal state of Base\Genuses object.
      */
     public function __construct()
     {
@@ -209,9 +211,9 @@ abstract class Colours implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Colours</code> instance.  If
-     * <code>obj</code> is an instance of <code>Colours</code>, delegates to
-     * <code>equals(Colours)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Genuses</code> instance.  If
+     * <code>obj</code> is an instance of <code>Genuses</code>, delegates to
+     * <code>equals(Genuses)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -277,7 +279,7 @@ abstract class Colours implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Colours The current object, for fluid interface
+     * @return $this|Genuses The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -331,13 +333,13 @@ abstract class Colours implements ActiveRecordInterface
     }
 
     /**
-     * Get the [colour] column value.
+     * Get the [genus] column value.
      *
      * @return int
      */
-    public function getColour()
+    public function getGenus()
     {
-        return $this->colour;
+        return $this->genus;
     }
 
     /**
@@ -361,30 +363,30 @@ abstract class Colours implements ActiveRecordInterface
     }
 
     /**
-     * Set the value of [colour] column.
+     * Set the value of [genus] column.
      *
      * @param int $v new value
-     * @return $this|\Colours The current object (for fluent API support)
+     * @return $this|\Genuses The current object (for fluent API support)
      */
-    public function setColour($v)
+    public function setGenus($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->colour !== $v) {
-            $this->colour = $v;
-            $this->modifiedColumns[ColoursTableMap::COL_COLOUR] = true;
+        if ($this->genus !== $v) {
+            $this->genus = $v;
+            $this->modifiedColumns[GenusesTableMap::COL_GENUS] = true;
         }
 
         return $this;
-    } // setColour()
+    } // setGenus()
 
     /**
      * Set the value of [code] column.
      *
      * @param string $v new value
-     * @return $this|\Colours The current object (for fluent API support)
+     * @return $this|\Genuses The current object (for fluent API support)
      */
     public function setCode($v)
     {
@@ -394,7 +396,7 @@ abstract class Colours implements ActiveRecordInterface
 
         if ($this->code !== $v) {
             $this->code = $v;
-            $this->modifiedColumns[ColoursTableMap::COL_CODE] = true;
+            $this->modifiedColumns[GenusesTableMap::COL_CODE] = true;
         }
 
         return $this;
@@ -404,7 +406,7 @@ abstract class Colours implements ActiveRecordInterface
      * Set the value of [description] column.
      *
      * @param string $v new value
-     * @return $this|\Colours The current object (for fluent API support)
+     * @return $this|\Genuses The current object (for fluent API support)
      */
     public function setDescription($v)
     {
@@ -414,7 +416,7 @@ abstract class Colours implements ActiveRecordInterface
 
         if ($this->description !== $v) {
             $this->description = $v;
-            $this->modifiedColumns[ColoursTableMap::COL_DESCRIPTION] = true;
+            $this->modifiedColumns[GenusesTableMap::COL_DESCRIPTION] = true;
         }
 
         return $this;
@@ -456,13 +458,13 @@ abstract class Colours implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : ColoursTableMap::translateFieldName('Colour', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->colour = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : GenusesTableMap::translateFieldName('Genus', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->genus = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : ColoursTableMap::translateFieldName('Code', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : GenusesTableMap::translateFieldName('Code', TableMap::TYPE_PHPNAME, $indexType)];
             $this->code = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : ColoursTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : GenusesTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
             $this->description = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -472,10 +474,10 @@ abstract class Colours implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 3; // 3 = ColoursTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 3; // 3 = GenusesTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Colours'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Genuses'), 0, $e);
         }
     }
 
@@ -517,13 +519,13 @@ abstract class Colours implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(ColoursTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(GenusesTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildColoursQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildGenusesQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -533,9 +535,9 @@ abstract class Colours implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collAnimalssRelatedByFurcolour = null;
+            $this->collAnimalss = null;
 
-            $this->collAnimalssRelatedByEyecolour = null;
+            $this->collRacess = null;
 
         } // if (deep)
     }
@@ -546,8 +548,8 @@ abstract class Colours implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Colours::setDeleted()
-     * @see Colours::isDeleted()
+     * @see Genuses::setDeleted()
+     * @see Genuses::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -556,11 +558,11 @@ abstract class Colours implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ColoursTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(GenusesTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildColoursQuery::create()
+            $deleteQuery = ChildGenusesQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -591,7 +593,7 @@ abstract class Colours implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ColoursTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(GenusesTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -610,7 +612,7 @@ abstract class Colours implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                ColoursTableMap::addInstanceToPool($this);
+                GenusesTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -647,34 +649,34 @@ abstract class Colours implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->animalssRelatedByFurcolourScheduledForDeletion !== null) {
-                if (!$this->animalssRelatedByFurcolourScheduledForDeletion->isEmpty()) {
+            if ($this->animalssScheduledForDeletion !== null) {
+                if (!$this->animalssScheduledForDeletion->isEmpty()) {
                     \AnimalsQuery::create()
-                        ->filterByPrimaryKeys($this->animalssRelatedByFurcolourScheduledForDeletion->getPrimaryKeys(false))
+                        ->filterByPrimaryKeys($this->animalssScheduledForDeletion->getPrimaryKeys(false))
                         ->delete($con);
-                    $this->animalssRelatedByFurcolourScheduledForDeletion = null;
+                    $this->animalssScheduledForDeletion = null;
                 }
             }
 
-            if ($this->collAnimalssRelatedByFurcolour !== null) {
-                foreach ($this->collAnimalssRelatedByFurcolour as $referrerFK) {
+            if ($this->collAnimalss !== null) {
+                foreach ($this->collAnimalss as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
                 }
             }
 
-            if ($this->animalssRelatedByEyecolourScheduledForDeletion !== null) {
-                if (!$this->animalssRelatedByEyecolourScheduledForDeletion->isEmpty()) {
-                    \AnimalsQuery::create()
-                        ->filterByPrimaryKeys($this->animalssRelatedByEyecolourScheduledForDeletion->getPrimaryKeys(false))
+            if ($this->racessScheduledForDeletion !== null) {
+                if (!$this->racessScheduledForDeletion->isEmpty()) {
+                    \RacesQuery::create()
+                        ->filterByPrimaryKeys($this->racessScheduledForDeletion->getPrimaryKeys(false))
                         ->delete($con);
-                    $this->animalssRelatedByEyecolourScheduledForDeletion = null;
+                    $this->racessScheduledForDeletion = null;
                 }
             }
 
-            if ($this->collAnimalssRelatedByEyecolour !== null) {
-                foreach ($this->collAnimalssRelatedByEyecolour as $referrerFK) {
+            if ($this->collRacess !== null) {
+                foreach ($this->collRacess as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -701,24 +703,24 @@ abstract class Colours implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[ColoursTableMap::COL_COLOUR] = true;
-        if (null !== $this->colour) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . ColoursTableMap::COL_COLOUR . ')');
+        $this->modifiedColumns[GenusesTableMap::COL_GENUS] = true;
+        if (null !== $this->genus) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . GenusesTableMap::COL_GENUS . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(ColoursTableMap::COL_COLOUR)) {
-            $modifiedColumns[':p' . $index++]  = 'colour';
+        if ($this->isColumnModified(GenusesTableMap::COL_GENUS)) {
+            $modifiedColumns[':p' . $index++]  = 'genus';
         }
-        if ($this->isColumnModified(ColoursTableMap::COL_CODE)) {
+        if ($this->isColumnModified(GenusesTableMap::COL_CODE)) {
             $modifiedColumns[':p' . $index++]  = 'code';
         }
-        if ($this->isColumnModified(ColoursTableMap::COL_DESCRIPTION)) {
+        if ($this->isColumnModified(GenusesTableMap::COL_DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = 'description';
         }
 
         $sql = sprintf(
-            'INSERT INTO colours (%s) VALUES (%s)',
+            'INSERT INTO genuses (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -727,8 +729,8 @@ abstract class Colours implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'colour':
-                        $stmt->bindValue($identifier, $this->colour, PDO::PARAM_INT);
+                    case 'genus':
+                        $stmt->bindValue($identifier, $this->genus, PDO::PARAM_INT);
                         break;
                     case 'code':
                         $stmt->bindValue($identifier, $this->code, PDO::PARAM_STR);
@@ -749,7 +751,7 @@ abstract class Colours implements ActiveRecordInterface
         } catch (Exception $e) {
             throw new PropelException('Unable to get autoincrement id.', 0, $e);
         }
-        $this->setColour($pk);
+        $this->setGenus($pk);
 
         $this->setNew(false);
     }
@@ -782,7 +784,7 @@ abstract class Colours implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = ColoursTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = GenusesTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -799,7 +801,7 @@ abstract class Colours implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getColour();
+                return $this->getGenus();
                 break;
             case 1:
                 return $this->getCode();
@@ -831,13 +833,13 @@ abstract class Colours implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Colours'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Genuses'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Colours'][$this->hashCode()] = true;
-        $keys = ColoursTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Genuses'][$this->hashCode()] = true;
+        $keys = GenusesTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getColour(),
+            $keys[0] => $this->getGenus(),
             $keys[1] => $this->getCode(),
             $keys[2] => $this->getDescription(),
         );
@@ -847,7 +849,7 @@ abstract class Colours implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->collAnimalssRelatedByFurcolour) {
+            if (null !== $this->collAnimalss) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
@@ -860,22 +862,22 @@ abstract class Colours implements ActiveRecordInterface
                         $key = 'Animalss';
                 }
 
-                $result[$key] = $this->collAnimalssRelatedByFurcolour->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->collAnimalss->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
-            if (null !== $this->collAnimalssRelatedByEyecolour) {
+            if (null !== $this->collRacess) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'animalss';
+                        $key = 'racess';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'animalss';
+                        $key = 'racess';
                         break;
                     default:
-                        $key = 'Animalss';
+                        $key = 'Racess';
                 }
 
-                $result[$key] = $this->collAnimalssRelatedByEyecolour->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->collRacess->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -891,11 +893,11 @@ abstract class Colours implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Colours
+     * @return $this|\Genuses
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = ColoursTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = GenusesTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -906,13 +908,13 @@ abstract class Colours implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Colours
+     * @return $this|\Genuses
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setColour($value);
+                $this->setGenus($value);
                 break;
             case 1:
                 $this->setCode($value);
@@ -944,10 +946,10 @@ abstract class Colours implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = ColoursTableMap::getFieldNames($keyType);
+        $keys = GenusesTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setColour($arr[$keys[0]]);
+            $this->setGenus($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
             $this->setCode($arr[$keys[1]]);
@@ -974,7 +976,7 @@ abstract class Colours implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Colours The current object, for fluid interface
+     * @return $this|\Genuses The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -994,16 +996,16 @@ abstract class Colours implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(ColoursTableMap::DATABASE_NAME);
+        $criteria = new Criteria(GenusesTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(ColoursTableMap::COL_COLOUR)) {
-            $criteria->add(ColoursTableMap::COL_COLOUR, $this->colour);
+        if ($this->isColumnModified(GenusesTableMap::COL_GENUS)) {
+            $criteria->add(GenusesTableMap::COL_GENUS, $this->genus);
         }
-        if ($this->isColumnModified(ColoursTableMap::COL_CODE)) {
-            $criteria->add(ColoursTableMap::COL_CODE, $this->code);
+        if ($this->isColumnModified(GenusesTableMap::COL_CODE)) {
+            $criteria->add(GenusesTableMap::COL_CODE, $this->code);
         }
-        if ($this->isColumnModified(ColoursTableMap::COL_DESCRIPTION)) {
-            $criteria->add(ColoursTableMap::COL_DESCRIPTION, $this->description);
+        if ($this->isColumnModified(GenusesTableMap::COL_DESCRIPTION)) {
+            $criteria->add(GenusesTableMap::COL_DESCRIPTION, $this->description);
         }
 
         return $criteria;
@@ -1021,8 +1023,8 @@ abstract class Colours implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildColoursQuery::create();
-        $criteria->add(ColoursTableMap::COL_COLOUR, $this->colour);
+        $criteria = ChildGenusesQuery::create();
+        $criteria->add(GenusesTableMap::COL_GENUS, $this->genus);
 
         return $criteria;
     }
@@ -1035,7 +1037,7 @@ abstract class Colours implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getColour();
+        $validPk = null !== $this->getGenus();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1055,18 +1057,18 @@ abstract class Colours implements ActiveRecordInterface
      */
     public function getPrimaryKey()
     {
-        return $this->getColour();
+        return $this->getGenus();
     }
 
     /**
-     * Generic method to set the primary key (colour column).
+     * Generic method to set the primary key (genus column).
      *
      * @param       int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setColour($key);
+        $this->setGenus($key);
     }
 
     /**
@@ -1075,7 +1077,7 @@ abstract class Colours implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getColour();
+        return null === $this->getGenus();
     }
 
     /**
@@ -1084,7 +1086,7 @@ abstract class Colours implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Colours (or compatible) type.
+     * @param      object $copyObj An object of \Genuses (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
@@ -1099,15 +1101,15 @@ abstract class Colours implements ActiveRecordInterface
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
 
-            foreach ($this->getAnimalssRelatedByFurcolour() as $relObj) {
+            foreach ($this->getAnimalss() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addAnimalsRelatedByFurcolour($relObj->copy($deepCopy));
+                    $copyObj->addAnimals($relObj->copy($deepCopy));
                 }
             }
 
-            foreach ($this->getAnimalssRelatedByEyecolour() as $relObj) {
+            foreach ($this->getRacess() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addAnimalsRelatedByEyecolour($relObj->copy($deepCopy));
+                    $copyObj->addRaces($relObj->copy($deepCopy));
                 }
             }
 
@@ -1115,7 +1117,7 @@ abstract class Colours implements ActiveRecordInterface
 
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setColour(NULL); // this is a auto-increment column, so set to default value
+            $copyObj->setGenus(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1128,7 +1130,7 @@ abstract class Colours implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Colours Clone of current object.
+     * @return \Genuses Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1152,40 +1154,40 @@ abstract class Colours implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('AnimalsRelatedByFurcolour' == $relationName) {
-            return $this->initAnimalssRelatedByFurcolour();
+        if ('Animals' == $relationName) {
+            return $this->initAnimalss();
         }
-        if ('AnimalsRelatedByEyecolour' == $relationName) {
-            return $this->initAnimalssRelatedByEyecolour();
+        if ('Races' == $relationName) {
+            return $this->initRacess();
         }
     }
 
     /**
-     * Clears out the collAnimalssRelatedByFurcolour collection
+     * Clears out the collAnimalss collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
      * @return void
-     * @see        addAnimalssRelatedByFurcolour()
+     * @see        addAnimalss()
      */
-    public function clearAnimalssRelatedByFurcolour()
+    public function clearAnimalss()
     {
-        $this->collAnimalssRelatedByFurcolour = null; // important to set this to NULL since that means it is uninitialized
+        $this->collAnimalss = null; // important to set this to NULL since that means it is uninitialized
     }
 
     /**
-     * Reset is the collAnimalssRelatedByFurcolour collection loaded partially.
+     * Reset is the collAnimalss collection loaded partially.
      */
-    public function resetPartialAnimalssRelatedByFurcolour($v = true)
+    public function resetPartialAnimalss($v = true)
     {
-        $this->collAnimalssRelatedByFurcolourPartial = $v;
+        $this->collAnimalssPartial = $v;
     }
 
     /**
-     * Initializes the collAnimalssRelatedByFurcolour collection.
+     * Initializes the collAnimalss collection.
      *
-     * By default this just sets the collAnimalssRelatedByFurcolour collection to an empty array (like clearcollAnimalssRelatedByFurcolour());
+     * By default this just sets the collAnimalss collection to an empty array (like clearcollAnimalss());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
@@ -1194,13 +1196,13 @@ abstract class Colours implements ActiveRecordInterface
      *
      * @return void
      */
-    public function initAnimalssRelatedByFurcolour($overrideExisting = true)
+    public function initAnimalss($overrideExisting = true)
     {
-        if (null !== $this->collAnimalssRelatedByFurcolour && !$overrideExisting) {
+        if (null !== $this->collAnimalss && !$overrideExisting) {
             return;
         }
-        $this->collAnimalssRelatedByFurcolour = new ObjectCollection();
-        $this->collAnimalssRelatedByFurcolour->setModel('\Animals');
+        $this->collAnimalss = new ObjectCollection();
+        $this->collAnimalss->setModel('\Animals');
     }
 
     /**
@@ -1209,7 +1211,7 @@ abstract class Colours implements ActiveRecordInterface
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
      * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildColours is new, it will return
+     * If this ChildGenuses is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
@@ -1217,48 +1219,48 @@ abstract class Colours implements ActiveRecordInterface
      * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
      * @throws PropelException
      */
-    public function getAnimalssRelatedByFurcolour(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function getAnimalss(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        $partial = $this->collAnimalssRelatedByFurcolourPartial && !$this->isNew();
-        if (null === $this->collAnimalssRelatedByFurcolour || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collAnimalssRelatedByFurcolour) {
+        $partial = $this->collAnimalssPartial && !$this->isNew();
+        if (null === $this->collAnimalss || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collAnimalss) {
                 // return empty collection
-                $this->initAnimalssRelatedByFurcolour();
+                $this->initAnimalss();
             } else {
-                $collAnimalssRelatedByFurcolour = ChildAnimalsQuery::create(null, $criteria)
-                    ->filterByColoursRelatedByFurcolour($this)
+                $collAnimalss = ChildAnimalsQuery::create(null, $criteria)
+                    ->filterByGenuses($this)
                     ->find($con);
 
                 if (null !== $criteria) {
-                    if (false !== $this->collAnimalssRelatedByFurcolourPartial && count($collAnimalssRelatedByFurcolour)) {
-                        $this->initAnimalssRelatedByFurcolour(false);
+                    if (false !== $this->collAnimalssPartial && count($collAnimalss)) {
+                        $this->initAnimalss(false);
 
-                        foreach ($collAnimalssRelatedByFurcolour as $obj) {
-                            if (false == $this->collAnimalssRelatedByFurcolour->contains($obj)) {
-                                $this->collAnimalssRelatedByFurcolour->append($obj);
+                        foreach ($collAnimalss as $obj) {
+                            if (false == $this->collAnimalss->contains($obj)) {
+                                $this->collAnimalss->append($obj);
                             }
                         }
 
-                        $this->collAnimalssRelatedByFurcolourPartial = true;
+                        $this->collAnimalssPartial = true;
                     }
 
-                    return $collAnimalssRelatedByFurcolour;
+                    return $collAnimalss;
                 }
 
-                if ($partial && $this->collAnimalssRelatedByFurcolour) {
-                    foreach ($this->collAnimalssRelatedByFurcolour as $obj) {
+                if ($partial && $this->collAnimalss) {
+                    foreach ($this->collAnimalss as $obj) {
                         if ($obj->isNew()) {
-                            $collAnimalssRelatedByFurcolour[] = $obj;
+                            $collAnimalss[] = $obj;
                         }
                     }
                 }
 
-                $this->collAnimalssRelatedByFurcolour = $collAnimalssRelatedByFurcolour;
-                $this->collAnimalssRelatedByFurcolourPartial = false;
+                $this->collAnimalss = $collAnimalss;
+                $this->collAnimalssPartial = false;
             }
         }
 
-        return $this->collAnimalssRelatedByFurcolour;
+        return $this->collAnimalss;
     }
 
     /**
@@ -1267,29 +1269,29 @@ abstract class Colours implements ActiveRecordInterface
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param      Collection $animalssRelatedByFurcolour A Propel collection.
+     * @param      Collection $animalss A Propel collection.
      * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildColours The current object (for fluent API support)
+     * @return $this|ChildGenuses The current object (for fluent API support)
      */
-    public function setAnimalssRelatedByFurcolour(Collection $animalssRelatedByFurcolour, ConnectionInterface $con = null)
+    public function setAnimalss(Collection $animalss, ConnectionInterface $con = null)
     {
-        /** @var ChildAnimals[] $animalssRelatedByFurcolourToDelete */
-        $animalssRelatedByFurcolourToDelete = $this->getAnimalssRelatedByFurcolour(new Criteria(), $con)->diff($animalssRelatedByFurcolour);
+        /** @var ChildAnimals[] $animalssToDelete */
+        $animalssToDelete = $this->getAnimalss(new Criteria(), $con)->diff($animalss);
 
 
-        $this->animalssRelatedByFurcolourScheduledForDeletion = $animalssRelatedByFurcolourToDelete;
+        $this->animalssScheduledForDeletion = $animalssToDelete;
 
-        foreach ($animalssRelatedByFurcolourToDelete as $animalsRelatedByFurcolourRemoved) {
-            $animalsRelatedByFurcolourRemoved->setColoursRelatedByFurcolour(null);
+        foreach ($animalssToDelete as $animalsRemoved) {
+            $animalsRemoved->setGenuses(null);
         }
 
-        $this->collAnimalssRelatedByFurcolour = null;
-        foreach ($animalssRelatedByFurcolour as $animalsRelatedByFurcolour) {
-            $this->addAnimalsRelatedByFurcolour($animalsRelatedByFurcolour);
+        $this->collAnimalss = null;
+        foreach ($animalss as $animals) {
+            $this->addAnimals($animals);
         }
 
-        $this->collAnimalssRelatedByFurcolour = $animalssRelatedByFurcolour;
-        $this->collAnimalssRelatedByFurcolourPartial = false;
+        $this->collAnimalss = $animalss;
+        $this->collAnimalssPartial = false;
 
         return $this;
     }
@@ -1303,16 +1305,16 @@ abstract class Colours implements ActiveRecordInterface
      * @return int             Count of related Animals objects.
      * @throws PropelException
      */
-    public function countAnimalssRelatedByFurcolour(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function countAnimalss(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
     {
-        $partial = $this->collAnimalssRelatedByFurcolourPartial && !$this->isNew();
-        if (null === $this->collAnimalssRelatedByFurcolour || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collAnimalssRelatedByFurcolour) {
+        $partial = $this->collAnimalssPartial && !$this->isNew();
+        if (null === $this->collAnimalss || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collAnimalss) {
                 return 0;
             }
 
             if ($partial && !$criteria) {
-                return count($this->getAnimalssRelatedByFurcolour());
+                return count($this->getAnimalss());
             }
 
             $query = ChildAnimalsQuery::create(null, $criteria);
@@ -1321,11 +1323,11 @@ abstract class Colours implements ActiveRecordInterface
             }
 
             return $query
-                ->filterByColoursRelatedByFurcolour($this)
+                ->filterByGenuses($this)
                 ->count($con);
         }
 
-        return count($this->collAnimalssRelatedByFurcolour);
+        return count($this->collAnimalss);
     }
 
     /**
@@ -1333,46 +1335,46 @@ abstract class Colours implements ActiveRecordInterface
      * through the ChildAnimals foreign key attribute.
      *
      * @param  ChildAnimals $l ChildAnimals
-     * @return $this|\Colours The current object (for fluent API support)
+     * @return $this|\Genuses The current object (for fluent API support)
      */
-    public function addAnimalsRelatedByFurcolour(ChildAnimals $l)
+    public function addAnimals(ChildAnimals $l)
     {
-        if ($this->collAnimalssRelatedByFurcolour === null) {
-            $this->initAnimalssRelatedByFurcolour();
-            $this->collAnimalssRelatedByFurcolourPartial = true;
+        if ($this->collAnimalss === null) {
+            $this->initAnimalss();
+            $this->collAnimalssPartial = true;
         }
 
-        if (!$this->collAnimalssRelatedByFurcolour->contains($l)) {
-            $this->doAddAnimalsRelatedByFurcolour($l);
+        if (!$this->collAnimalss->contains($l)) {
+            $this->doAddAnimals($l);
         }
 
         return $this;
     }
 
     /**
-     * @param ChildAnimals $animalsRelatedByFurcolour The ChildAnimals object to add.
+     * @param ChildAnimals $animals The ChildAnimals object to add.
      */
-    protected function doAddAnimalsRelatedByFurcolour(ChildAnimals $animalsRelatedByFurcolour)
+    protected function doAddAnimals(ChildAnimals $animals)
     {
-        $this->collAnimalssRelatedByFurcolour[]= $animalsRelatedByFurcolour;
-        $animalsRelatedByFurcolour->setColoursRelatedByFurcolour($this);
+        $this->collAnimalss[]= $animals;
+        $animals->setGenuses($this);
     }
 
     /**
-     * @param  ChildAnimals $animalsRelatedByFurcolour The ChildAnimals object to remove.
-     * @return $this|ChildColours The current object (for fluent API support)
+     * @param  ChildAnimals $animals The ChildAnimals object to remove.
+     * @return $this|ChildGenuses The current object (for fluent API support)
      */
-    public function removeAnimalsRelatedByFurcolour(ChildAnimals $animalsRelatedByFurcolour)
+    public function removeAnimals(ChildAnimals $animals)
     {
-        if ($this->getAnimalssRelatedByFurcolour()->contains($animalsRelatedByFurcolour)) {
-            $pos = $this->collAnimalssRelatedByFurcolour->search($animalsRelatedByFurcolour);
-            $this->collAnimalssRelatedByFurcolour->remove($pos);
-            if (null === $this->animalssRelatedByFurcolourScheduledForDeletion) {
-                $this->animalssRelatedByFurcolourScheduledForDeletion = clone $this->collAnimalssRelatedByFurcolour;
-                $this->animalssRelatedByFurcolourScheduledForDeletion->clear();
+        if ($this->getAnimalss()->contains($animals)) {
+            $pos = $this->collAnimalss->search($animals);
+            $this->collAnimalss->remove($pos);
+            if (null === $this->animalssScheduledForDeletion) {
+                $this->animalssScheduledForDeletion = clone $this->collAnimalss;
+                $this->animalssScheduledForDeletion->clear();
             }
-            $this->animalssRelatedByFurcolourScheduledForDeletion[]= clone $animalsRelatedByFurcolour;
-            $animalsRelatedByFurcolour->setColoursRelatedByFurcolour(null);
+            $this->animalssScheduledForDeletion[]= clone $animals;
+            $animals->setGenuses(null);
         }
 
         return $this;
@@ -1382,128 +1384,153 @@ abstract class Colours implements ActiveRecordInterface
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this Colours is new, it will return
-     * an empty collection; or if this Colours has previously
-     * been saved, it will retrieve related AnimalssRelatedByFurcolour from storage.
+     * Otherwise if this Genuses is new, it will return
+     * an empty collection; or if this Genuses has previously
+     * been saved, it will retrieve related Animalss from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in Colours.
+     * actually need in Genuses.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
      */
-    public function getAnimalssRelatedByFurcolourJoinRaces(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getAnimalssJoinRaces(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildAnimalsQuery::create(null, $criteria);
         $query->joinWith('Races', $joinBehavior);
 
-        return $this->getAnimalssRelatedByFurcolour($query, $con);
+        return $this->getAnimalss($query, $con);
     }
 
 
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this Colours is new, it will return
-     * an empty collection; or if this Colours has previously
-     * been saved, it will retrieve related AnimalssRelatedByFurcolour from storage.
+     * Otherwise if this Genuses is new, it will return
+     * an empty collection; or if this Genuses has previously
+     * been saved, it will retrieve related Animalss from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in Colours.
+     * actually need in Genuses.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
      */
-    public function getAnimalssRelatedByFurcolourJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getAnimalssJoinColoursRelatedByFurcolour(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildAnimalsQuery::create(null, $criteria);
+        $query->joinWith('ColoursRelatedByFurcolour', $joinBehavior);
+
+        return $this->getAnimalss($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Genuses is new, it will return
+     * an empty collection; or if this Genuses has previously
+     * been saved, it will retrieve related Animalss from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Genuses.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
+     */
+    public function getAnimalssJoinColoursRelatedByEyecolour(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildAnimalsQuery::create(null, $criteria);
+        $query->joinWith('ColoursRelatedByEyecolour', $joinBehavior);
+
+        return $this->getAnimalss($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Genuses is new, it will return
+     * an empty collection; or if this Genuses has previously
+     * been saved, it will retrieve related Animalss from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Genuses.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
+     */
+    public function getAnimalssJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildAnimalsQuery::create(null, $criteria);
         $query->joinWith('Users', $joinBehavior);
 
-        return $this->getAnimalssRelatedByFurcolour($query, $con);
+        return $this->getAnimalss($query, $con);
     }
 
 
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this Colours is new, it will return
-     * an empty collection; or if this Colours has previously
-     * been saved, it will retrieve related AnimalssRelatedByFurcolour from storage.
+     * Otherwise if this Genuses is new, it will return
+     * an empty collection; or if this Genuses has previously
+     * been saved, it will retrieve related Animalss from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in Colours.
+     * actually need in Genuses.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
      */
-    public function getAnimalssRelatedByFurcolourJoinGenuses(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildAnimalsQuery::create(null, $criteria);
-        $query->joinWith('Genuses', $joinBehavior);
-
-        return $this->getAnimalssRelatedByFurcolour($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Colours is new, it will return
-     * an empty collection; or if this Colours has previously
-     * been saved, it will retrieve related AnimalssRelatedByFurcolour from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Colours.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
-     */
-    public function getAnimalssRelatedByFurcolourJoinSexes(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getAnimalssJoinSexes(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildAnimalsQuery::create(null, $criteria);
         $query->joinWith('Sexes', $joinBehavior);
 
-        return $this->getAnimalssRelatedByFurcolour($query, $con);
+        return $this->getAnimalss($query, $con);
     }
 
     /**
-     * Clears out the collAnimalssRelatedByEyecolour collection
+     * Clears out the collRacess collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
      * @return void
-     * @see        addAnimalssRelatedByEyecolour()
+     * @see        addRacess()
      */
-    public function clearAnimalssRelatedByEyecolour()
+    public function clearRacess()
     {
-        $this->collAnimalssRelatedByEyecolour = null; // important to set this to NULL since that means it is uninitialized
+        $this->collRacess = null; // important to set this to NULL since that means it is uninitialized
     }
 
     /**
-     * Reset is the collAnimalssRelatedByEyecolour collection loaded partially.
+     * Reset is the collRacess collection loaded partially.
      */
-    public function resetPartialAnimalssRelatedByEyecolour($v = true)
+    public function resetPartialRacess($v = true)
     {
-        $this->collAnimalssRelatedByEyecolourPartial = $v;
+        $this->collRacessPartial = $v;
     }
 
     /**
-     * Initializes the collAnimalssRelatedByEyecolour collection.
+     * Initializes the collRacess collection.
      *
-     * By default this just sets the collAnimalssRelatedByEyecolour collection to an empty array (like clearcollAnimalssRelatedByEyecolour());
+     * By default this just sets the collRacess collection to an empty array (like clearcollRacess());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
@@ -1512,288 +1539,188 @@ abstract class Colours implements ActiveRecordInterface
      *
      * @return void
      */
-    public function initAnimalssRelatedByEyecolour($overrideExisting = true)
+    public function initRacess($overrideExisting = true)
     {
-        if (null !== $this->collAnimalssRelatedByEyecolour && !$overrideExisting) {
+        if (null !== $this->collRacess && !$overrideExisting) {
             return;
         }
-        $this->collAnimalssRelatedByEyecolour = new ObjectCollection();
-        $this->collAnimalssRelatedByEyecolour->setModel('\Animals');
+        $this->collRacess = new ObjectCollection();
+        $this->collRacess->setModel('\Races');
     }
 
     /**
-     * Gets an array of ChildAnimals objects which contain a foreign key that references this object.
+     * Gets an array of ChildRaces objects which contain a foreign key that references this object.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
      * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildColours is new, it will return
+     * If this ChildGenuses is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
+     * @return ObjectCollection|ChildRaces[] List of ChildRaces objects
      * @throws PropelException
      */
-    public function getAnimalssRelatedByEyecolour(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function getRacess(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        $partial = $this->collAnimalssRelatedByEyecolourPartial && !$this->isNew();
-        if (null === $this->collAnimalssRelatedByEyecolour || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collAnimalssRelatedByEyecolour) {
+        $partial = $this->collRacessPartial && !$this->isNew();
+        if (null === $this->collRacess || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collRacess) {
                 // return empty collection
-                $this->initAnimalssRelatedByEyecolour();
+                $this->initRacess();
             } else {
-                $collAnimalssRelatedByEyecolour = ChildAnimalsQuery::create(null, $criteria)
-                    ->filterByColoursRelatedByEyecolour($this)
+                $collRacess = ChildRacesQuery::create(null, $criteria)
+                    ->filterByGenuses($this)
                     ->find($con);
 
                 if (null !== $criteria) {
-                    if (false !== $this->collAnimalssRelatedByEyecolourPartial && count($collAnimalssRelatedByEyecolour)) {
-                        $this->initAnimalssRelatedByEyecolour(false);
+                    if (false !== $this->collRacessPartial && count($collRacess)) {
+                        $this->initRacess(false);
 
-                        foreach ($collAnimalssRelatedByEyecolour as $obj) {
-                            if (false == $this->collAnimalssRelatedByEyecolour->contains($obj)) {
-                                $this->collAnimalssRelatedByEyecolour->append($obj);
+                        foreach ($collRacess as $obj) {
+                            if (false == $this->collRacess->contains($obj)) {
+                                $this->collRacess->append($obj);
                             }
                         }
 
-                        $this->collAnimalssRelatedByEyecolourPartial = true;
+                        $this->collRacessPartial = true;
                     }
 
-                    return $collAnimalssRelatedByEyecolour;
+                    return $collRacess;
                 }
 
-                if ($partial && $this->collAnimalssRelatedByEyecolour) {
-                    foreach ($this->collAnimalssRelatedByEyecolour as $obj) {
+                if ($partial && $this->collRacess) {
+                    foreach ($this->collRacess as $obj) {
                         if ($obj->isNew()) {
-                            $collAnimalssRelatedByEyecolour[] = $obj;
+                            $collRacess[] = $obj;
                         }
                     }
                 }
 
-                $this->collAnimalssRelatedByEyecolour = $collAnimalssRelatedByEyecolour;
-                $this->collAnimalssRelatedByEyecolourPartial = false;
+                $this->collRacess = $collRacess;
+                $this->collRacessPartial = false;
             }
         }
 
-        return $this->collAnimalssRelatedByEyecolour;
+        return $this->collRacess;
     }
 
     /**
-     * Sets a collection of ChildAnimals objects related by a one-to-many relationship
+     * Sets a collection of ChildRaces objects related by a one-to-many relationship
      * to the current object.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param      Collection $animalssRelatedByEyecolour A Propel collection.
+     * @param      Collection $racess A Propel collection.
      * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildColours The current object (for fluent API support)
+     * @return $this|ChildGenuses The current object (for fluent API support)
      */
-    public function setAnimalssRelatedByEyecolour(Collection $animalssRelatedByEyecolour, ConnectionInterface $con = null)
+    public function setRacess(Collection $racess, ConnectionInterface $con = null)
     {
-        /** @var ChildAnimals[] $animalssRelatedByEyecolourToDelete */
-        $animalssRelatedByEyecolourToDelete = $this->getAnimalssRelatedByEyecolour(new Criteria(), $con)->diff($animalssRelatedByEyecolour);
+        /** @var ChildRaces[] $racessToDelete */
+        $racessToDelete = $this->getRacess(new Criteria(), $con)->diff($racess);
 
 
-        $this->animalssRelatedByEyecolourScheduledForDeletion = $animalssRelatedByEyecolourToDelete;
+        $this->racessScheduledForDeletion = $racessToDelete;
 
-        foreach ($animalssRelatedByEyecolourToDelete as $animalsRelatedByEyecolourRemoved) {
-            $animalsRelatedByEyecolourRemoved->setColoursRelatedByEyecolour(null);
+        foreach ($racessToDelete as $racesRemoved) {
+            $racesRemoved->setGenuses(null);
         }
 
-        $this->collAnimalssRelatedByEyecolour = null;
-        foreach ($animalssRelatedByEyecolour as $animalsRelatedByEyecolour) {
-            $this->addAnimalsRelatedByEyecolour($animalsRelatedByEyecolour);
+        $this->collRacess = null;
+        foreach ($racess as $races) {
+            $this->addRaces($races);
         }
 
-        $this->collAnimalssRelatedByEyecolour = $animalssRelatedByEyecolour;
-        $this->collAnimalssRelatedByEyecolourPartial = false;
+        $this->collRacess = $racess;
+        $this->collRacessPartial = false;
 
         return $this;
     }
 
     /**
-     * Returns the number of related Animals objects.
+     * Returns the number of related Races objects.
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct
      * @param      ConnectionInterface $con
-     * @return int             Count of related Animals objects.
+     * @return int             Count of related Races objects.
      * @throws PropelException
      */
-    public function countAnimalssRelatedByEyecolour(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function countRacess(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
     {
-        $partial = $this->collAnimalssRelatedByEyecolourPartial && !$this->isNew();
-        if (null === $this->collAnimalssRelatedByEyecolour || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collAnimalssRelatedByEyecolour) {
+        $partial = $this->collRacessPartial && !$this->isNew();
+        if (null === $this->collRacess || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collRacess) {
                 return 0;
             }
 
             if ($partial && !$criteria) {
-                return count($this->getAnimalssRelatedByEyecolour());
+                return count($this->getRacess());
             }
 
-            $query = ChildAnimalsQuery::create(null, $criteria);
+            $query = ChildRacesQuery::create(null, $criteria);
             if ($distinct) {
                 $query->distinct();
             }
 
             return $query
-                ->filterByColoursRelatedByEyecolour($this)
+                ->filterByGenuses($this)
                 ->count($con);
         }
 
-        return count($this->collAnimalssRelatedByEyecolour);
+        return count($this->collRacess);
     }
 
     /**
-     * Method called to associate a ChildAnimals object to this object
-     * through the ChildAnimals foreign key attribute.
+     * Method called to associate a ChildRaces object to this object
+     * through the ChildRaces foreign key attribute.
      *
-     * @param  ChildAnimals $l ChildAnimals
-     * @return $this|\Colours The current object (for fluent API support)
+     * @param  ChildRaces $l ChildRaces
+     * @return $this|\Genuses The current object (for fluent API support)
      */
-    public function addAnimalsRelatedByEyecolour(ChildAnimals $l)
+    public function addRaces(ChildRaces $l)
     {
-        if ($this->collAnimalssRelatedByEyecolour === null) {
-            $this->initAnimalssRelatedByEyecolour();
-            $this->collAnimalssRelatedByEyecolourPartial = true;
+        if ($this->collRacess === null) {
+            $this->initRacess();
+            $this->collRacessPartial = true;
         }
 
-        if (!$this->collAnimalssRelatedByEyecolour->contains($l)) {
-            $this->doAddAnimalsRelatedByEyecolour($l);
+        if (!$this->collRacess->contains($l)) {
+            $this->doAddRaces($l);
         }
 
         return $this;
     }
 
     /**
-     * @param ChildAnimals $animalsRelatedByEyecolour The ChildAnimals object to add.
+     * @param ChildRaces $races The ChildRaces object to add.
      */
-    protected function doAddAnimalsRelatedByEyecolour(ChildAnimals $animalsRelatedByEyecolour)
+    protected function doAddRaces(ChildRaces $races)
     {
-        $this->collAnimalssRelatedByEyecolour[]= $animalsRelatedByEyecolour;
-        $animalsRelatedByEyecolour->setColoursRelatedByEyecolour($this);
+        $this->collRacess[]= $races;
+        $races->setGenuses($this);
     }
 
     /**
-     * @param  ChildAnimals $animalsRelatedByEyecolour The ChildAnimals object to remove.
-     * @return $this|ChildColours The current object (for fluent API support)
+     * @param  ChildRaces $races The ChildRaces object to remove.
+     * @return $this|ChildGenuses The current object (for fluent API support)
      */
-    public function removeAnimalsRelatedByEyecolour(ChildAnimals $animalsRelatedByEyecolour)
+    public function removeRaces(ChildRaces $races)
     {
-        if ($this->getAnimalssRelatedByEyecolour()->contains($animalsRelatedByEyecolour)) {
-            $pos = $this->collAnimalssRelatedByEyecolour->search($animalsRelatedByEyecolour);
-            $this->collAnimalssRelatedByEyecolour->remove($pos);
-            if (null === $this->animalssRelatedByEyecolourScheduledForDeletion) {
-                $this->animalssRelatedByEyecolourScheduledForDeletion = clone $this->collAnimalssRelatedByEyecolour;
-                $this->animalssRelatedByEyecolourScheduledForDeletion->clear();
+        if ($this->getRacess()->contains($races)) {
+            $pos = $this->collRacess->search($races);
+            $this->collRacess->remove($pos);
+            if (null === $this->racessScheduledForDeletion) {
+                $this->racessScheduledForDeletion = clone $this->collRacess;
+                $this->racessScheduledForDeletion->clear();
             }
-            $this->animalssRelatedByEyecolourScheduledForDeletion[]= clone $animalsRelatedByEyecolour;
-            $animalsRelatedByEyecolour->setColoursRelatedByEyecolour(null);
+            $this->racessScheduledForDeletion[]= clone $races;
+            $races->setGenuses(null);
         }
 
         return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Colours is new, it will return
-     * an empty collection; or if this Colours has previously
-     * been saved, it will retrieve related AnimalssRelatedByEyecolour from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Colours.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
-     */
-    public function getAnimalssRelatedByEyecolourJoinRaces(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildAnimalsQuery::create(null, $criteria);
-        $query->joinWith('Races', $joinBehavior);
-
-        return $this->getAnimalssRelatedByEyecolour($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Colours is new, it will return
-     * an empty collection; or if this Colours has previously
-     * been saved, it will retrieve related AnimalssRelatedByEyecolour from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Colours.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
-     */
-    public function getAnimalssRelatedByEyecolourJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildAnimalsQuery::create(null, $criteria);
-        $query->joinWith('Users', $joinBehavior);
-
-        return $this->getAnimalssRelatedByEyecolour($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Colours is new, it will return
-     * an empty collection; or if this Colours has previously
-     * been saved, it will retrieve related AnimalssRelatedByEyecolour from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Colours.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
-     */
-    public function getAnimalssRelatedByEyecolourJoinGenuses(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildAnimalsQuery::create(null, $criteria);
-        $query->joinWith('Genuses', $joinBehavior);
-
-        return $this->getAnimalssRelatedByEyecolour($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Colours is new, it will return
-     * an empty collection; or if this Colours has previously
-     * been saved, it will retrieve related AnimalssRelatedByEyecolour from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Colours.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
-     */
-    public function getAnimalssRelatedByEyecolourJoinSexes(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildAnimalsQuery::create(null, $criteria);
-        $query->joinWith('Sexes', $joinBehavior);
-
-        return $this->getAnimalssRelatedByEyecolour($query, $con);
     }
 
     /**
@@ -1803,7 +1730,7 @@ abstract class Colours implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->colour = null;
+        $this->genus = null;
         $this->code = null;
         $this->description = null;
         $this->alreadyInSave = false;
@@ -1824,20 +1751,20 @@ abstract class Colours implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collAnimalssRelatedByFurcolour) {
-                foreach ($this->collAnimalssRelatedByFurcolour as $o) {
+            if ($this->collAnimalss) {
+                foreach ($this->collAnimalss as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collAnimalssRelatedByEyecolour) {
-                foreach ($this->collAnimalssRelatedByEyecolour as $o) {
+            if ($this->collRacess) {
+                foreach ($this->collRacess as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
         } // if ($deep)
 
-        $this->collAnimalssRelatedByFurcolour = null;
-        $this->collAnimalssRelatedByEyecolour = null;
+        $this->collAnimalss = null;
+        $this->collRacess = null;
     }
 
     /**
@@ -1847,7 +1774,7 @@ abstract class Colours implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(ColoursTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(GenusesTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

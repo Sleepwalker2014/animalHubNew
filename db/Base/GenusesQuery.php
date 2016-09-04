@@ -2,11 +2,11 @@
 
 namespace Base;
 
-use \Colours as ChildColours;
-use \ColoursQuery as ChildColoursQuery;
+use \Genuses as ChildGenuses;
+use \GenusesQuery as ChildGenusesQuery;
 use \Exception;
 use \PDO;
-use Map\ColoursTableMap;
+use Map\GenusesTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -16,99 +16,99 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 
 /**
- * Base class that represents a query for the 'colours' table.
+ * Base class that represents a query for the 'genuses' table.
  *
  *
  *
- * @method     ChildColoursQuery orderByColour($order = Criteria::ASC) Order by the colour column
- * @method     ChildColoursQuery orderByCode($order = Criteria::ASC) Order by the code column
- * @method     ChildColoursQuery orderByDescription($order = Criteria::ASC) Order by the description column
+ * @method     ChildGenusesQuery orderByGenus($order = Criteria::ASC) Order by the genus column
+ * @method     ChildGenusesQuery orderByCode($order = Criteria::ASC) Order by the code column
+ * @method     ChildGenusesQuery orderByDescription($order = Criteria::ASC) Order by the description column
  *
- * @method     ChildColoursQuery groupByColour() Group by the colour column
- * @method     ChildColoursQuery groupByCode() Group by the code column
- * @method     ChildColoursQuery groupByDescription() Group by the description column
+ * @method     ChildGenusesQuery groupByGenus() Group by the genus column
+ * @method     ChildGenusesQuery groupByCode() Group by the code column
+ * @method     ChildGenusesQuery groupByDescription() Group by the description column
  *
- * @method     ChildColoursQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
- * @method     ChildColoursQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
- * @method     ChildColoursQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ * @method     ChildGenusesQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
+ * @method     ChildGenusesQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
+ * @method     ChildGenusesQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildColoursQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
- * @method     ChildColoursQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
- * @method     ChildColoursQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
+ * @method     ChildGenusesQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
+ * @method     ChildGenusesQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
+ * @method     ChildGenusesQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildColoursQuery leftJoinAnimalsRelatedByFurcolour($relationAlias = null) Adds a LEFT JOIN clause to the query using the AnimalsRelatedByFurcolour relation
- * @method     ChildColoursQuery rightJoinAnimalsRelatedByFurcolour($relationAlias = null) Adds a RIGHT JOIN clause to the query using the AnimalsRelatedByFurcolour relation
- * @method     ChildColoursQuery innerJoinAnimalsRelatedByFurcolour($relationAlias = null) Adds a INNER JOIN clause to the query using the AnimalsRelatedByFurcolour relation
+ * @method     ChildGenusesQuery leftJoinAnimals($relationAlias = null) Adds a LEFT JOIN clause to the query using the Animals relation
+ * @method     ChildGenusesQuery rightJoinAnimals($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Animals relation
+ * @method     ChildGenusesQuery innerJoinAnimals($relationAlias = null) Adds a INNER JOIN clause to the query using the Animals relation
  *
- * @method     ChildColoursQuery joinWithAnimalsRelatedByFurcolour($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the AnimalsRelatedByFurcolour relation
+ * @method     ChildGenusesQuery joinWithAnimals($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Animals relation
  *
- * @method     ChildColoursQuery leftJoinWithAnimalsRelatedByFurcolour() Adds a LEFT JOIN clause and with to the query using the AnimalsRelatedByFurcolour relation
- * @method     ChildColoursQuery rightJoinWithAnimalsRelatedByFurcolour() Adds a RIGHT JOIN clause and with to the query using the AnimalsRelatedByFurcolour relation
- * @method     ChildColoursQuery innerJoinWithAnimalsRelatedByFurcolour() Adds a INNER JOIN clause and with to the query using the AnimalsRelatedByFurcolour relation
+ * @method     ChildGenusesQuery leftJoinWithAnimals() Adds a LEFT JOIN clause and with to the query using the Animals relation
+ * @method     ChildGenusesQuery rightJoinWithAnimals() Adds a RIGHT JOIN clause and with to the query using the Animals relation
+ * @method     ChildGenusesQuery innerJoinWithAnimals() Adds a INNER JOIN clause and with to the query using the Animals relation
  *
- * @method     ChildColoursQuery leftJoinAnimalsRelatedByEyecolour($relationAlias = null) Adds a LEFT JOIN clause to the query using the AnimalsRelatedByEyecolour relation
- * @method     ChildColoursQuery rightJoinAnimalsRelatedByEyecolour($relationAlias = null) Adds a RIGHT JOIN clause to the query using the AnimalsRelatedByEyecolour relation
- * @method     ChildColoursQuery innerJoinAnimalsRelatedByEyecolour($relationAlias = null) Adds a INNER JOIN clause to the query using the AnimalsRelatedByEyecolour relation
+ * @method     ChildGenusesQuery leftJoinRaces($relationAlias = null) Adds a LEFT JOIN clause to the query using the Races relation
+ * @method     ChildGenusesQuery rightJoinRaces($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Races relation
+ * @method     ChildGenusesQuery innerJoinRaces($relationAlias = null) Adds a INNER JOIN clause to the query using the Races relation
  *
- * @method     ChildColoursQuery joinWithAnimalsRelatedByEyecolour($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the AnimalsRelatedByEyecolour relation
+ * @method     ChildGenusesQuery joinWithRaces($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Races relation
  *
- * @method     ChildColoursQuery leftJoinWithAnimalsRelatedByEyecolour() Adds a LEFT JOIN clause and with to the query using the AnimalsRelatedByEyecolour relation
- * @method     ChildColoursQuery rightJoinWithAnimalsRelatedByEyecolour() Adds a RIGHT JOIN clause and with to the query using the AnimalsRelatedByEyecolour relation
- * @method     ChildColoursQuery innerJoinWithAnimalsRelatedByEyecolour() Adds a INNER JOIN clause and with to the query using the AnimalsRelatedByEyecolour relation
+ * @method     ChildGenusesQuery leftJoinWithRaces() Adds a LEFT JOIN clause and with to the query using the Races relation
+ * @method     ChildGenusesQuery rightJoinWithRaces() Adds a RIGHT JOIN clause and with to the query using the Races relation
+ * @method     ChildGenusesQuery innerJoinWithRaces() Adds a INNER JOIN clause and with to the query using the Races relation
  *
- * @method     \AnimalsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \AnimalsQuery|\RacesQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
- * @method     ChildColours findOne(ConnectionInterface $con = null) Return the first ChildColours matching the query
- * @method     ChildColours findOneOrCreate(ConnectionInterface $con = null) Return the first ChildColours matching the query, or a new ChildColours object populated from the query conditions when no match is found
+ * @method     ChildGenuses findOne(ConnectionInterface $con = null) Return the first ChildGenuses matching the query
+ * @method     ChildGenuses findOneOrCreate(ConnectionInterface $con = null) Return the first ChildGenuses matching the query, or a new ChildGenuses object populated from the query conditions when no match is found
  *
- * @method     ChildColours findOneByColour(int $colour) Return the first ChildColours filtered by the colour column
- * @method     ChildColours findOneByCode(string $code) Return the first ChildColours filtered by the code column
- * @method     ChildColours findOneByDescription(string $description) Return the first ChildColours filtered by the description column *
+ * @method     ChildGenuses findOneByGenus(int $genus) Return the first ChildGenuses filtered by the genus column
+ * @method     ChildGenuses findOneByCode(string $code) Return the first ChildGenuses filtered by the code column
+ * @method     ChildGenuses findOneByDescription(string $description) Return the first ChildGenuses filtered by the description column *
 
- * @method     ChildColours requirePk($key, ConnectionInterface $con = null) Return the ChildColours by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildColours requireOne(ConnectionInterface $con = null) Return the first ChildColours matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildGenuses requirePk($key, ConnectionInterface $con = null) Return the ChildGenuses by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildGenuses requireOne(ConnectionInterface $con = null) Return the first ChildGenuses matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildColours requireOneByColour(int $colour) Return the first ChildColours filtered by the colour column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildColours requireOneByCode(string $code) Return the first ChildColours filtered by the code column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildColours requireOneByDescription(string $description) Return the first ChildColours filtered by the description column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildGenuses requireOneByGenus(int $genus) Return the first ChildGenuses filtered by the genus column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildGenuses requireOneByCode(string $code) Return the first ChildGenuses filtered by the code column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildGenuses requireOneByDescription(string $description) Return the first ChildGenuses filtered by the description column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildColours[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildColours objects based on current ModelCriteria
- * @method     ChildColours[]|ObjectCollection findByColour(int $colour) Return ChildColours objects filtered by the colour column
- * @method     ChildColours[]|ObjectCollection findByCode(string $code) Return ChildColours objects filtered by the code column
- * @method     ChildColours[]|ObjectCollection findByDescription(string $description) Return ChildColours objects filtered by the description column
- * @method     ChildColours[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     ChildGenuses[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildGenuses objects based on current ModelCriteria
+ * @method     ChildGenuses[]|ObjectCollection findByGenus(int $genus) Return ChildGenuses objects filtered by the genus column
+ * @method     ChildGenuses[]|ObjectCollection findByCode(string $code) Return ChildGenuses objects filtered by the code column
+ * @method     ChildGenuses[]|ObjectCollection findByDescription(string $description) Return ChildGenuses objects filtered by the description column
+ * @method     ChildGenuses[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
-abstract class ColoursQuery extends ModelCriteria
+abstract class GenusesQuery extends ModelCriteria
 {
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
-     * Initializes internal state of \Base\ColoursQuery object.
+     * Initializes internal state of \Base\GenusesQuery object.
      *
      * @param     string $dbName The database name
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'default', $modelName = '\\Colours', $modelAlias = null)
+    public function __construct($dbName = 'default', $modelName = '\\Genuses', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }
 
     /**
-     * Returns a new ChildColoursQuery object.
+     * Returns a new ChildGenusesQuery object.
      *
      * @param     string $modelAlias The alias of a model in the query
      * @param     Criteria $criteria Optional Criteria to build the query from
      *
-     * @return ChildColoursQuery
+     * @return ChildGenusesQuery
      */
     public static function create($modelAlias = null, Criteria $criteria = null)
     {
-        if ($criteria instanceof ChildColoursQuery) {
+        if ($criteria instanceof ChildGenusesQuery) {
             return $criteria;
         }
-        $query = new ChildColoursQuery();
+        $query = new ChildGenusesQuery();
         if (null !== $modelAlias) {
             $query->setModelAlias($modelAlias);
         }
@@ -131,19 +131,19 @@ abstract class ColoursQuery extends ModelCriteria
      * @param mixed $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
-     * @return ChildColours|array|mixed the result, formatted by the current formatter
+     * @return ChildGenuses|array|mixed the result, formatted by the current formatter
      */
     public function findPk($key, ConnectionInterface $con = null)
     {
         if ($key === null) {
             return null;
         }
-        if ((null !== ($obj = ColoursTableMap::getInstanceFromPool((string) $key))) && !$this->formatter) {
+        if ((null !== ($obj = GenusesTableMap::getInstanceFromPool((string) $key))) && !$this->formatter) {
             // the object is already in the instance pool
             return $obj;
         }
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(ColoursTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(GenusesTableMap::DATABASE_NAME);
         }
         $this->basePreSelect($con);
         if ($this->formatter || $this->modelAlias || $this->with || $this->select
@@ -164,11 +164,11 @@ abstract class ColoursQuery extends ModelCriteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildColours A model object, or null if the key is not found
+     * @return ChildGenuses A model object, or null if the key is not found
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT colour, code, description FROM colours WHERE colour = :p0';
+        $sql = 'SELECT genus, code, description FROM genuses WHERE genus = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -179,10 +179,10 @@ abstract class ColoursQuery extends ModelCriteria
         }
         $obj = null;
         if ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
-            /** @var ChildColours $obj */
-            $obj = new ChildColours();
+            /** @var ChildGenuses $obj */
+            $obj = new ChildGenuses();
             $obj->hydrate($row);
-            ColoursTableMap::addInstanceToPool($obj, (string) $key);
+            GenusesTableMap::addInstanceToPool($obj, (string) $key);
         }
         $stmt->closeCursor();
 
@@ -195,7 +195,7 @@ abstract class ColoursQuery extends ModelCriteria
      * @param     mixed $key Primary key to use for the query
      * @param     ConnectionInterface $con A connection object
      *
-     * @return ChildColours|array|mixed the result, formatted by the current formatter
+     * @return ChildGenuses|array|mixed the result, formatted by the current formatter
      */
     protected function findPkComplex($key, ConnectionInterface $con)
     {
@@ -237,12 +237,12 @@ abstract class ColoursQuery extends ModelCriteria
      *
      * @param     mixed $key Primary key to use for the query
      *
-     * @return $this|ChildColoursQuery The current query, for fluid interface
+     * @return $this|ChildGenusesQuery The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(ColoursTableMap::COL_COLOUR, $key, Criteria::EQUAL);
+        return $this->addUsingAlias(GenusesTableMap::COL_GENUS, $key, Criteria::EQUAL);
     }
 
     /**
@@ -250,42 +250,42 @@ abstract class ColoursQuery extends ModelCriteria
      *
      * @param     array $keys The list of primary key to use for the query
      *
-     * @return $this|ChildColoursQuery The current query, for fluid interface
+     * @return $this|ChildGenusesQuery The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(ColoursTableMap::COL_COLOUR, $keys, Criteria::IN);
+        return $this->addUsingAlias(GenusesTableMap::COL_GENUS, $keys, Criteria::IN);
     }
 
     /**
-     * Filter the query on the colour column
+     * Filter the query on the genus column
      *
      * Example usage:
      * <code>
-     * $query->filterByColour(1234); // WHERE colour = 1234
-     * $query->filterByColour(array(12, 34)); // WHERE colour IN (12, 34)
-     * $query->filterByColour(array('min' => 12)); // WHERE colour > 12
+     * $query->filterByGenus(1234); // WHERE genus = 1234
+     * $query->filterByGenus(array(12, 34)); // WHERE genus IN (12, 34)
+     * $query->filterByGenus(array('min' => 12)); // WHERE genus > 12
      * </code>
      *
-     * @param     mixed $colour The value to use as filter.
+     * @param     mixed $genus The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildColoursQuery The current query, for fluid interface
+     * @return $this|ChildGenusesQuery The current query, for fluid interface
      */
-    public function filterByColour($colour = null, $comparison = null)
+    public function filterByGenus($genus = null, $comparison = null)
     {
-        if (is_array($colour)) {
+        if (is_array($genus)) {
             $useMinMax = false;
-            if (isset($colour['min'])) {
-                $this->addUsingAlias(ColoursTableMap::COL_COLOUR, $colour['min'], Criteria::GREATER_EQUAL);
+            if (isset($genus['min'])) {
+                $this->addUsingAlias(GenusesTableMap::COL_GENUS, $genus['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($colour['max'])) {
-                $this->addUsingAlias(ColoursTableMap::COL_COLOUR, $colour['max'], Criteria::LESS_EQUAL);
+            if (isset($genus['max'])) {
+                $this->addUsingAlias(GenusesTableMap::COL_GENUS, $genus['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -296,7 +296,7 @@ abstract class ColoursQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(ColoursTableMap::COL_COLOUR, $colour, $comparison);
+        return $this->addUsingAlias(GenusesTableMap::COL_GENUS, $genus, $comparison);
     }
 
     /**
@@ -312,7 +312,7 @@ abstract class ColoursQuery extends ModelCriteria
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildColoursQuery The current query, for fluid interface
+     * @return $this|ChildGenusesQuery The current query, for fluid interface
      */
     public function filterByCode($code = null, $comparison = null)
     {
@@ -325,7 +325,7 @@ abstract class ColoursQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(ColoursTableMap::COL_CODE, $code, $comparison);
+        return $this->addUsingAlias(GenusesTableMap::COL_CODE, $code, $comparison);
     }
 
     /**
@@ -341,7 +341,7 @@ abstract class ColoursQuery extends ModelCriteria
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildColoursQuery The current query, for fluid interface
+     * @return $this|ChildGenusesQuery The current query, for fluid interface
      */
     public function filterByDescription($description = null, $comparison = null)
     {
@@ -354,7 +354,7 @@ abstract class ColoursQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(ColoursTableMap::COL_DESCRIPTION, $description, $comparison);
+        return $this->addUsingAlias(GenusesTableMap::COL_DESCRIPTION, $description, $comparison);
     }
 
     /**
@@ -363,35 +363,35 @@ abstract class ColoursQuery extends ModelCriteria
      * @param \Animals|ObjectCollection $animals the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return ChildColoursQuery The current query, for fluid interface
+     * @return ChildGenusesQuery The current query, for fluid interface
      */
-    public function filterByAnimalsRelatedByFurcolour($animals, $comparison = null)
+    public function filterByAnimals($animals, $comparison = null)
     {
         if ($animals instanceof \Animals) {
             return $this
-                ->addUsingAlias(ColoursTableMap::COL_COLOUR, $animals->getFurcolour(), $comparison);
+                ->addUsingAlias(GenusesTableMap::COL_GENUS, $animals->getGenus(), $comparison);
         } elseif ($animals instanceof ObjectCollection) {
             return $this
-                ->useAnimalsRelatedByFurcolourQuery()
+                ->useAnimalsQuery()
                 ->filterByPrimaryKeys($animals->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByAnimalsRelatedByFurcolour() only accepts arguments of type \Animals or Collection');
+            throw new PropelException('filterByAnimals() only accepts arguments of type \Animals or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the AnimalsRelatedByFurcolour relation
+     * Adds a JOIN clause to the query using the Animals relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return $this|ChildColoursQuery The current query, for fluid interface
+     * @return $this|ChildGenusesQuery The current query, for fluid interface
      */
-    public function joinAnimalsRelatedByFurcolour($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinAnimals($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('AnimalsRelatedByFurcolour');
+        $relationMap = $tableMap->getRelation('Animals');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -406,14 +406,14 @@ abstract class ColoursQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'AnimalsRelatedByFurcolour');
+            $this->addJoinObject($join, 'Animals');
         }
 
         return $this;
     }
 
     /**
-     * Use the AnimalsRelatedByFurcolour relation Animals object
+     * Use the Animals relation Animals object
      *
      * @see useQuery()
      *
@@ -423,48 +423,48 @@ abstract class ColoursQuery extends ModelCriteria
      *
      * @return \AnimalsQuery A secondary query class using the current class as primary query
      */
-    public function useAnimalsRelatedByFurcolourQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useAnimalsQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinAnimalsRelatedByFurcolour($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'AnimalsRelatedByFurcolour', '\AnimalsQuery');
+            ->joinAnimals($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Animals', '\AnimalsQuery');
     }
 
     /**
-     * Filter the query by a related \Animals object
+     * Filter the query by a related \Races object
      *
-     * @param \Animals|ObjectCollection $animals the related object to use as filter
+     * @param \Races|ObjectCollection $races the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return ChildColoursQuery The current query, for fluid interface
+     * @return ChildGenusesQuery The current query, for fluid interface
      */
-    public function filterByAnimalsRelatedByEyecolour($animals, $comparison = null)
+    public function filterByRaces($races, $comparison = null)
     {
-        if ($animals instanceof \Animals) {
+        if ($races instanceof \Races) {
             return $this
-                ->addUsingAlias(ColoursTableMap::COL_COLOUR, $animals->getEyecolour(), $comparison);
-        } elseif ($animals instanceof ObjectCollection) {
+                ->addUsingAlias(GenusesTableMap::COL_GENUS, $races->getGenus(), $comparison);
+        } elseif ($races instanceof ObjectCollection) {
             return $this
-                ->useAnimalsRelatedByEyecolourQuery()
-                ->filterByPrimaryKeys($animals->getPrimaryKeys())
+                ->useRacesQuery()
+                ->filterByPrimaryKeys($races->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByAnimalsRelatedByEyecolour() only accepts arguments of type \Animals or Collection');
+            throw new PropelException('filterByRaces() only accepts arguments of type \Races or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the AnimalsRelatedByEyecolour relation
+     * Adds a JOIN clause to the query using the Races relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return $this|ChildColoursQuery The current query, for fluid interface
+     * @return $this|ChildGenusesQuery The current query, for fluid interface
      */
-    public function joinAnimalsRelatedByEyecolour($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinRaces($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('AnimalsRelatedByEyecolour');
+        $relationMap = $tableMap->getRelation('Races');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -479,14 +479,14 @@ abstract class ColoursQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'AnimalsRelatedByEyecolour');
+            $this->addJoinObject($join, 'Races');
         }
 
         return $this;
     }
 
     /**
-     * Use the AnimalsRelatedByEyecolour relation Animals object
+     * Use the Races relation Races object
      *
      * @see useQuery()
      *
@@ -494,33 +494,33 @@ abstract class ColoursQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \AnimalsQuery A secondary query class using the current class as primary query
+     * @return \RacesQuery A secondary query class using the current class as primary query
      */
-    public function useAnimalsRelatedByEyecolourQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useRacesQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinAnimalsRelatedByEyecolour($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'AnimalsRelatedByEyecolour', '\AnimalsQuery');
+            ->joinRaces($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Races', '\RacesQuery');
     }
 
     /**
      * Exclude object from result
      *
-     * @param   ChildColours $colours Object to remove from the list of results
+     * @param   ChildGenuses $genuses Object to remove from the list of results
      *
-     * @return $this|ChildColoursQuery The current query, for fluid interface
+     * @return $this|ChildGenusesQuery The current query, for fluid interface
      */
-    public function prune($colours = null)
+    public function prune($genuses = null)
     {
-        if ($colours) {
-            $this->addUsingAlias(ColoursTableMap::COL_COLOUR, $colours->getColour(), Criteria::NOT_EQUAL);
+        if ($genuses) {
+            $this->addUsingAlias(GenusesTableMap::COL_GENUS, $genuses->getGenus(), Criteria::NOT_EQUAL);
         }
 
         return $this;
     }
 
     /**
-     * Deletes all rows from the colours table.
+     * Deletes all rows from the genuses table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
@@ -528,7 +528,7 @@ abstract class ColoursQuery extends ModelCriteria
     public function doDeleteAll(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ColoursTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(GenusesTableMap::DATABASE_NAME);
         }
 
         // use transaction because $criteria could contain info
@@ -539,8 +539,8 @@ abstract class ColoursQuery extends ModelCriteria
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            ColoursTableMap::clearInstancePool();
-            ColoursTableMap::clearRelatedInstancePool();
+            GenusesTableMap::clearInstancePool();
+            GenusesTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
@@ -558,26 +558,26 @@ abstract class ColoursQuery extends ModelCriteria
     public function delete(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(ColoursTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(GenusesTableMap::DATABASE_NAME);
         }
 
         $criteria = $this;
 
         // Set the correct dbName
-        $criteria->setDbName(ColoursTableMap::DATABASE_NAME);
+        $criteria->setDbName(GenusesTableMap::DATABASE_NAME);
 
         // use transaction because $criteria could contain info
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
 
-            ColoursTableMap::removeInstanceFromPool($criteria);
+            GenusesTableMap::removeInstanceFromPool($criteria);
 
             $affectedRows += ModelCriteria::delete($con);
-            ColoursTableMap::clearRelatedInstancePool();
+            GenusesTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
     }
 
-} // ColoursQuery
+} // GenusesQuery

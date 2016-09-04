@@ -9,22 +9,32 @@ class MainRouter
     private $actionCode = null;
     private $parameters = [];
     private $actionMethodMap = ['Login' => ['class' => 'Login', 'method' => 'getHTML'],
-                                'LoginUser' => ['class' => 'Login', 'method' => 'handleLogin'],
-                                'LogoutUser' => ['class' => 'Logout', 'method' => 'handleLogout'],
-                                'Register' => ['class' => 'Register', 'method' => 'handleRegister'],
-                                'CompleteRegister' => ['class' => 'Register', 'method' => 'handleCompleteRegistration'],
-                                'Home' => ['class' => 'Home', 'method' => 'getHTML'],
-                                'Overview' => ['class' => 'Overview', 'method' => 'getHTML'],
-                                'UserSettings' => ['class' => 'UserSettings', 'method' => 'getHTML'],
-                                'AnimalOverview' => ['class' => 'AnimalOverview', 'method' => 'getHTML']];
+        'LoginUser' => ['class' => 'Login', 'method' => 'handleLogin'],
+        'LogoutUser' => ['class' => 'Logout', 'method' => 'handleLogout'],
+        'Register' => ['class' => 'Register', 'method' => 'handleRegister'],
+        'CompleteRegister' => ['class' => 'Register', 'method' => 'handleCompleteRegistration'],
+        'Home' => ['class' => 'Home', 'method' => 'getHTML'],
+        'Overview' => ['class' => 'Overview', 'method' => 'getHTML'],
+        'UserSettings' => ['class' => 'UserSettings', 'method' => 'getHTML'],
+        'AnimalOverview' => ['class' => 'AnimalOverview', 'method' => 'getHTML'],
+        'EditAnimal' => ['class' => 'EditAnimal', 'method' => 'getHTML'],
+        'SaveAnimal' => ['class' => 'EditAnimal', 'method' => 'saveAnimal'],
+        'RemoveAnimal' => ['class' => 'AnimalOverview', 'method' => 'removeAnimal'],
+        'AnimalDonation' => ['class' => 'AnimalDonation', 'method' => 'getHTML']];
     /**
      * @var Template
      */
     private $template;
+
     /**
      * @var SessionHandler
      */
     private $sessionHandler;
+
+    /**
+     * @var bool
+     */
+    private $isAjax;
 
     /**
      * MainRouter constructor.
@@ -32,18 +42,22 @@ class MainRouter
      * @param mixed[] $parameters
      * @param Template $template
      * @param SessionHandler $sessionHandler
+     * @param bool|false $isAjax
      */
-    public function __construct($actionCode = null, $parameters = null, Template $template, SessionHandler $sessionHandler)
+    public function __construct($actionCode = null, $parameters = null, Template $template, SessionHandler $sessionHandler, $isAjax = false)
     {
         $this->actionCode = $actionCode;
         $this->parameters = $parameters;
         $this->template = $template;
         $this->sessionHandler = $sessionHandler;
+        $this->isAjax = $isAjax;
     }
 
     public function route()
     {
         $user = $this->sessionHandler->getSessionUser();
+
+        $this->template->includeBaseTemplate(!$this->isAjax);
 
         if (!empty($user)) {
             if (empty($this->actionCode)) {

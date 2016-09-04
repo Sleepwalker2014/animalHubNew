@@ -148,3 +148,9 @@ footer {
     height:                  25%;
     padding:                 25px;
 }
+
+#messageBox {
+    position:                fixed;
+    width:                   100%;
+    z-index:                 9999;
+}

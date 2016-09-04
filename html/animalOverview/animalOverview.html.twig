@@ -19,11 +19,11 @@
                     animal.animal }} class="removeAnimal glyphicon glyphicon-remove btn-default"></icon>
                     <img class="editAnimal" data-animal={{
                     animal.animal }}
-                    src="{{animal.imagePath}}"
+                    src="http://www.bilder-katzen.de/wp-content/uploads/2014/01/Katzenbilder-Set4_Bild7.jpg"
                          alt="bild">
                     <div class="caption">
-                        <h3>{{ animal.name }} - <p>{{ animal.race }}</p> <span class="fa {% if animal.sex == 'female' %}fa-venus{% else %}fa-mars{% endif %}"></span></h3>
-                        <p><span class="fa fa-birthday-cake"></span> {{ animal.birthday }}</p>
+                        <h3>{{ animal.name }} - {{ animal.race }} <span class="fa {% if animal.sex == 'female' %}fa-venus{% else %}fa-mars{% endif %}"></span></h3>
+                        <p><span class="fa fa-birthday-cake"></span> {{ animal.birthDay }}</p>
                         <p><span class="fa fa-eye"></span> {{ animal.eyeColour }}</p>
                         <p><span class="fa fa-eye"></span> {{ animal.furColour }}</p>
                         <p><span class="fa fa-info-circle"></span> {{ animal.specification }}</p>
@@ -37,6 +37,8 @@
                     animal.animal }} class="searchAnimal glyphicon glyphicon-search btn btn-default"></icon>
                     <icon data-animal={{
                     animal.animal }} class="printAnimal glyphicon glyphicon-print btn btn-default"></icon>
+                    <icon data-animal={{
+                    animal.animal }} class="animalDonation glyphicon glyphicon-euro btn btn-default"></icon>
                 </div>
             </div>
         {% endfor %}

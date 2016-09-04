@@ -59,7 +59,7 @@ class RacesTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class RacesTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the race field
@@ -87,6 +87,11 @@ class RacesTableMap extends TableMap
     const COL_NAME = 'races.name';
 
     /**
+     * the column name for the genus field
+     */
+    const COL_GENUS = 'races.genus';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -98,11 +103,11 @@ class RacesTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Race', 'Code', 'Name', ),
-        self::TYPE_CAMELNAME     => array('race', 'code', 'name', ),
-        self::TYPE_COLNAME       => array(RacesTableMap::COL_RACE, RacesTableMap::COL_CODE, RacesTableMap::COL_NAME, ),
-        self::TYPE_FIELDNAME     => array('race', 'code', 'name', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Race', 'Code', 'Name', 'Genus', ),
+        self::TYPE_CAMELNAME     => array('race', 'code', 'name', 'genus', ),
+        self::TYPE_COLNAME       => array(RacesTableMap::COL_RACE, RacesTableMap::COL_CODE, RacesTableMap::COL_NAME, RacesTableMap::COL_GENUS, ),
+        self::TYPE_FIELDNAME     => array('race', 'code', 'name', 'genus', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -112,11 +117,11 @@ class RacesTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Race' => 0, 'Code' => 1, 'Name' => 2, ),
-        self::TYPE_CAMELNAME     => array('race' => 0, 'code' => 1, 'name' => 2, ),
-        self::TYPE_COLNAME       => array(RacesTableMap::COL_RACE => 0, RacesTableMap::COL_CODE => 1, RacesTableMap::COL_NAME => 2, ),
-        self::TYPE_FIELDNAME     => array('race' => 0, 'code' => 1, 'name' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Race' => 0, 'Code' => 1, 'Name' => 2, 'Genus' => 3, ),
+        self::TYPE_CAMELNAME     => array('race' => 0, 'code' => 1, 'name' => 2, 'genus' => 3, ),
+        self::TYPE_COLNAME       => array(RacesTableMap::COL_RACE => 0, RacesTableMap::COL_CODE => 1, RacesTableMap::COL_NAME => 2, RacesTableMap::COL_GENUS => 3, ),
+        self::TYPE_FIELDNAME     => array('race' => 0, 'code' => 1, 'name' => 2, 'genus' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -139,6 +144,7 @@ class RacesTableMap extends TableMap
         $this->addPrimaryKey('race', 'Race', 'INTEGER', true, 10, null);
         $this->addColumn('code', 'Code', 'VARCHAR', true, 15, null);
         $this->addColumn('name', 'Name', 'VARCHAR', true, 25, null);
+        $this->addForeignKey('genus', 'Genus', 'INTEGER', 'genuses', 'genus', true, 10, null);
     } // initialize()
 
     /**
@@ -146,6 +152,20 @@ class RacesTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Genuses', '\\Genuses', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':genus',
+    1 => ':genus',
+  ),
+), null, 'CASCADE', null, false);
+        $this->addRelation('Animals', '\\Animals', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':race',
+    1 => ':race',
+  ),
+), null, 'CASCADE', 'Animalss', false);
     } // buildRelations()
 
     /**
@@ -292,10 +312,12 @@ class RacesTableMap extends TableMap
             $criteria->addSelectColumn(RacesTableMap::COL_RACE);
             $criteria->addSelectColumn(RacesTableMap::COL_CODE);
             $criteria->addSelectColumn(RacesTableMap::COL_NAME);
+            $criteria->addSelectColumn(RacesTableMap::COL_GENUS);
         } else {
             $criteria->addSelectColumn($alias . '.race');
             $criteria->addSelectColumn($alias . '.code');
             $criteria->addSelectColumn($alias . '.name');
+            $criteria->addSelectColumn($alias . '.genus');
         }
     }
 

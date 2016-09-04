@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \Animals;
-use \AnimalsQuery;
+use \Specie;
+use \SpecieQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'animals' table.
+ * This class defines the structure of the 'specie' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class AnimalsTableMap extends TableMap
+class SpecieTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class AnimalsTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.AnimalsTableMap';
+    const CLASS_NAME = '.Map.SpecieTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class AnimalsTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'animals';
+    const TABLE_NAME = 'specie';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Animals';
+    const OM_CLASS = '\\Specie';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Animals';
+    const CLASS_DEFAULT = 'Specie';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 11;
+    const NUM_COLUMNS = 3;
 
     /**
      * The number of lazy-loaded columns
@@ -69,62 +69,22 @@ class AnimalsTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 11;
+    const NUM_HYDRATE_COLUMNS = 3;
 
     /**
-     * the column name for the animal field
+     * the column name for the species field
      */
-    const COL_ANIMAL = 'animals.animal';
+    const COL_SPECIES = 'specie.species';
 
     /**
-     * the column name for the name field
+     * the column name for the code field
      */
-    const COL_NAME = 'animals.name';
+    const COL_CODE = 'specie.code';
 
     /**
-     * the column name for the genus field
+     * the column name for the description field
      */
-    const COL_GENUS = 'animals.genus';
-
-    /**
-     * the column name for the birthDay field
-     */
-    const COL_BIRTHDAY = 'animals.birthDay';
-
-    /**
-     * the column name for the sex field
-     */
-    const COL_SEX = 'animals.sex';
-
-    /**
-     * the column name for the furColour field
-     */
-    const COL_FURCOLOUR = 'animals.furColour';
-
-    /**
-     * the column name for the eyeColour field
-     */
-    const COL_EYECOLOUR = 'animals.eyeColour';
-
-    /**
-     * the column name for the size field
-     */
-    const COL_SIZE = 'animals.size';
-
-    /**
-     * the column name for the specification field
-     */
-    const COL_SPECIFICATION = 'animals.specification';
-
-    /**
-     * the column name for the user field
-     */
-    const COL_USER = 'animals.user';
-
-    /**
-     * the column name for the race field
-     */
-    const COL_RACE = 'animals.race';
+    const COL_DESCRIPTION = 'specie.description';
 
     /**
      * The default string format for model objects of the related table
@@ -138,11 +98,11 @@ class AnimalsTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Animal', 'Name', 'Genus', 'Birthday', 'Sex', 'Furcolour', 'Eyecolour', 'Size', 'Specification', 'User', 'Race', ),
-        self::TYPE_CAMELNAME     => array('animal', 'name', 'genus', 'birthday', 'sex', 'furcolour', 'eyecolour', 'size', 'specification', 'user', 'race', ),
-        self::TYPE_COLNAME       => array(AnimalsTableMap::COL_ANIMAL, AnimalsTableMap::COL_NAME, AnimalsTableMap::COL_GENUS, AnimalsTableMap::COL_BIRTHDAY, AnimalsTableMap::COL_SEX, AnimalsTableMap::COL_FURCOLOUR, AnimalsTableMap::COL_EYECOLOUR, AnimalsTableMap::COL_SIZE, AnimalsTableMap::COL_SPECIFICATION, AnimalsTableMap::COL_USER, AnimalsTableMap::COL_RACE, ),
-        self::TYPE_FIELDNAME     => array('animal', 'name', 'genus', 'birthDay', 'sex', 'furColour', 'eyeColour', 'size', 'specification', 'user', 'race', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+        self::TYPE_PHPNAME       => array('Species', 'Code', 'Description', ),
+        self::TYPE_CAMELNAME     => array('species', 'code', 'description', ),
+        self::TYPE_COLNAME       => array(SpecieTableMap::COL_SPECIES, SpecieTableMap::COL_CODE, SpecieTableMap::COL_DESCRIPTION, ),
+        self::TYPE_FIELDNAME     => array('species', 'code', 'description', ),
+        self::TYPE_NUM           => array(0, 1, 2, )
     );
 
     /**
@@ -152,11 +112,11 @@ class AnimalsTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Animal' => 0, 'Name' => 1, 'Genus' => 2, 'Birthday' => 3, 'Sex' => 4, 'Furcolour' => 5, 'Eyecolour' => 6, 'Size' => 7, 'Specification' => 8, 'User' => 9, 'Race' => 10, ),
-        self::TYPE_CAMELNAME     => array('animal' => 0, 'name' => 1, 'genus' => 2, 'birthday' => 3, 'sex' => 4, 'furcolour' => 5, 'eyecolour' => 6, 'size' => 7, 'specification' => 8, 'user' => 9, 'race' => 10, ),
-        self::TYPE_COLNAME       => array(AnimalsTableMap::COL_ANIMAL => 0, AnimalsTableMap::COL_NAME => 1, AnimalsTableMap::COL_GENUS => 2, AnimalsTableMap::COL_BIRTHDAY => 3, AnimalsTableMap::COL_SEX => 4, AnimalsTableMap::COL_FURCOLOUR => 5, AnimalsTableMap::COL_EYECOLOUR => 6, AnimalsTableMap::COL_SIZE => 7, AnimalsTableMap::COL_SPECIFICATION => 8, AnimalsTableMap::COL_USER => 9, AnimalsTableMap::COL_RACE => 10, ),
-        self::TYPE_FIELDNAME     => array('animal' => 0, 'name' => 1, 'genus' => 2, 'birthDay' => 3, 'sex' => 4, 'furColour' => 5, 'eyeColour' => 6, 'size' => 7, 'specification' => 8, 'user' => 9, 'race' => 10, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+        self::TYPE_PHPNAME       => array('Species' => 0, 'Code' => 1, 'Description' => 2, ),
+        self::TYPE_CAMELNAME     => array('species' => 0, 'code' => 1, 'description' => 2, ),
+        self::TYPE_COLNAME       => array(SpecieTableMap::COL_SPECIES => 0, SpecieTableMap::COL_CODE => 1, SpecieTableMap::COL_DESCRIPTION => 2, ),
+        self::TYPE_FIELDNAME     => array('species' => 0, 'code' => 1, 'description' => 2, ),
+        self::TYPE_NUM           => array(0, 1, 2, )
     );
 
     /**
@@ -169,24 +129,16 @@ class AnimalsTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('animals');
-        $this->setPhpName('Animals');
+        $this->setName('specie');
+        $this->setPhpName('Specie');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Animals');
+        $this->setClassName('\\Specie');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
-        $this->addPrimaryKey('animal', 'Animal', 'INTEGER', true, null, null);
-        $this->addColumn('name', 'Name', 'VARCHAR', true, 45, null);
-        $this->addForeignKey('genus', 'Genus', 'INTEGER', 'genuses', 'genus', true, null, null);
-        $this->addColumn('birthDay', 'Birthday', 'DATE', true, null, null);
-        $this->addForeignKey('sex', 'Sex', 'INTEGER', 'sexes', 'sex', true, null, null);
-        $this->addForeignKey('furColour', 'Furcolour', 'INTEGER', 'colours', 'colour', true, null, null);
-        $this->addForeignKey('eyeColour', 'Eyecolour', 'INTEGER', 'colours', 'colour', true, null, null);
-        $this->addColumn('size', 'Size', 'INTEGER', true, 10, null);
-        $this->addColumn('specification', 'Specification', 'VARCHAR', true, 255, null);
-        $this->addForeignKey('user', 'User', 'INTEGER', 'users', 'user', true, 10, null);
-        $this->addForeignKey('race', 'Race', 'INTEGER', 'races', 'race', true, 10, null);
+        $this->addPrimaryKey('species', 'Species', 'INTEGER', true, null, null);
+        $this->addColumn('code', 'Code', 'VARCHAR', true, 25, null);
+        $this->addColumn('description', 'Description', 'VARCHAR', true, 45, null);
     } // initialize()
 
     /**
@@ -194,48 +146,13 @@ class AnimalsTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Races', '\\Races', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('Animals', '\\Animals', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':race',
-    1 => ':race',
+    0 => ':species',
+    1 => ':species',
   ),
-), null, 'CASCADE', null, false);
-        $this->addRelation('ColoursRelatedByFurcolour', '\\Colours', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':furColour',
-    1 => ':colour',
-  ),
-), null, 'CASCADE', null, false);
-        $this->addRelation('ColoursRelatedByEyecolour', '\\Colours', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':eyeColour',
-    1 => ':colour',
-  ),
-), null, 'CASCADE', null, false);
-        $this->addRelation('Users', '\\Users', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':user',
-    1 => ':user',
-  ),
-), null, 'CASCADE', null, false);
-        $this->addRelation('Genuses', '\\Genuses', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':genus',
-    1 => ':genus',
-  ),
-), null, 'CASCADE', null, false);
-        $this->addRelation('Sexes', '\\Sexes', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':sex',
-    1 => ':sex',
-  ),
-), null, 'CASCADE', null, false);
+), null, 'CASCADE', 'Animalss', false);
     } // buildRelations()
 
     /**
@@ -254,11 +171,11 @@ class AnimalsTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Animal', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Species', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Animal', TableMap::TYPE_PHPNAME, $indexType)];
+        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Species', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -278,7 +195,7 @@ class AnimalsTableMap extends TableMap
         return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('Animal', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('Species', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -295,7 +212,7 @@ class AnimalsTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? AnimalsTableMap::CLASS_DEFAULT : AnimalsTableMap::OM_CLASS;
+        return $withPrefix ? SpecieTableMap::CLASS_DEFAULT : SpecieTableMap::OM_CLASS;
     }
 
     /**
@@ -309,22 +226,22 @@ class AnimalsTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Animals object, last column rank)
+     * @return array           (Specie object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = AnimalsTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = AnimalsTableMap::getInstanceFromPool($key))) {
+        $key = SpecieTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = SpecieTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + AnimalsTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + SpecieTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = AnimalsTableMap::OM_CLASS;
-            /** @var Animals $obj */
+            $cls = SpecieTableMap::OM_CLASS;
+            /** @var Specie $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            AnimalsTableMap::addInstanceToPool($obj, $key);
+            SpecieTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -347,18 +264,18 @@ class AnimalsTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = AnimalsTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = AnimalsTableMap::getInstanceFromPool($key))) {
+            $key = SpecieTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = SpecieTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Animals $obj */
+                /** @var Specie $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                AnimalsTableMap::addInstanceToPool($obj, $key);
+                SpecieTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -379,29 +296,13 @@ class AnimalsTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(AnimalsTableMap::COL_ANIMAL);
-            $criteria->addSelectColumn(AnimalsTableMap::COL_NAME);
-            $criteria->addSelectColumn(AnimalsTableMap::COL_GENUS);
-            $criteria->addSelectColumn(AnimalsTableMap::COL_BIRTHDAY);
-            $criteria->addSelectColumn(AnimalsTableMap::COL_SEX);
-            $criteria->addSelectColumn(AnimalsTableMap::COL_FURCOLOUR);
-            $criteria->addSelectColumn(AnimalsTableMap::COL_EYECOLOUR);
-            $criteria->addSelectColumn(AnimalsTableMap::COL_SIZE);
-            $criteria->addSelectColumn(AnimalsTableMap::COL_SPECIFICATION);
-            $criteria->addSelectColumn(AnimalsTableMap::COL_USER);
-            $criteria->addSelectColumn(AnimalsTableMap::COL_RACE);
+            $criteria->addSelectColumn(SpecieTableMap::COL_SPECIES);
+            $criteria->addSelectColumn(SpecieTableMap::COL_CODE);
+            $criteria->addSelectColumn(SpecieTableMap::COL_DESCRIPTION);
         } else {
-            $criteria->addSelectColumn($alias . '.animal');
-            $criteria->addSelectColumn($alias . '.name');
-            $criteria->addSelectColumn($alias . '.genus');
-            $criteria->addSelectColumn($alias . '.birthDay');
-            $criteria->addSelectColumn($alias . '.sex');
-            $criteria->addSelectColumn($alias . '.furColour');
-            $criteria->addSelectColumn($alias . '.eyeColour');
-            $criteria->addSelectColumn($alias . '.size');
-            $criteria->addSelectColumn($alias . '.specification');
-            $criteria->addSelectColumn($alias . '.user');
-            $criteria->addSelectColumn($alias . '.race');
+            $criteria->addSelectColumn($alias . '.species');
+            $criteria->addSelectColumn($alias . '.code');
+            $criteria->addSelectColumn($alias . '.description');
         }
     }
 
@@ -414,7 +315,7 @@ class AnimalsTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(AnimalsTableMap::DATABASE_NAME)->getTable(AnimalsTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(SpecieTableMap::DATABASE_NAME)->getTable(SpecieTableMap::TABLE_NAME);
     }
 
     /**
@@ -422,16 +323,16 @@ class AnimalsTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(AnimalsTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(AnimalsTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new AnimalsTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(SpecieTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(SpecieTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new SpecieTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Animals or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Specie or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Animals object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Specie object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -442,27 +343,27 @@ class AnimalsTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(AnimalsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SpecieTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Animals) { // it's a model object
+        } elseif ($values instanceof \Specie) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(AnimalsTableMap::DATABASE_NAME);
-            $criteria->add(AnimalsTableMap::COL_ANIMAL, (array) $values, Criteria::IN);
+            $criteria = new Criteria(SpecieTableMap::DATABASE_NAME);
+            $criteria->add(SpecieTableMap::COL_SPECIES, (array) $values, Criteria::IN);
         }
 
-        $query = AnimalsQuery::create()->mergeWith($criteria);
+        $query = SpecieQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            AnimalsTableMap::clearInstancePool();
+            SpecieTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                AnimalsTableMap::removeInstanceFromPool($singleval);
+                SpecieTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -470,20 +371,20 @@ class AnimalsTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the animals table.
+     * Deletes all rows from the specie table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return AnimalsQuery::create()->doDeleteAll($con);
+        return SpecieQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Animals or Criteria object.
+     * Performs an INSERT on the database, given a Specie or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Animals object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Specie object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -492,22 +393,22 @@ class AnimalsTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(AnimalsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SpecieTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Animals object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Specie object
         }
 
-        if ($criteria->containsKey(AnimalsTableMap::COL_ANIMAL) && $criteria->keyContainsValue(AnimalsTableMap::COL_ANIMAL) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.AnimalsTableMap::COL_ANIMAL.')');
+        if ($criteria->containsKey(SpecieTableMap::COL_SPECIES) && $criteria->keyContainsValue(SpecieTableMap::COL_SPECIES) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.SpecieTableMap::COL_SPECIES.')');
         }
 
 
         // Set the correct dbName
-        $query = AnimalsQuery::create()->mergeWith($criteria);
+        $query = SpecieQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -516,7 +417,7 @@ class AnimalsTableMap extends TableMap
         });
     }
 
-} // AnimalsTableMap
+} // SpecieTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-AnimalsTableMap::buildTableMap();
+SpecieTableMap::buildTableMap();

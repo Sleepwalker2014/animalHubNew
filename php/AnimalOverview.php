@@ -38,7 +38,6 @@ class AnimalOverview
         $userAnimals = $this->getAnimalsFromUser();
 
         $response = $this->getHTMLResponse($userAnimals);
-        syslog(0, print_r($response, true));
 
         echo $this->template->getHTMLAsString(self::TEMPLATE_FILE, $response);
     }
@@ -62,9 +61,29 @@ class AnimalOverview
         $response = [];
 
         foreach ($userAnimals as $userAnimal) {
-            $response['animals'][] = ['name' => $userAnimal->getName()];
+            $response['animals'][] = ['animal' => $userAnimal->getAnimal(),
+                                      'name' => $userAnimal->getName(),
+                                      'birthDay' => $userAnimal->getBirthday('d.m.Y'),
+                                      'race' => $userAnimal->getGenuses()->getDescription(),
+                                      'genus' => $userAnimal->getGenus(),
+                                      'sex' => $userAnimal->getSex(),
+                                      'eyeColour' => $userAnimal->getColoursRelatedByEyecolour()->getDescription(),
+                                      'furColour' => $userAnimal->getColoursRelatedByFurcolour()->getDescription(),
+                                      'specification' => $userAnimal->getSpecification()];
         }
 
         return $response;
+    }
+
+    /**
+     * @internal param int $animalId
+     */
+    public function removeAnimal()
+    {
+        $animalId = $_POST['animalId'];
+        $animalQuery = new AnimalsQuery();
+        $animalQuery->filterByAnimal($animalId)
+                    ->filterByUser($this->sessionHandler->getSessionUser())
+                    ->delete();
     }
 }
