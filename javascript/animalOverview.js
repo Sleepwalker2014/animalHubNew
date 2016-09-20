@@ -21,9 +21,9 @@ $(document).ready(function () {
                    'animalId': animalId,
                    'isAjax' : true}
         }).done(function (result) {
-            $('#mainContent').html(result);
+            $('#mainContent').html(result.responseText);
         }).always(function (result) {
-            $('#mainContent').html(result);
+            $('#mainContent').html(result.responseText);
         });
     });
 

@@ -66,7 +66,7 @@ class AnimalOverview
                                       'birthDay' => $userAnimal->getBirthday('d.m.Y'),
                                       'race' => $userAnimal->getGenuses()->getDescription(),
                                       'genus' => $userAnimal->getGenus(),
-                                      'sex' => $userAnimal->getSex(),
+                                      'sex' => $userAnimal->getSexes()->getCode(),
                                       'eyeColour' => $userAnimal->getColoursRelatedByEyecolour()->getDescription(),
                                       'furColour' => $userAnimal->getColoursRelatedByFurcolour()->getDescription(),
                                       'specification' => $userAnimal->getSpecification()];

@@ -44,7 +44,7 @@ class AnimalDonation
     public function getHTML ()
     {
         $response = [];
-
+syslog(0, "hh");
         echo $this->template->getHTMLAsString(self::TEMPLATE_FILE, $response);
     }
 }
